@@ -1,26 +1,25 @@
-const products=[
-  {id:1,name:'Heart Phone Charm',price:12900,category:'tech',emoji:'💗',bg:'#ffd8e9',badge:'NEW',sub:'Phone crush'},
-  {id:2,name:'Cherry Lip Balm',price:8900,category:'beauty',emoji:'🍒',bg:'#ffe5ec',badge:'MUSA PICK',sub:'Beauty'},
-  {id:3,name:'Mini Bow Scrunchie',price:6900,category:'accessories',emoji:'🎀',bg:'#fff0cf',badge:'NEW',sub:'Girly stuff'},
-  {id:4,name:'Cute Study Stickers',price:5900,category:'school',emoji:'✨',bg:'#e8f3e7',badge:'BESTIE FAV',sub:'School'},
-  {id:5,name:'Pearl Hair Clip',price:9900,category:'accessories',emoji:'🤍',bg:'#eee8ff',badge:'TREND ALERT',sub:'Accessories'},
-  {id:6,name:'Cloud Mirror',price:10900,category:'beauty',emoji:'☁️',bg:'#e6f0ff',badge:'NEW',sub:'Beauty'},
-  {id:7,name:'Star Cable Charm',price:7900,category:'tech',emoji:'⭐',bg:'#fff2a9',badge:'ZOE’S PICK',sub:'Tech'},
-  {id:8,name:'Pet Lover Keychain',price:8500,category:'gifts',emoji:'🐾',bg:'#e8f3e7',badge:'CUTE FIND',sub:'Gifts'},
-  {id:9,name:'Pastel Gel Pens',price:7500,category:'school',emoji:'🖊️',bg:'#eee8ff',badge:'SCHOOL FAV',sub:'School'},
-  {id:10,name:'Mini Gift Pouch',price:11900,category:'gifts',emoji:'🎁',bg:'#ffd8e9',badge:'GIFTABLE',sub:'Gifts'},
-  {id:11,name:'Glossy Claw Clip',price:8900,category:'accessories',emoji:'🦋',bg:'#e6f0ff',badge:'NEW',sub:'Accessories'},
-  {id:12,name:'Self Care Headband',price:9900,category:'beauty',emoji:'🫧',bg:'#fff0cf',badge:'MUSA PICK',sub:'Self care'}
-];
+const FREE_SHIPPING_THRESHOLD = 50000;
+const WHATSAPP = '5493513394174';
+let products = [];
+let bag = JSON.parse(localStorage.getItem('musaBag') || '[]');
 
-let bag=JSON.parse(localStorage.getItem('musaBag')||'[]');
+const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n);
 
-const money=n=>new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n);
+async function loadProducts(){
+  const response = await fetch('data/products.json', {cache:'no-store'});
+  if(!response.ok) throw new Error('No se pudo cargar el catálogo');
+  products = await response.json();
+  renderGrid('#newGrid', products.filter(p=>p.active && p.newDrop).slice(0,4));
+  renderGrid('#shopGrid', products.filter(p=>p.active));
+  renderBag();
+}
 
 function card(p){
+  const stockLabel = p.stock <= 2 ? 'ÚLTIMAS UNIDADES' : p.badge;
+  const pickLabel = p.musaPick ? 'MUSA PICK' : stockLabel;
   return `<article class="product-card">
     <div class="product-image" style="background:${p.bg}">
-      <span class="product-badge">${p.badge}</span>
+      <span class="product-badge">${pickLabel}</span>
       <button class="product-like" aria-label="Favorito">♡</button>
       <span class="product-emoji">${p.emoji}</span>
     </div>
@@ -28,21 +27,87 @@ function card(p){
       <div><div class="product-name">${p.name}</div><div class="product-sub">${p.sub}</div></div>
       <div class="product-price">${money(p.price)}</div>
     </div>
-    <button class="add-btn" onclick="addToBag(${p.id})">AGREGAR +</button>
+    <button class="add-btn" onclick="addToBag('${p.id}')" ${p.stock<1?'disabled':''}>${p.stock<1?'SIN STOCK':'AGREGAR +'}</button>
   </article>`;
 }
 
-function renderGrid(target,list){document.querySelector(target).innerHTML=list.map(card).join('')}
+function renderGrid(target,list){
+  const el=document.querySelector(target);
+  el.innerHTML=list.length ? list.map(card).join('') : '<p class="empty-results">No encontramos productos en esta categoría todavía ♡</p>';
+}
 
-renderGrid('#newGrid',products.slice(0,4));
-renderGrid('#shopGrid',products);
+function renderBag(){
+  bag = bag.filter(x=>products.some(p=>p.id===x.id && p.active));
+  const count=bag.reduce((s,x)=>s+x.qty,0);
+  document.querySelector('#bagCount').textContent=count;
+  const items=document.querySelector('#bagItems');
+  if(!bag.length){
+    items.innerHTML='<p class="empty-bag">Tu bolsa está esperando algo lindo ✦</p>';
+    updateShipping(0);
+    return;
+  }
+  let total=0;
+  items.innerHTML=bag.map(x=>{
+    const p=products.find(p=>p.id===x.id);
+    const safeQty=Math.min(x.qty,p.stock);
+    x.qty=safeQty;
+    total+=p.price*safeQty;
+    return `<div class="bag-item">
+      <div class="bag-thumb" style="background:${p.bg}">${p.emoji}</div>
+      <div><h4>${p.name}</h4><small>${safeQty} × ${money(p.price)}</small></div>
+      <button class="remove" onclick="removeFromBag('${p.id}')">×</button>
+    </div>`;
+  }).join('');
+  document.querySelector('#bagTotal').textContent=money(total);
+  updateShipping(total);
+  localStorage.setItem('musaBag',JSON.stringify(bag));
+}
+
+function updateShipping(subtotal){
+  const totalEl=document.querySelector('#shippingTotal');
+  const message=document.querySelector('#freeShippingMessage');
+  if(subtotal===0){
+    totalEl.textContent='A CALCULAR';
+    message.textContent='';
+    return;
+  }
+  if(subtotal>=FREE_SHIPPING_THRESHOLD){
+    totalEl.textContent='BONIFICADO ♡';
+    message.textContent='🎉 ¡Tu compra tiene envío bonificado!';
+  }else{
+    const missing=FREE_SHIPPING_THRESHOLD-subtotal;
+    totalEl.textContent='A CALCULAR';
+    message.textContent=`✨ Te faltan ${money(missing)} para tener envío bonificado.`;
+  }
+}
+
+function addToBag(id){
+  const p=products.find(p=>p.id===id);
+  if(!p || p.stock<1) return;
+  const found=bag.find(x=>x.id===id);
+  if(found){
+    if(found.qty>=p.stock) return;
+    found.qty++;
+  }else bag.push({id,qty:1});
+  localStorage.setItem('musaBag',JSON.stringify(bag));
+  renderBag();
+  openBag();
+}
+function removeFromBag(id){ bag=bag.filter(x=>x.id!==id); renderBag(); }
+
+const drawer=document.querySelector('#bagDrawer'),backdrop=document.querySelector('#backdrop');
+function openBag(){drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false')}
+function closeBag(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true')}
+document.querySelector('#bagBtn').onclick=openBag;
+document.querySelector('#closeBag').onclick=closeBag;
+backdrop.onclick=closeBag;
 
 document.querySelectorAll('.filter').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const f=btn.dataset.filter;
-    renderGrid('#shopGrid',f==='all'?products:products.filter(p=>p.category===f));
+    renderGrid('#shopGrid',f==='all'?products.filter(p=>p.active):products.filter(p=>p.active && p.category===f));
   });
 });
 
@@ -51,59 +116,38 @@ document.querySelectorAll('.vibe-card').forEach(v=>{
     e.preventDefault();
     const f=v.dataset.category;
     document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
-    renderGrid('#shopGrid',products.filter(p=>p.category===f));
+    renderGrid('#shopGrid',f==='all'?products.filter(p=>p.active):products.filter(p=>p.active && p.category===f));
     document.querySelector('#shop').scrollIntoView({behavior:'smooth'});
   });
 });
-
-function addToBag(id){
-  const found=bag.find(x=>x.id===id);
-  if(found) found.qty++;
-  else bag.push({id,qty:1});
-  saveBag();
-  openBag();
-}
-function saveBag(){localStorage.setItem('musaBag',JSON.stringify(bag));renderBag()}
-function renderBag(){
-  const count=bag.reduce((s,x)=>s+x.qty,0);
-  document.querySelector('#bagCount').textContent=count;
-  const items=document.querySelector('#bagItems');
-  if(!bag.length){items.innerHTML='<p class="empty-bag">Tu bolsa está esperando algo lindo ✦</p>';document.querySelector('#bagTotal').textContent=money(0);return}
-  let total=0;
-  items.innerHTML=bag.map(x=>{
-    const p=products.find(p=>p.id===x.id); total+=p.price*x.qty;
-    return `<div class="bag-item"><div class="bag-thumb" style="background:${p.bg}">${p.emoji}</div><div><h4>${p.name}</h4><small>${x.qty} × ${money(p.price)}</small></div><button class="remove" onclick="removeFromBag(${p.id})">×</button></div>`;
-  }).join('');
-  document.querySelector('#bagTotal').textContent=money(total);
-}
-function removeFromBag(id){bag=bag.filter(x=>x.id!==id);saveBag()}
-
-const drawer=document.querySelector('#bagDrawer'),backdrop=document.querySelector('#backdrop');
-function openBag(){drawer.classList.add('open');backdrop.classList.add('open');drawer.setAttribute('aria-hidden','false')}
-function closeBag(){drawer.classList.remove('open');backdrop.classList.remove('open');drawer.setAttribute('aria-hidden','true')}
-document.querySelector('#bagBtn').onclick=openBag;
-document.querySelector('#closeBag').onclick=closeBag;
-backdrop.onclick=closeBag;
-renderBag();
 
 const overlay=document.querySelector('#searchOverlay');
 document.querySelector('#searchBtn').onclick=()=>{overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');setTimeout(()=>document.querySelector('#searchInput').focus(),100)};
 document.querySelector('#closeSearch').onclick=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true')};
 document.querySelector('#searchInput').addEventListener('input',e=>{
   const q=e.target.value.toLowerCase().trim();
-  if(!q){document.querySelector('#searchHint').textContent='Probá: beauty, charm, stickers...';return}
+  if(!q){document.querySelector('#searchHint').textContent='Probá: beauty, funda, stickers...';return}
   const found=products.filter(p=>(p.name+' '+p.category+' '+p.sub).toLowerCase().includes(q));
   document.querySelector('#searchHint').textContent=found.length?`${found.length} resultado${found.length===1?'':'s'} encontrado${found.length===1?'':'s'} ♡`:'Todavía no encontramos eso — quizás en el próximo drop ✦';
 });
 
-document.querySelector('#newsletterForm').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<strong>YA ESTÁS ADENTRO ♡</strong><span style="margin-left:10px;color:#665b63">Te avisamos del próximo drop.</span>'});
-document.querySelector('#checkoutBtn').onclick=()=>alert('Checkout Mercado Pago: lo conectamos en la próxima etapa ♡');
-
-
-
-/* Mobile menu */
-const nav=document.querySelector('.desktop-nav');
-document.querySelector('#menuBtn').addEventListener('click',()=>{
-  nav.classList.toggle('mobile-open');
+document.querySelector('#newsletterForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  e.target.innerHTML='<strong>YA ESTÁS ADENTRO ♡</strong><span style="margin-left:10px;color:#665b63">Te avisamos del próximo drop.</span>';
 });
+
+document.querySelector('#checkoutBtn').onclick=()=>{
+  const subtotal=bag.reduce((sum,x)=>{const p=products.find(p=>p.id===x.id);return sum+(p?p.price*x.qty:0)},0);
+  if(!subtotal){openBag();return}
+  alert('El checkout seguro de Mercado Pago se conectará en el backend de MUSA. El carrito y la regla de envío bonificado ya están preparados. ♡');
+};
+
+const nav=document.querySelector('.desktop-nav');
+document.querySelector('#menuBtn').addEventListener('click',()=>nav.classList.toggle('mobile-open'));
 nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>nav.classList.remove('mobile-open')));
+
+loadProducts().catch(error=>{
+  console.error(error);
+  document.querySelector('#newGrid').innerHTML='<p class="empty-results">Estamos actualizando MUSA. Volvemos enseguida ♡</p>';
+  document.querySelector('#shopGrid').innerHTML='<p class="empty-results">Estamos actualizando MUSA. Volvemos enseguida ♡</p>';
+});
