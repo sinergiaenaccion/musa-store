@@ -28,7 +28,7 @@ function card(p){
       <div><div class="product-name">${p.name}</div><div class="product-sub">${p.sub}</div></div>
       <div class="product-price">${money(p.price)}</div>
     </div>
-    <button class="add-btn" onclick="addToBag(${p.id})">ADD TO BAG +</button>
+    <button class="add-btn" onclick="addToBag(${p.id})">AGREGAR +</button>
   </article>`;
 }
 
@@ -68,7 +68,7 @@ function renderBag(){
   const count=bag.reduce((s,x)=>s+x.qty,0);
   document.querySelector('#bagCount').textContent=count;
   const items=document.querySelector('#bagItems');
-  if(!bag.length){items.innerHTML='<p class="empty-bag">Your bag is waiting for something cute ✦</p>';document.querySelector('#bagTotal').textContent=money(0);return}
+  if(!bag.length){items.innerHTML='<p class="empty-bag">Tu bolsa está esperando algo lindo ✦</p>';document.querySelector('#bagTotal').textContent=money(0);return}
   let total=0;
   items.innerHTML=bag.map(x=>{
     const p=products.find(p=>p.id===x.id); total+=p.price*x.qty;
@@ -93,9 +93,17 @@ document.querySelector('#searchInput').addEventListener('input',e=>{
   const q=e.target.value.toLowerCase().trim();
   if(!q){document.querySelector('#searchHint').textContent='Probá: beauty, charm, stickers...';return}
   const found=products.filter(p=>(p.name+' '+p.category+' '+p.sub).toLowerCase().includes(q));
-  document.querySelector('#searchHint').textContent=found.length?`${found.length} find${found.length===1?'':'s'} encontrad${found.length===1?'o':'os'} ♡`:'No encontramos eso todavía — maybe next drop?';
+  document.querySelector('#searchHint').textContent=found.length?`${found.length} resultado${found.length===1?'':'s'} encontrado${found.length===1?'':'s'} ♡`:'Todavía no encontramos eso — quizás en el próximo drop ✦';
 });
 
-document.querySelector('#newsletterForm').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<strong>YOU’RE IN ♡</strong><span style="margin-left:10px;color:#665b63">Te avisamos del próximo drop.</span>'});
+document.querySelector('#newsletterForm').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<strong>YA ESTÁS ADENTRO ♡</strong><span style="margin-left:10px;color:#665b63">Te avisamos del próximo drop.</span>'});
 document.querySelector('#checkoutBtn').onclick=()=>alert('Checkout Mercado Pago: lo conectamos en la próxima etapa ♡');
-document.querySelector('#menuBtn').onclick=()=>document.querySelector('.desktop-nav').classList.toggle('mobile-open');
+
+
+
+/* Mobile menu */
+const nav=document.querySelector('.desktop-nav');
+document.querySelector('#menuBtn').addEventListener('click',()=>{
+  nav.classList.toggle('mobile-open');
+});
+nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>nav.classList.remove('mobile-open')));
