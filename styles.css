@@ -145,3 +145,20 @@ footer h4{font-size:9px;letter-spacing:.16em;margin:8px 0 18px;color:#8c7885}foo
   .whatsapp-float span{display:none}
   .whatsapp-float b{width:54px;height:54px}
 }
+
+@media(max-width:900px){
+  .desktop-nav.mobile-open{
+    display:flex;
+    position:fixed;
+    left:0;right:0;top:78px;
+    background:rgba(255,250,247,.98);
+    backdrop-filter:blur(14px);
+    padding:22px;
+    flex-direction:column;
+    gap:18px;
+    border-bottom:1px solid var(--line);
+    box-shadow:0 15px 35px rgba(37,35,49,.08);
+    z-index:19;
+  }
+  .desktop-nav.mobile-open a{font-size:12px}
+}
