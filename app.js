@@ -9,13 +9,14 @@ async function loadProducts(){
   const response = await fetch('data/products.json', {cache:'no-store'});
   if(!response.ok) throw new Error('No se pudo cargar el catálogo');
   products = await response.json();
-  renderGrid('#newGrid', products.filter(p=>p.active && p.newDrop).slice(0,4));
+  renderGrid('#newGrid', products.filter(p=>p.active && p.newDrop && !p.digital).slice(0,4));
+  renderGrid('#digitalProducts', products.filter(p=>p.active && p.digital));
   renderGrid('#shopGrid', products.filter(p=>p.active));
   renderBag();
 }
 
 function card(p){
-  const stockLabel = p.stock <= 2 ? 'ÚLTIMAS UNIDADES' : p.badge;
+  const stockLabel = p.digital ? 'DIGITAL' : (p.stock <= 2 ? 'ÚLTIMAS UNIDADES' : p.badge);
   const pickLabel = p.musaPick ? 'MUSA PICK' : stockLabel;
   return `<article class="product-card">
     <div class="product-image" style="background:${p.bg}">
@@ -27,7 +28,7 @@ function card(p){
       <div><div class="product-name">${p.name}</div><div class="product-sub">${p.sub}</div></div>
       <div class="product-price">${money(p.price)}</div>
     </div>
-    <button class="add-btn" onclick="addToBag('${p.id}')" ${p.stock<1?'disabled':''}>${p.stock<1?'SIN STOCK':'AGREGAR +'}</button>
+    <button class="add-btn" onclick="${p.digital ? 'buyDigital(\''+p.id+'\')' : 'addToBag(\''+p.id+'\')'}" ${p.stock<1?'disabled':''}>${p.digital?'COMPRAR DIGITAL ↗':(p.stock<1?'SIN STOCK':'AGREGAR +')}</button>
   </article>`;
 }
 
@@ -59,7 +60,8 @@ function renderBag(){
     </div>`;
   }).join('');
   document.querySelector('#bagTotal').textContent=money(total);
-  updateShipping(total);
+  const physicalSubtotal=bag.reduce((sum,x)=>{const p=products.find(p=>p.id===x.id);return sum+(p && !p.digital ? p.price*x.qty:0)},0);
+  updateShipping(physicalSubtotal);
   localStorage.setItem('musaBag',JSON.stringify(bag));
 }
 
@@ -81,9 +83,16 @@ function updateShipping(subtotal){
   }
 }
 
+function buyDigital(id){
+  const p=products.find(x=>x.id===id);
+  if(!p) return;
+  const text=encodeURIComponent('Hola MUSA 💗 Quiero comprar el producto digital "'+p.name+'" por '+money(p.price)+'. ¿Me pasan el medio de pago y cómo recibo el PDF?');
+  window.open('https://wa.me/'+WHATSAPP+'?text='+text,'_blank','noopener');
+}
 function addToBag(id){
   const p=products.find(p=>p.id===id);
   if(!p || p.stock<1) return;
+  if(p.digital){buyDigital(id);return;}
   const found=bag.find(x=>x.id===id);
   if(found){
     if(found.qty>=p.stock) return;
@@ -150,4 +159,5 @@ loadProducts().catch(error=>{
   console.error(error);
   document.querySelector('#newGrid').innerHTML='<p class="empty-results">Estamos actualizando MUSA. Volvemos enseguida ♡</p>';
   document.querySelector('#shopGrid').innerHTML='<p class="empty-results">Estamos actualizando MUSA. Volvemos enseguida ♡</p>';
+  document.querySelector('#digitalProducts').innerHTML='<p class="empty-results">Estamos actualizando MUSA. Volvemos enseguida ♡</p>';
 });
