@@ -22,7 +22,7 @@ function card(p){
     <div class="product-image" style="background:${p.bg}">
       <span class="product-badge">${pickLabel}</span>
       <button class="product-like" aria-label="Favorito">♡</button>
-      <span class="product-emoji">${p.emoji}</span>
+      ${p.image ? '<img class="product-cover" src="'+p.image+'" alt="'+p.name+'" loading="lazy">': '<span class="product-emoji">'+p.emoji+'</span>'}
     </div>
     <div class="product-info">
       <div><div class="product-name">${p.name}</div><div class="product-sub">${p.sub}</div></div>
