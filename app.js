@@ -83,12 +83,39 @@ function updateShipping(subtotal){
   }
 }
 
-function buyDigital(id){
+const DIGITAL_API_BASE = window.MUSA_API_BASE || '';
+
+async function buyDigital(id){
   const p=products.find(x=>x.id===id);
   if(!p) return;
-  const text=encodeURIComponent('Hola MUSA 💗 Quiero comprar el producto digital "'+p.name+'" por '+money(p.price)+'. ¿Me pasan el medio de pago y cómo recibo el PDF?');
-  window.open('https://wa.me/'+WHATSAPP+'?text='+text,'_blank','noopener');
+
+  const button = document.querySelector(`.add-btn[onclick="buyDigital('${id}')"]`);
+  if(button){
+    button.disabled=true;
+    button.textContent='ABRIENDO PAGO…';
+  }
+
+  try{
+    const response=await fetch(`${DIGITAL_API_BASE}/api/create-preference`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({productId:id})
+    });
+    const data=await response.json();
+    if(!response.ok || !data.initPoint) throw new Error(data.error || 'checkout_unavailable');
+    window.location.href=data.initPoint;
+  }catch(error){
+    console.warn('Checkout digital no disponible todavía:',error);
+    const text=encodeURIComponent('Hola MUSA 💗 Quiero comprar el producto digital "'+p.name+'" por '+money(p.price)+'. ¿Me pasan el medio de pago y cómo recibo el PDF?');
+    window.open('https://wa.me/'+WHATSAPP+'?text='+text,'_blank','noopener');
+  }finally{
+    if(button){
+      button.disabled=false;
+      button.textContent='COMPRAR DIGITAL ↗';
+    }
+  }
 }
+
 function addToBag(id){
   const p=products.find(p=>p.id===id);
   if(!p || p.stock<1) return;
