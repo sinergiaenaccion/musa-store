@@ -153,6 +153,12 @@ module.exports = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return json(res, 500, { error: "No se pudo verificar el pago." });
+    return json(res, 500, {
+      error: "No se pudo verificar el pago.",
+      diagnostic: {
+        errorType: error?.name || "Error",
+        errorMessage: String(error?.message || "Error interno").slice(0, 200)
+      }
+    });
   }
 };
