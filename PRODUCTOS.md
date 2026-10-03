@@ -1,29 +1,30 @@
 # Cargar productos en MUSA ♡
 
-Por ahora el catálogo de MUSA vive en `data/products.json`.
+Por ahora el catálogo público de MUSA está enfocado en **productos digitales**.
 
-## Para agregar un producto
+Los productos activos viven en `data/products.json`. Los productos físicos quedan fuera de la tienda hasta que estén realmente disponibles.
+
+## Para agregar un workbook digital
 
 Copiá uno de los objetos existentes y completá:
 
-- `id`: código único, por ejemplo `MUSA-009`.
+- `id`: código único, por ejemplo `MUSA-D09`.
 - `name`: nombre visible.
 - `price`: precio de venta en pesos.
-- `cost`: costo de compra (interno; no se muestra en la tienda).
-- `stock`: unidades disponibles.
-- `category`: `beauty`, `tech`, `accessories`, `school` o `gifts`.
-- `badge`: etiqueta que aparece en la tarjeta.
-- `sub`: pequeña descripción.
-- `emoji` y `bg`: imagen provisional hasta incorporar fotos reales.
-- `featured`: aparece en destacados.
-- `musaPick`: aparece como MUSA PICK / MUSA INSPIRACIÓN.
-- `newDrop`: aparece en novedades.
-- `weightGrams`: peso aproximado del producto.
-- `dimensionsCm`: largo, ancho y alto en cm.
+- `category`: actualmente `digital`.
+- `badge`: etiqueta de la tarjeta.
+- `sub`: descripción corta.
+- `description`: explicación comercial del workbook.
+- `includes`: lista breve de lo que incluye.
+- `pages`: cantidad de páginas.
+- `image`: portada pública.
+- `digital`: `true`.
 - `active`: usar `false` para ocultarlo sin borrarlo.
 
-## Importante
+La entrega del PDF no se configura en este archivo. El backend usa las variables privadas `MUSA_PDF_URL_MUSA_D01` … `D08`.
 
-El `cost` es interno y no se publica. El peso y las medidas quedan preparados para futuras cotizaciones con Correo Argentino, Andreani o PUDO.
+## Productos físicos
 
-La carga manual es la primera etapa. Más adelante construiremos **MUSA ADMIN**, para hacer lo mismo desde el celular sin editar código.
+Cuando MUSA incorpore nuevamente productos físicos, se pueden reactivar en el catálogo y volver a conectar stock, peso, medidas y logística.
+
+Los campos de peso y dimensiones pueden volver a utilizarse para futuras cotizaciones con Correo Argentino, Andreani o PUDO.
