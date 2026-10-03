@@ -364,3 +364,89 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .sparkle-a{left:1%;top:16%}.sparkle-b{right:1%;top:38%}.sparkle-c{left:5%;bottom:18%}
   .sparkle-d{right:23%;bottom:7%}.sparkle-e{right:25%;top:8%}.sparkle-f{right:2%;bottom:29%}
 }
+
+
+/* MUSA — MUSE GLOW / GOLD FOIL FINISH */
+.stack-front{
+  border:6px solid rgba(255,255,255,.9);
+  box-shadow:
+    0 0 0 2px rgba(212,154,44,.92),
+    0 0 0 5px rgba(255,255,255,.55),
+    0 30px 60px rgba(244,63,145,.28),
+    18px 25px 0 rgba(255,255,255,.72);
+}
+.stack-front:after{
+  content:'';
+  position:absolute;
+  inset:10px;
+  border:1px solid rgba(255,220,143,.9);
+  border-radius:22px;
+  pointer-events:none;
+  z-index:2;
+  box-shadow:inset 0 0 25px rgba(255,255,255,.13);
+}
+.stack-front .cover-mini{
+  color:#fffdf9;
+  text-shadow:
+    0 1px 0 #fff,
+    0 0 8px rgba(255,255,255,.7),
+    0 3px 16px rgba(156,35,91,.25);
+}
+.stack-front strong{
+  color:#fff;
+  text-shadow:
+    0 1px 0 rgba(212,154,44,.8),
+    0 0 10px rgba(255,255,255,.55),
+    0 5px 18px rgba(128,20,72,.2);
+}
+.stack-front b{
+  color:#f9d98c;
+  text-shadow:0 0 12px rgba(255,226,154,.95);
+}
+.stack-front:before{
+  color:#ffe4a6;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 16px rgba(212,154,44,.95),
+    0 0 26px rgba(255,92,168,.45);
+}
+.digital-hero-art:before{
+  content:'✦';
+  position:absolute;
+  z-index:7;
+  left:8%;
+  top:18%;
+  color:#d49a2c;
+  font-size:31px;
+  text-shadow:0 0 6px #fff,0 0 17px rgba(212,154,44,.8);
+  animation:heroTwinkle 2.2s ease-in-out infinite;
+}
+.digital-hero-art:after{
+  content:'✦  ·  ✧  ·  ✦';
+  position:absolute;
+  z-index:7;
+  right:1%;
+  bottom:18%;
+  color:#d49a2c;
+  font-size:17px;
+  letter-spacing:5px;
+  text-shadow:0 0 7px #fff,0 0 15px rgba(212,154,44,.75);
+  animation:heroTwinkle 2.8s ease-in-out .5s infinite;
+}
+@keyframes heroTwinkle{
+  0%,100%{opacity:.45;transform:scale(.82) rotate(0deg)}
+  50%{opacity:1;transform:scale(1.18) rotate(12deg)}
+}
+@media(max-width:560px){
+  .stack-front{
+    border-width:5px;
+    box-shadow:
+      0 0 0 2px rgba(212,154,44,.92),
+      0 0 0 4px rgba(255,255,255,.55),
+      0 25px 48px rgba(244,63,145,.25),
+      14px 19px 0 rgba(255,255,255,.7);
+  }
+  .stack-front:after{inset:8px;border-radius:19px}
+  .digital-hero-art:before{left:2%;top:19%;font-size:25px}
+  .digital-hero-art:after{right:0;bottom:17%;font-size:13px}
+}
