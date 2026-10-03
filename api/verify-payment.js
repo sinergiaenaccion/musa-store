@@ -25,6 +25,34 @@ async function sign(payload) {
   return crypto.createHmac("sha256", secret).update(payload).digest("base64url");
 }
 
+async function getPreference(payment, orderId) {
+  const headers = {
+    Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}`
+  };
+
+  const preferenceId = String(payment.preference_id || "").trim();
+  if (preferenceId) {
+    const response = await fetch(
+      `https://api.mercadopago.com/checkout/preferences/${encodeURIComponent(preferenceId)}`,
+      { headers }
+    );
+    if (response.ok) {
+      const preference = await response.json();
+      if (String(preference.external_reference || "") === orderId) return preference;
+    }
+  }
+
+  const response = await fetch(
+    `https://api.mercadopago.com/checkout/preferences/search?external_reference=${encodeURIComponent(orderId)}&limit=10`,
+    { headers }
+  );
+  if (!response.ok) return null;
+
+  const data = await response.json();
+  const elements = Array.isArray(data.elements) ? data.elements : [];
+  return elements.find(item => String(item.external_reference || "") === orderId) || null;
+}
+
 module.exports = async (req, res) => {
   if (req.method !== "GET") return json(res, 405, { error: "Método no permitido" });
   if (!process.env.MP_ACCESS_TOKEN) return json(res, 503, { error: "Mercado Pago todavía no está configurado." });
@@ -45,8 +73,9 @@ module.exports = async (req, res) => {
       payment.order?.external_reference,
       payment.order?.external_reference_id
     ].filter(Boolean).map(String);
+
     const approved = payment.status === "approved";
-    const sameOrder = paidOrderCandidates.includes(orderId);
+    let sameOrder = paidOrderCandidates.includes(orderId);
 
     let productIds = String(payment.metadata?.product_ids || "")
       .split(",")
@@ -71,6 +100,21 @@ module.exports = async (req, res) => {
       productIds = Object.entries(PRODUCTS)
         .filter(([, name]) => name === description)
         .map(([id]) => id);
+    }
+
+    const preference = await getPreference(payment, orderId);
+
+    if (preference) {
+      sameOrder = sameOrder || String(preference.external_reference || "") === orderId;
+
+      if (!productIds.length && Array.isArray(preference.items)) {
+        productIds = preference.items
+          .flatMap(item => [
+            String(item.id || ""),
+            Object.entries(PRODUCTS).find(([, name]) => name === String(item.title || ""))?.[0] || ""
+          ])
+          .filter(id => PRODUCTS[id]);
+      }
     }
 
     if (!approved || !sameOrder || !productIds.length) {
