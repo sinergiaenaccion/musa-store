@@ -1,1 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000"><defs><filter id="s"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-opacity=".14"/></filter><style>.t{font:700 64px Arial,sans-serif;fill:#282330}.a{fill:#62A46A}.tag{font:700 17px Arial,sans-serif;letter-spacing:1px;fill:#62A46A}.sub{font:italic 25px Arial,sans-serif;fill:#282330}</style></defs><rect width="800" height="1000" fill="#EAF5E7"/><ellipse cx="175" cy="390" rx="190" ry="160" fill="#fff"/><ellipse cx="650" cy="260" rx="150" ry="115" fill="#BFE0BA"/><ellipse cx="635" cy="840" rx="180" ry="125" fill="#FFE4B2"/><image href="assets/musa-logo.jpg" x="60" y="55" width="170" height="170" preserveAspectRatio="xMidYMid meet"/><text x="65" y="270" class="tag">FINANZAS · METAS · AHORRO</text><text x="90" y="520" class="t">MONEY</text><text x="90" y="600" class="t a">GIRL</text><text x="90" y="680" class="sub">Tus metas también importan.</text><g filter="url(#s)"><path d="M70 755 C120 725 190 735 240 750 C310 770 380 720 455 750 C520 776 600 735 730 760 L720 870 C610 900 510 870 420 895 C330 920 220 875 80 900 Z" fill="#fff"/></g><text x="100" y="805" class="tag">MUSA DIGITAL · 10 + 1 PÁGINAS</text><text x="100" y="850" class="sub" style="font-size:19px;fill:#786F7D">MADE WITH LOVE BY MUSA ♡</text><g fill="#D1A85A"><path d="M685 115 l7 20 20 7-20 7-7 20-7-20-20-7 20-7z"/><path d="M95 705 l5 15 15 5-15 5-5 15-5-15-15-5 15-5z"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0f8ed"/><stop offset="1" stop-color="#cde6c5"/></linearGradient>
+ <radialGradient id="orb"><stop stop-color="#fff" stop-opacity=".92"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></radialGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#2b2030" flood-opacity=".13"/></filter>
+</defs>
+<rect x="18" y="18" width="764" height="964" rx="58" fill="url(#bg)" stroke="#fff" stroke-width="5"/>
+<circle cx="650" cy="155" r="112" fill="url(#orb)"/>
+<circle cx="650" cy="155" r="78" fill="#5d9d67" opacity=".10"/>
+<circle cx="132" cy="855" r="100" fill="#fff" opacity=".55"/>
+<path d="M70 225 C220 175 370 260 520 205 S700 170 730 210" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round" opacity=".55"/>
+<g fill="#d4a84f">
+ <path d="M110 155 l7 18 18 7-18 7-7 18-7-18-18-7 18-7z"/>
+ <path d="M694 360 l6 15 15 6-15 6-6 15-6-15-15-6 15-6z"/>
+</g>
+<text x="70" y="95" font-family="Arial,sans-serif" font-size="21" font-weight="700" letter-spacing="4" fill="#45694a">MUSA DIGITAL  ·  WORKBOOK</text>
+<text x="70" y="125" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="3" fill="#5d9d67">BRILLA A TU MANERA ♡</text>
+
+<g filter="url(#shadow)">
+ <rect x="78" y="300" width="644" height="470" rx="42" fill="#fff" opacity=".94"/>
+ <rect x="96" y="318" width="608" height="434" rx="32" fill="none" stroke="#5d9d67" stroke-width="2" stroke-dasharray="4 10" opacity=".28"/>
+</g>
+<text x="112" y="385" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="4" fill="#5d9d67">TUS METAS TAMBIÉN IMPORTAN.</text>
+<text x="112" y="505" font-family="Arial,sans-serif" font-size="84" font-weight="900" letter-spacing="-3" fill="#45694a">MONEY</text>
+<text x="112" y="590" font-family="Georgia,serif" font-size="86" font-weight="700" font-style="italic" letter-spacing="-3" fill="#5d9d67">GIRL</text>
+<text x="112" y="650" font-family="Arial,sans-serif" font-size="22" fill="#45694a" opacity=".82">Tus metas también importan.</text>
+<circle cx="650" cy="655" r="46" fill="#5d9d67" opacity=".11"/>
+<text x="650" y="666" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#5d9d67">♡</text>
+
+<text x="70" y="845" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#45694a" opacity=".75">OPEN · WRITE · CREATE · REPEAT</text>
+<text x="70" y="900" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#45694a">Tus metas también importan.</text>
+<text x="70" y="936" font-family="Arial,sans-serif" font-size="14" letter-spacing="2" fill="#d4a84f">MADE WITH LOVE BY MUSA ♡</text>
+<text x="730" y="936" text-anchor="end" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#5d9d67">01 / MUSA</text>
+</svg>
