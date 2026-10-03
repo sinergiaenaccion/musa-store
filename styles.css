@@ -66,7 +66,7 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 .digital-banner{margin-bottom:30px}
 .digital-badge{display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:999px;padding:13px 17px;font-size:9px;font-weight:800;letter-spacing:.08em;white-space:nowrap;color:#b52b6d}
 .digital-product-card{background:#fff}
-.digital-product-card .product-image{aspect-ratio:1/1.12;box-shadow:0 12px 30px rgba(37,35,49,.07)}
+.digital-product-card .product-image{aspect-ratio:4/5;box-shadow:0 12px 30px rgba(37,35,49,.07)}
 .digital-info{align-items:start}
 .product-description{font-size:11px;color:#625b64;line-height:1.55;margin:12px 0 0;min-height:52px}
 .product-details{margin-top:10px;border-top:1px solid var(--line);font-size:10px;color:#625b64}
