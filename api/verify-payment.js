@@ -66,7 +66,16 @@ module.exports = async (req, res) => {
       headers: { Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}` }
     });
     const payment = await mp.json();
-    if (!mp.ok) return json(res, 502, { error: "No se pudo verificar el pago." });
+    if (!mp.ok) {
+      const errorMessage = String(payment?.message || payment?.error || "").slice(0, 200);
+      return json(res, 502, {
+        error: "No se pudo verificar el pago.",
+        diagnostic: {
+          mercadoPagoHttpStatus: mp.status,
+          mercadoPagoError: errorMessage || null
+        }
+      });
+    }
 
     const paidOrderCandidates = [
       payment.external_reference,
