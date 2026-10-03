@@ -119,7 +119,7 @@ document.querySelector('#checkoutBtn').onclick=async()=>{
       const p=products.find(p=>p.id===x.id);
       return p?`${x.qty} × ${p.name}`:null;
     }).filter(Boolean).join('%0A');
-    const text=encodeURIComponent('Hola MUSA 💗 Quiero comprar:%0A'+selected+'%0A%0A¿Me pasan el medio de pago y cómo recibo los workbooks?');
+    const text=encodeURIComponent('Hola MUSA 💗 Quiero comprar:\n'+selected+'\n\n¿Me pasan el medio de pago y cómo recibo los workbooks?');
     window.open('https://wa.me/5493513394174?text='+text,'_blank','noopener');
   }finally{
     button.disabled=false;
