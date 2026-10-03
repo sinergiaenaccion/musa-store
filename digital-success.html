@@ -18,6 +18,7 @@
     .download-card small{display:block;color:#8a7d86;margin-top:4px}
     .download-card a{white-space:nowrap}
     .tiny{font-size:.85rem!important;color:#8a7d86!important;margin-top:22px!important}
+    .thank-you{font-weight:600;color:#ff5ca8!important;margin-top:10px!important}
   </style>
 </head>
 <body>
@@ -31,6 +32,7 @@
     <h1 id="title">Estamos verificando tu pago...</h1>
     <p id="message">Un segundo. Primero confirmamos el estado de la operación con Mercado Pago y recién después habilitamos tus descargas.</p>
     <div id="downloads" class="download-list"></div>
+    <p class="thank-you" id="thankYou" style="display:none">Gracias por tu compra y por ser parte de MUSA. ♡</p>
     <p class="tiny" id="detail"></p>
     <p><a class="btn btn-pink" href="index.html">VOLVER A MUSA ♡</a></p>
   </main>
@@ -43,6 +45,7 @@
     const message=document.querySelector("#message");
     const downloads=document.querySelector("#downloads");
     const detail=document.querySelector("#detail");
+    const thankYou=document.querySelector("#thankYou");
 
     async function verify(){
       if(state==="failure"){
@@ -62,7 +65,8 @@
           title.textContent="Tu MUSA ya es tuya. ♡";
           message.textContent="¡Listo! El pago fue aprobado. Descargá tus workbooks desde acá.";
           downloads.innerHTML=(data.downloads||[]).map(item=>`<div class="download-card"><div><strong>${item.name}</strong><small>PDF · descarga digital</small></div><a class="btn btn-pink" href="${item.downloadUrl}">DESCARGAR ↗</a></div>`).join("");
-          detail.textContent="Por seguridad, estos enlaces de descarga son temporales.";
+          thankYou.style.display="block";
+          detail.textContent="Por seguridad, estos enlaces de descarga son temporales y tienen una validez de 15 minutos.";
           localStorage.removeItem("musaBag");
         }else{
           title.textContent=data.status==="pending"?"Estamos esperando la confirmación ♡":"El pago todavía no está aprobado.";
