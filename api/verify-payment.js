@@ -40,17 +40,37 @@ module.exports = async (req, res) => {
     const payment = await mp.json();
     if (!mp.ok) return json(res, 502, { error: "No se pudo verificar el pago." });
 
-    const paidOrder = payment.external_reference || "";
+    const paidOrderCandidates = [
+      payment.external_reference,
+      payment.order?.external_reference,
+      payment.order?.external_reference_id
+    ].filter(Boolean).map(String);
     const approved = payment.status === "approved";
-    const sameOrder = paidOrder === orderId;
+    const sameOrder = paidOrderCandidates.includes(orderId);
 
     let productIds = String(payment.metadata?.product_ids || "")
       .split(",")
       .map(id => id.trim())
       .filter(id => PRODUCTS[id]);
 
-    if (!productIds.length && Array.isArray(payment.additional_info?.items)) {
-      productIds = payment.additional_info.items.map(item => String(item.id || "")).filter(id => PRODUCTS[id]);
+    const additionalItems = Array.isArray(payment.additional_info?.items)
+      ? payment.additional_info.items
+      : [];
+
+    if (!productIds.length && additionalItems.length) {
+      productIds = additionalItems
+        .flatMap(item => [
+          String(item.id || ""),
+          Object.entries(PRODUCTS).find(([, name]) => name === String(item.title || ""))?.[0] || ""
+        ])
+        .filter(id => PRODUCTS[id]);
+    }
+
+    if (!productIds.length) {
+      const description = String(payment.description || "").trim();
+      productIds = Object.entries(PRODUCTS)
+        .filter(([, name]) => name === description)
+        .map(([id]) => id);
     }
 
     if (!approved || !sameOrder || !productIds.length) {
