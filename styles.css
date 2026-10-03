@@ -43,3 +43,51 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 .product-cover{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;}
 .digital-section .product-image{overflow:hidden;position:relative;}
 .digital-section .product-cover + .product-emoji{display:none;}
+
+
+/* MUSA DIGITAL LAUNCH */
+.digital-hero{background:radial-gradient(circle at 80% 15%,rgba(255,92,168,.14),transparent 28%),linear-gradient(135deg,#fffaf7 0%,#fff2f8 55%,#f1ebff 100%)}
+.hero-microcopy{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;font-size:10px;color:#786c75;letter-spacing:.03em}
+.digital-hero-art{min-height:470px}
+.digital-stack{width:min(410px,86%);height:400px;position:relative;display:grid;place-items:center}
+.stack-card{position:absolute;width:280px;height:355px;border-radius:30px;padding:30px;box-shadow:0 25px 55px rgba(37,35,49,.14);display:flex;flex-direction:column;justify-content:flex-end}
+.stack-back{background:#eee8ff;transform:rotate(-10deg) translate(-42px,8px);font-family:'Playfair Display',serif;font-size:30px;line-height:1.05;color:#6f5a84}
+.stack-front{background:linear-gradient(155deg,#ff73b5,#f43f91);color:#fff;transform:rotate(6deg);justify-content:center;align-items:center;text-align:center;border:8px solid rgba(255,255,255,.75)}
+.stack-front span{font-family:'Playfair Display',serif;font-size:48px;font-style:italic}
+.stack-front strong{font-size:34px;letter-spacing:.12em}
+.stack-front small{margin-top:15px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;max-width:160px}
+.digital-intro{background:#fff}
+.collection-lead{max-width:760px;color:var(--muted);line-height:1.7;font-size:15px;margin:0 0 35px}
+.mood-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.mood-card{min-height:170px;border-radius:24px;padding:23px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}
+.mood-card:hover{transform:translateY(-4px)}
+.mood-card span{font-size:28px}.mood-card strong{font-size:13px;letter-spacing:.02em}.mood-card small{font-size:10px;color:#665b63}
+.mood-pink{background:#ffd8e9}.mood-lilac{background:#eee8ff}.mood-yellow{background:#fff0cf}.mood-green{background:#e8f3e7}
+.digital-banner{margin-bottom:30px}
+.digital-badge{display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:999px;padding:13px 17px;font-size:9px;font-weight:800;letter-spacing:.08em;white-space:nowrap;color:#b52b6d}
+.digital-product-card{background:#fff}
+.digital-product-card .product-image{aspect-ratio:1/1.12;box-shadow:0 12px 30px rgba(37,35,49,.07)}
+.digital-info{align-items:start}
+.product-description{font-size:11px;color:#625b64;line-height:1.55;margin:12px 0 0;min-height:52px}
+.product-details{margin-top:10px;border-top:1px solid var(--line);font-size:10px;color:#625b64}
+.product-details summary{list-style:none;cursor:pointer;padding:10px 0;font-weight:700;color:var(--ink);display:flex;justify-content:space-between}
+.product-details summary::-webkit-details-marker{display:none}
+.product-details summary span{color:var(--pink);font-size:15px}
+.product-details[open] summary span{transform:rotate(45deg)}
+.product-details ul{padding:0 0 8px 18px;margin:0;line-height:1.6}
+.product-details li{margin:4px 0}
+.digital-add{opacity:1;transform:none;width:100%;background:var(--ink);color:#fff;border-color:var(--ink);padding:11px}
+.digital-add:hover{background:var(--pink);border-color:var(--pink)}
+.how-section{background:#fff5fa}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.steps-grid article{background:#fff;border:1px solid var(--line);border-radius:26px;padding:28px;min-height:240px;position:relative}
+.steps-grid article>b{position:absolute;right:22px;top:20px;font-size:11px;color:#b98522;letter-spacing:.1em}
+.steps-grid article span{font-size:28px;color:var(--pink)}
+.steps-grid h3{font-size:18px;margin:35px 0 10px}
+.steps-grid p{font-size:11px;color:var(--muted);line-height:1.65;margin:0}
+.bag-thumb{overflow:hidden;background:#fff0f7}
+.bag-thumb img{width:100%;height:100%;object-fit:cover}
+.bag-footer>div{align-items:center}
+.bag-footer .shipping-summary strong{font-size:9px;color:var(--hot);letter-spacing:.05em}
+@media(max-width:900px){.mood-grid{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:1fr}.digital-hero-art{min-height:420px}}
+@media(max-width:560px){.mood-grid{grid-template-columns:1fr}.mood-card{min-height:145px}.stack-card{width:240px;height:315px}.stack-front span{font-size:40px}.stack-front strong{font-size:28px}.hero-microcopy{gap:9px}.digital-badge{white-space:normal;text-align:center}.product-description{min-height:0}}
