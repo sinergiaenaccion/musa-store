@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
       };
     });
 
-    const siteUrl = (process.env.MUSA_SITE_URL || "https://sinergiaenaccion.github.io/musa-store").replace(/\/$/, "");
+    const siteUrl = (process.env.MUSA_SITE_URL || "https://musa-store-z7wk.vercel.app").replace(/\/$/, "");
     const orderId = `MUSA-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
     const productIds = items.map(item => item.productId);
 
@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
         failure: `${siteUrl}/digital-success.html?order=${encodeURIComponent(orderId)}&state=failure`
       },
       auto_return: "approved",
-      notification_url: `${(process.env.MUSA_API_BASE_URL || "").replace(/\/$/, "")}/api/webhook`
+      notification_url: `${(process.env.MUSA_API_BASE_URL || "https://musa-store-z7wk.vercel.app").replace(/\/$/, "")}/api/webhook`
     };
 
     const mp = await fetch("https://api.mercadopago.com/checkout/preferences", {
