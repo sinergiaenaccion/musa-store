@@ -1,4 +1,13 @@
-const PRODUCTS = new Set(["MUSA-D01","MUSA-D02","MUSA-D03","MUSA-D04","MUSA-D05","MUSA-D06"]);
+const PRODUCTS = {
+  "MUSA-D01": "Workbook Glow Up",
+  "MUSA-D02": "Workbook Study Girl",
+  "MUSA-D03": "Workbook Sunday Reset",
+  "MUSA-D04": "Workbook Bestie",
+  "MUSA-D05": "Workbook Money Girl",
+  "MUSA-D06": "My Life Planner",
+  "MUSA-D07": "Workbook Agradecimiento",
+  "MUSA-D08": "Workbook Relax"
+};
 
 function json(res, status, body) {
   res.status(status).setHeader("Content-Type", "application/json");
@@ -31,13 +40,20 @@ module.exports = async (req, res) => {
     const payment = await mp.json();
     if (!mp.ok) return json(res, 502, { error: "No se pudo verificar el pago." });
 
-    const productId = payment.metadata?.product_id || "";
     const paidOrder = payment.external_reference || "";
     const approved = payment.status === "approved";
     const sameOrder = paidOrder === orderId;
-    const validProduct = PRODUCTS.has(productId);
 
-    if (!approved || !sameOrder || !validProduct) {
+    let productIds = String(payment.metadata?.product_ids || "")
+      .split(",")
+      .map(id => id.trim())
+      .filter(id => PRODUCTS[id]);
+
+    if (!productIds.length && Array.isArray(payment.additional_info?.items)) {
+      productIds = payment.additional_info.items.map(item => String(item.id || "")).filter(id => PRODUCTS[id]);
+    }
+
+    if (!approved || !sameOrder || !productIds.length) {
       return json(res, 200, {
         approved: false,
         status: payment.status || "unknown",
@@ -49,15 +65,18 @@ module.exports = async (req, res) => {
 
     const payload = JSON.stringify({
       order: orderId,
-      product: productId,
+      products: [...new Set(productIds)],
       exp: Date.now() + 15 * 60 * 1000
     });
     const token = `${b64url(payload)}.${await sign(payload)}`;
 
     return json(res, 200, {
       approved: true,
-      productId,
-      downloadUrl: `/api/download?token=${encodeURIComponent(token)}`
+      downloads: [...new Set(productIds)].map(productId => ({
+        productId,
+        name: PRODUCTS[productId],
+        downloadUrl: `/api/download?token=${encodeURIComponent(token)}&product=${encodeURIComponent(productId)}`
+      }))
     });
   } catch (error) {
     console.error(error);
