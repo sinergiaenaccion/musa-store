@@ -85,7 +85,7 @@ module.exports = async (req, res) => {
     }
 
     const siteUrl = process.env.MUSA_SITE_URL || "https://www.hellomusa.store";
-    const verifyUrl = `${siteUrl.replace(/\\/$/, "")}/api/verify-payment?payment_id=${encodeURIComponent(paymentId)}&order=${encodeURIComponent(orderId)}`;
+    const verifyUrl = `${siteUrl.replace(/\/$/, "")}/api/verify-payment?payment_id=${encodeURIComponent(paymentId)}&order=${encodeURIComponent(orderId)}`;
     const verifyResponse = await fetch(verifyUrl);
     if (!verifyResponse.ok) {
       console.error("No se pudo generar la descarga.", verifyResponse.status);
@@ -101,7 +101,7 @@ module.exports = async (req, res) => {
     for (const download of verified.downloads) {
       const absoluteDownloadUrl = download.downloadUrl.startsWith("http")
         ? download.downloadUrl
-        : `${siteUrl.replace(/\\/$/, "")}${download.downloadUrl}`;
+        : `${siteUrl.replace(/\/$/, "")}${download.downloadUrl}`;
 
       const resendResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
