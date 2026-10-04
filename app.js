@@ -248,6 +248,45 @@ document.querySelector('#newsletterForm').addEventListener('submit',async e=>{
 });
 
 
+
+const infoModal=document.querySelector('#infoModal');
+const infoModalClose=document.querySelector('#infoModalClose');
+const infoTitle=document.querySelector('#infoModalTitle');
+const infoPanels=[...document.querySelectorAll('[data-info-panel]')];
+const infoTitles={
+  payments:'Medios de pago',
+  terms:'Términos y condiciones',
+  privacy:'Política de privacidad',
+  refunds:'Política de reembolso',
+  faq:'Preguntas frecuentes',
+  regret:'Botón de arrepentimiento'
+};
+
+function openInfo(key){
+  if(!infoModal) return;
+  infoPanels.forEach(panel=>panel.classList.toggle('active',panel.dataset.infoPanel===key));
+  infoTitle.textContent=infoTitles[key]||'Información MUSA';
+  infoModal.classList.add('open');
+  infoModal.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeInfo(){
+  if(!infoModal) return;
+  infoModal.classList.remove('open');
+  infoModal.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+document.addEventListener('click',e=>{
+  const link=e.target.closest('[data-info]');
+  if(link){
+    e.preventDefault();
+    openInfo(link.dataset.info);
+  }
+});
+infoModalClose?.addEventListener('click',closeInfo);
+infoModal?.addEventListener('click',e=>{if(e.target===infoModal) closeInfo();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape') closeInfo();});
+
 const clubPopup=document.querySelector('#clubPopup');
 const clubPopupForm=document.querySelector('#clubPopupForm');
 const clubPopupClose=document.querySelector('#clubPopupClose');
