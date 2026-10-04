@@ -169,7 +169,21 @@
     <div class="drawer-head"><h3>TU BOLSA ♡</h3><button id="closeBag">×</button></div>
     <div id="bagItems" class="bag-items"><p class="empty-bag">Tu bolsa está esperando algo lindo ✦</p></div>
     <div class="bag-footer">
-      <div><span>SUBTOTAL</span><strong id="bagTotal">$0</strong></div>
+      <div class="coupon-box">
+        <label for="couponInput">¿TENÉS UN CÓDIGO? ✦</label>
+        <div class="coupon-row">
+          <input id="couponInput" type="text" placeholder="Ej. MUSAWEEK" maxlength="30" autocomplete="off">
+          <button id="applyCoupon" type="button">APLICAR</button>
+        </div>
+        <small id="couponMessage" aria-live="polite"></small>
+      </div>
+      <div class="voucher-box">
+        <button id="voucherBtn" type="button">🎁 REGALÁ MUSA</button>
+        <small>¿Querés regalar un workbook? Te ayudamos a preparar tu voucher.</small>
+      </div>
+      <div><span>SUBTOTAL</span><strong id="bagSubtotal">$0</strong></div>
+      <div class="discount-row" id="discountRow" hidden><span>DESCUENTO</span><strong id="bagDiscount">-$0</strong></div>
+      <div><span>TOTAL</span><strong id="bagTotal">$0</strong></div>
       <div class="shipping-summary"><span>ENTREGA</span><strong>DESCARGA DIGITAL</strong></div>
       <button class="btn btn-pink full" id="checkoutBtn">CONTINUAR CON MERCADO PAGO ✦</button>
       <small>Después de la aprobación del pago vas a recibir el acceso temporal para descargar tus workbooks.</small>
