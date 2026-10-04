@@ -247,6 +247,55 @@ document.querySelector('#newsletterForm').addEventListener('submit',async e=>{
   }
 });
 
+
+const clubPopup=document.querySelector('#clubPopup');
+const clubPopupForm=document.querySelector('#clubPopupForm');
+const clubPopupClose=document.querySelector('#clubPopupClose');
+const clubTab=document.querySelector('#clubTab');
+
+function openClubPopup(){
+  if(!clubPopup) return;
+  clubPopup.classList.add('open');
+  clubPopup.setAttribute('aria-hidden','false');
+}
+function closeClubPopup(){
+  if(!clubPopup) return;
+  clubPopup.classList.remove('open');
+  clubPopup.setAttribute('aria-hidden','true');
+}
+clubTab?.addEventListener('click',openClubPopup);
+clubPopupClose?.addEventListener('click',closeClubPopup);
+clubPopup?.addEventListener('click',e=>{if(e.target===clubPopup) closeClubPopup();});
+
+clubPopupForm?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const input=clubPopupForm.querySelector('input[type="email"]');
+  const button=clubPopupForm.querySelector('button');
+  const email=input.value.trim().toLowerCase();
+  if(!email) return;
+  button.disabled=true;
+  button.textContent='SUMANDO…';
+  try{
+    const response=await fetch('/api/newsletter',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email})
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.error || 'No pudimos completar la suscripción.');
+    buyerEmail=email;
+    localStorage.setItem('musaBuyerEmail',email);
+    clubPopupForm.innerHTML='<strong class="club-success">YA SOS PARTE DE MUSA CLUB ♡</strong><span>Revisá tu mail: te enviamos tu bienvenida y tu beneficio de 10% OFF.</span>';
+    setTimeout(closeClubPopup,2200);
+  }catch(error){
+    button.disabled=false;
+    button.textContent='QUIERO MI BENEFICIO ✦';
+    let msg=clubPopupForm.querySelector('.club-popup-error');
+    if(!msg){msg=document.createElement('small');msg.className='club-popup-error';clubPopupForm.appendChild(msg);}
+    msg.textContent=error.message || 'No pudimos completar la suscripción. Probá nuevamente.';
+  }
+});
+
 const nav=document.querySelector('.desktop-nav');
 document.querySelector('#menuBtn').addEventListener('click',()=>nav.classList.toggle('mobile-open'));
 nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>nav.classList.remove('mobile-open')));
