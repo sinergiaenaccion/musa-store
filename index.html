@@ -172,14 +172,17 @@
       <div class="coupon-box">
         <label for="couponInput">¿TENÉS UN CÓDIGO? ✦</label>
         <div class="coupon-row">
-          <input id="couponInput" type="text" placeholder="Ej. MUSAWEEK" maxlength="30" autocomplete="off">
+          <input id="couponInput" type="text" placeholder="INGRESÁ TU CÓDIGO" maxlength="30" autocomplete="off" aria-label="Código de descuento">
           <button id="applyCoupon" type="button">APLICAR</button>
         </div>
         <small id="couponMessage" aria-live="polite"></small>
       </div>
       <div class="voucher-box">
-        <button id="voucherBtn" type="button">🎁 REGALÁ MUSA</button>
-        <small>¿Querés regalar un workbook? Te ayudamos a preparar tu voucher.</small>
+        <div class="voucher-copy">
+          <span class="voucher-icon">🎁</span>
+          <div><strong>REGALÁ MUSA</strong><small>Convertí un workbook en un regalo lindo y especial.</small></div>
+        </div>
+        <button id="voucherBtn" type="button">QUIERO REGALAR ✦</button>
       </div>
       <div><span>SUBTOTAL</span><strong id="bagSubtotal">$0</strong></div>
       <div class="discount-row" id="discountRow" hidden><span>DESCUENTO</span><strong id="bagDiscount">-$0</strong></div>
