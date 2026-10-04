@@ -887,3 +887,7 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .info-modal-card{width:100%;max-height:90vh;border-radius:22px;padding:35px 22px 28px}
   .info-modal-close{right:12px;top:8px}
 }
+
+.announcement{position:relative}
+.announcement-legal{color:#252331!important;font-size:8px!important;font-weight:900!important;letter-spacing:.08em;text-decoration:underline;margin-left:auto;white-space:nowrap}
+@media(max-width:700px){.announcement-legal{font-size:7px!important}.announcement-legal{display:none}}
