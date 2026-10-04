@@ -1623,3 +1623,41 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 @media(max-width:760px){
   .hero-photo span{font-size:6px;padding:6px 9px;bottom:-15px}
 }
+
+
+/* MUSA — hero phrases placed in the gaps, never on photos */
+.hero-phrase{
+  position:absolute;
+  z-index:18;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 13px;
+  min-height:30px;
+  border-radius:999px;
+  background:#fff;
+  color:#252331;
+  border:1px solid #eadfe5;
+  box-shadow:0 8px 20px rgba(37,35,49,.10);
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.12em;
+  white-space:nowrap;
+  pointer-events:none;
+}
+.phrase-top{top:2%;left:43%;transform:rotate(-2deg)}
+.phrase-right{top:43%;right:2%;transform:rotate(4deg)}
+.phrase-bottom{bottom:7%;left:43%;transform:rotate(2deg)}
+
+@media(max-width:760px){
+  .hero-phrase{font-size:6px;padding:7px 11px;min-height:27px}
+  .phrase-top{top:1%;left:42%}
+  .phrase-right{top:42%;right:1%}
+  .phrase-bottom{bottom:5%;left:40%}
+}
+@media(max-width:560px){
+  .hero-phrase{font-size:6px;padding:6px 10px;min-height:25px}
+  .phrase-top{top:1%;left:39%}
+  .phrase-right{top:40%;right:1%}
+  .phrase-bottom{bottom:5%;left:37%}
+}
