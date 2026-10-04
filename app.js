@@ -73,7 +73,7 @@ function renderBag(){
   localStorage.setItem('musaBag',JSON.stringify(bag));
   localStorage.setItem('musaCoupon',appliedCoupon);
   const couponInput=document.querySelector('#couponInput');
-  if(couponInput) couponInput.value=appliedCoupon;
+  if(couponInput) couponInput.value='';
 }
 
 function addToBag(id){
@@ -109,21 +109,40 @@ document.querySelector('#searchInput').addEventListener('input',e=>{
   if(found.length) document.querySelector('#digitalProducts').scrollIntoView({behavior:'smooth',block:'start'});
 });
 
-document.querySelector('#applyCoupon').onclick=()=>{
+document.querySelector('#applyCoupon').onclick=async()=>{
   const input=document.querySelector('#couponInput');
   const message=document.querySelector('#couponMessage');
+  const button=document.querySelector('#applyCoupon');
   const code=(input.value||'').trim().toUpperCase();
-  if(!code){ appliedCoupon=''; message.textContent='Ingresá un código para aplicarlo.'; renderBag(); return; }
-  const allowed=['MUSAWEEK','MAMA2026'];
-  if(!allowed.includes(code)){
+  if(!code){
     appliedCoupon='';
-    message.textContent='Ese código no está disponible. ♡';
+    localStorage.removeItem('musaCoupon');
+    message.textContent='Ingresá tu código para aplicar el beneficio. ♡';
     renderBag();
     return;
   }
-  appliedCoupon=code;
-  message.textContent=code==='MUSAWEEK'?'¡MUSA WEEK activada! Tenés 20% OFF. ✦':'¡Promo Día de la Madre activada! Tenés 20% OFF. 🌷';
-  renderBag();
+  button.disabled=true;
+  message.textContent='Verificando código…';
+  try{
+    const response=await fetch('/api/validate-coupon',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({code})
+    });
+    const data=await response.json();
+    if(!response.ok || !data.valid) throw new Error(data.error || 'coupon_invalid');
+    appliedCoupon=code;
+    message.textContent=`Código aplicado · ${Math.round(data.discount*100)}% OFF. ✦`;
+    input.value='';
+    renderBag();
+  }catch(error){
+    appliedCoupon='';
+    localStorage.removeItem('musaCoupon');
+    message.textContent='Ese código no está disponible. ♡';
+    renderBag();
+  }finally{
+    button.disabled=false;
+  }
 };
 
 document.querySelector('#voucherBtn').onclick=()=>{
