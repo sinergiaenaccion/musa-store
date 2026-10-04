@@ -1,6 +1,8 @@
 let products = [];
 let bag = JSON.parse(localStorage.getItem('musaBag') || '[]');
-let appliedCoupon = '';
+let appliedCoupon = localStorage.getItem('musaCoupon') || '';
+let appliedCouponDiscount = Number(localStorage.getItem('musaCouponDiscount') || 0);
+let buyerEmail = localStorage.getItem('musaBuyerEmail') || '';
 
 const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n);
 
@@ -66,7 +68,9 @@ function renderBag(){
     </div>`;
   }).join('');
   document.querySelector('#bagSubtotal').textContent=money(total);
-  const discount = appliedCoupon ? Math.round(total * 0.20) : 0;
+  const emailInput=document.querySelector('#buyerEmail');
+  if(emailInput) emailInput.value=buyerEmail;
+  const discount = appliedCoupon ? Math.round(total * (appliedCouponDiscount || 0.20)) : 0;
   document.querySelector('#discountRow').hidden=!appliedCoupon;
   document.querySelector('#bagDiscount').textContent=money(-discount);
   document.querySelector('#bagTotal').textContent=money(total-discount);
@@ -127,23 +131,33 @@ document.querySelector('#applyCoupon').onclick=async()=>{
     const response=await fetch('/api/validate-coupon',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({code})
+      body:JSON.stringify({code,email:buyerEmail})
     });
     const data=await response.json();
     if(!response.ok || !data.valid) throw new Error(data.error || 'coupon_invalid');
     appliedCoupon=code;
-    message.textContent=`Código aplicado · ${Math.round(data.discount*100)}% OFF. ✦`;
+    appliedCouponDiscount=Number(data.discount || 0);
+    localStorage.setItem('musaCoupon',appliedCoupon);
+    localStorage.setItem('musaCouponDiscount',String(appliedCouponDiscount));
+    message.textContent=`Código aplicado · ${Math.round(appliedCouponDiscount*100)}% OFF. ✦`;
     input.value='';
     renderBag();
   }catch(error){
     appliedCoupon='';
+    appliedCouponDiscount=0;
     localStorage.removeItem('musaCoupon');
-    message.textContent='Ese código no está disponible. ♡';
+    localStorage.removeItem('musaCouponDiscount');
+    message.textContent=error.message || 'Ese código no está disponible. ♡';
     renderBag();
   }finally{
     button.disabled=false;
   }
 };
+
+document.querySelector('#buyerEmail')?.addEventListener('input',e=>{
+  buyerEmail=e.target.value.trim().toLowerCase();
+  localStorage.setItem('musaBuyerEmail',buyerEmail);
+});
 
 document.querySelector('#voucherBtn').onclick=()=>{
   const text=encodeURIComponent('Hola MUSA 🎁 Quiero regalar un voucher MUSA. ¿Me cuentan las opciones y cómo puedo comprarlo?');
@@ -180,10 +194,13 @@ document.querySelector('#checkoutBtn').onclick=async()=>{
   button.disabled=true;
   button.textContent='ABRIENDO PAGO…';
   try{
+    if(appliedCoupon==='BIENVENIDA10' && !buyerEmail){
+      throw new Error('Para usar BIENVENIDA10 necesitamos el email con el que te sumaste a MUSA CLUB. ♡');
+    }
     const response=await fetch('/api/create-preference',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({items:bag,coupon:appliedCoupon})
+      body:JSON.stringify({items:bag,coupon:appliedCoupon,buyerEmail})
     });
     const data=await response.json();
     if(!response.ok || !data.initPoint) throw new Error(data.error || 'checkout_unavailable');
@@ -226,7 +243,7 @@ document.querySelector('#newsletterForm').addEventListener('submit',async e=>{
     button.textContent='ME SUMO ✦';
     let msg=form.querySelector('.newsletter-error');
     if(!msg){msg=document.createElement('small');msg.className='newsletter-error';msg.style.cssText='display:block;margin-top:10px;color:#b42318';form.appendChild(msg);}
-    msg.textContent='No pudimos completar la suscripción. Probá nuevamente en unos segundos. ♡';
+    msg.textContent=error.message || 'No pudimos completar la suscripción. Probá nuevamente en unos segundos. ♡';
   }
 });
 
