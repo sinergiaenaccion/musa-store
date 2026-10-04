@@ -914,3 +914,203 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .club-tab span{font-size:10px}
   .club-tab strong{font-size:12px}
 }
+
+
+/* MUSA EMPRESA AMIGA */
+.business-section{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:0;
+  padding:0;
+  background:linear-gradient(135deg,#252331 0%,#302a3a 55%,#4a3041 100%);
+  color:#fff;
+  overflow:hidden;
+}
+.business-copy{
+  padding:90px 7vw;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.business-copy .eyebrow{color:#f7d998}
+.business-copy h2{
+  font-size:clamp(42px,5vw,70px);
+  line-height:.92;
+  letter-spacing:-.06em;
+  margin:0 0 22px;
+}
+.business-copy h2 em{
+  font-family:'Playfair Display',serif;
+  font-weight:500;
+  color:#ff91c5;
+}
+.business-copy>p:not(.eyebrow){
+  max-width:490px;
+  color:#e1dbe1;
+  line-height:1.7;
+}
+.business-points{
+  display:grid;
+  gap:10px;
+  margin:28px 0 22px;
+  max-width:430px;
+}
+.business-points span{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 15px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:14px;
+  background:rgba(255,255,255,.045);
+  color:#eee8ee;
+  font-size:11px;
+}
+.business-points b{
+  color:#f5d38d;
+  font-size:10px;
+  letter-spacing:.1em;
+}
+.business-copy>small{
+  max-width:450px;
+  color:#bdb4bf;
+  font-size:10px;
+  line-height:1.55;
+}
+.business-form-card{
+  align-self:stretch;
+  padding:70px 7vw;
+  background:#fff;
+  color:#252331;
+  display:flex;
+  align-items:center;
+}
+.business-form-head{
+  margin-bottom:22px;
+}
+.business-form-head span{
+  display:block;
+  color:#b52b6d;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.16em;
+  margin-bottom:7px;
+}
+.business-form-head strong{
+  display:block;
+  font-size:30px;
+  line-height:1;
+  letter-spacing:-.04em;
+}
+.business-form-head small{
+  display:block;
+  margin-top:8px;
+  color:#766b74;
+  font-size:10px;
+  line-height:1.45;
+}
+.business-form-card form{width:100%}
+.business-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+.business-form-grid label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  color:#5d5660;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.06em;
+}
+.business-form-grid label.full{grid-column:1/-1}
+.business-form-grid input{
+  width:100%;
+  border:1px solid #d9cbd3;
+  border-radius:11px;
+  padding:12px 13px;
+  outline:none;
+  color:#252331;
+  background:#fff;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0;
+}
+.business-form-grid input:focus{
+  border-color:var(--pink);
+  box-shadow:0 0 0 3px rgba(255,92,168,.08);
+}
+.business-check{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  margin:17px 0 15px;
+  color:#766b74;
+  font-size:9px;
+  line-height:1.45;
+}
+.business-check input{
+  margin-top:2px;
+  accent-color:var(--pink);
+}
+.business-form-card .btn{width:100%;margin-top:2px}
+.business-form-note{
+  display:block;
+  margin-top:10px;
+  text-align:center;
+  color:#8c7885;
+  font-size:9px;
+}
+.business-form-message{
+  min-height:16px;
+  margin-top:9px;
+  text-align:center;
+  color:#a42348;
+  font-size:10px;
+}
+.business-honeypot{
+  position:absolute!important;
+  left:-10000px!important;
+  width:1px!important;
+  height:1px!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+.business-success{
+  padding:18px 0;
+}
+.business-success strong{
+  display:block;
+  color:#b52b6d;
+  font-size:27px;
+  line-height:1.05;
+}
+.business-success p{
+  color:#5d5660;
+  line-height:1.65;
+  font-size:13px;
+  margin:13px 0 8px;
+}
+.business-success span{
+  color:#8c7885;
+  font-size:10px;
+}
+
+.club-visual img,
+.community-grid>a img,
+.club-popup-image img{
+  object-position:center center;
+}
+@media(max-width:900px){
+  .business-section{grid-template-columns:1fr}
+  .business-copy{padding:65px 7vw}
+  .business-form-card{padding:55px 7vw}
+}
+@media(max-width:560px){
+  .business-copy{padding:55px 22px}
+  .business-copy h2{font-size:42px}
+  .business-form-card{padding:42px 22px}
+  .business-form-grid{grid-template-columns:1fr}
+  .business-form-grid label.full{grid-column:auto}
+}
