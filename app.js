@@ -219,7 +219,7 @@ document.querySelector('#checkoutBtn').onclick=async()=>{
   }
 };
 
-document.querySelector('#newsletterForm').addEventListener('submit',async e=>{
+document.querySelector('#newsletterForm')?.addEventListener('submit',async e=>{
   e.preventDefault();
   const form=e.target;
   const input=form.querySelector('input[type="email"]');
@@ -244,6 +244,37 @@ document.querySelector('#newsletterForm').addEventListener('submit',async e=>{
     let msg=form.querySelector('.newsletter-error');
     if(!msg){msg=document.createElement('small');msg.className='newsletter-error';msg.style.cssText='display:block;margin-top:10px;color:#b42318';form.appendChild(msg);}
     msg.textContent=error.message || 'No pudimos completar la suscripción. Probá nuevamente en unos segundos. ♡';
+  }
+});
+
+
+
+const businessFriendsForm=document.querySelector('#businessFriendsForm');
+const businessFriendsMessage=document.querySelector('#businessFriendsMessage');
+
+businessFriendsForm?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const form=e.target;
+  const button=form.querySelector('button[type="submit"]');
+  const message=businessFriendsMessage;
+  button.disabled=true;
+  button.textContent='ENVIANDO…';
+  if(message) message.textContent='';
+  const payload=Object.fromEntries(new FormData(form).entries());
+
+  try{
+    const response=await fetch('/api/business-friends',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.error || 'No pudimos enviar la solicitud.');
+    form.innerHTML='<div class="business-success"><strong>¡Solicitud recibida! ♡</strong><p>Gracias. Vamos a verificar tus datos y la vinculación con tu empresa. Te escribiremos al email que nos dejaste.</p><span>El proceso puede demorar hasta 5 días hábiles.</span></div>';
+  }catch(error){
+    button.disabled=false;
+    button.textContent='QUIERO ACTIVAR MI BENEFICIO ✦';
+    if(message) message.textContent=error.message || 'No pudimos completar la solicitud. Probá nuevamente.';
   }
 });
 
