@@ -9,6 +9,33 @@ function validEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+async function addToClub(email, headers) {
+  const segmentId = process.env.MUSA_CLUB_SEGMENT_ID || "6f8be3ee-a58a-4b21-8d17-b891eacc3d88";
+  try {
+    const existing = await fetch("https://api.resend.com/contacts/" + encodeURIComponent(email), {
+      headers
+    });
+    let contactId = email;
+    if (existing.ok) {
+      const contact = await existing.json();
+      contactId = contact?.id || email;
+    } else if (existing.status !== 404) {
+      console.warn("No se pudo consultar el contacto.", existing.status);
+    }
+
+    const segmentResponse = await fetch(
+      "https://api.resend.com/contacts/" + encodeURIComponent(contactId) + "/segments/" + encodeURIComponent(segmentId),
+      { method: "POST", headers }
+    );
+
+    if (!segmentResponse.ok && segmentResponse.status !== 409) {
+      console.warn("No se pudo agregar el contacto a MUSA CLUB.", segmentResponse.status);
+    }
+  } catch (error) {
+    console.warn("MUSA CLUB segment error", error?.message || error);
+  }
+}
+
 module.exports = async (req, res) => {
   if (req.method !== "POST") return json(res, 405, { error: "Método no permitido." });
 
@@ -22,70 +49,64 @@ module.exports = async (req, res) => {
     return json(res, 503, { error: "El servicio de email todavía no está configurado." });
   }
 
+  const sendingHeaders = {
+    Authorization: `Bearer ${sendingApiKey}`,
+    "Content-Type": "application/json"
+  };
+  const contactsHeaders = {
+    Authorization: `Bearer ${contactsApiKey}`,
+    "Content-Type": "application/json"
+  };
+
   try {
-    const sendingHeaders = {
-      Authorization: `Bearer ${sendingApiKey}`,
-      "Content-Type": "application/json"
-    };
-
-    const contactsHeaders = {
-      Authorization: `Bearer ${contactsApiKey}`,
-      "Content-Type": "application/json"
-    };
-
     let contactSaved = false;
-    const contactResponse = await fetch("https://api.resend.com/contacts", {
-      method: "POST",
-      headers: contactsHeaders,
-      body: JSON.stringify({
-        email,
-        unsubscribed: false
-      })
-    });
 
-    if (contactResponse.ok || contactResponse.status === 409) {
-      contactSaved = true;
-      const contact = contactResponse.ok ? await contactResponse.json() : null;
-      const contactId = contact?.id || email;
-      const segmentId = process.env.MUSA_CLUB_SEGMENT_ID;
+    try {
+      const contactResponse = await fetch("https://api.resend.com/contacts", {
+        method: "POST",
+        headers: contactsHeaders,
+        body: JSON.stringify({ email, unsubscribed: false })
+      });
 
-      if (segmentId) {
-        const segmentResponse = await fetch(
-          `https://api.resend.com/contacts/${encodeURIComponent(contactId)}/segments/${encodeURIComponent(segmentId)}`,
-          { method: "POST", headers: contactsHeaders }
-        );
-
-        if (!segmentResponse.ok && segmentResponse.status !== 409) {
-          console.warn("No se pudo agregar el contacto a MUSA CLUB.", segmentResponse.status);
-        }
+      if (contactResponse.ok || contactResponse.status === 409) {
+        contactSaved = true;
+      } else {
+        console.warn("No se pudo guardar el contacto en Resend.", contactResponse.status);
       }
-    } else {
-      console.warn("No se pudo guardar el contacto en Resend.", contactResponse.status);
+    } catch (error) {
+      console.warn("Contact save error", error?.message || error);
+    }
+
+    if (contactSaved) {
+      await addToClub(email, contactsHeaders);
     }
 
     const hash = crypto.createHash("sha256").update(email).digest("hex").slice(0, 24);
 
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: sendingHeaders,
+      headers: {
+        ...sendingHeaders,
+        "Idempotency-Key": `musa-club-welcome-${hash}`
+      },
       body: JSON.stringify({
         from: process.env.MUSA_FROM_EMAIL || "MUSA <hola@hellomusa.store>",
         to: [email],
         template: {
           id: "7e71bd3b-7ccb-46a2-b8b1-3548e9f07d1d"
-        },
-        idempotency_key: `musa-club-welcome-${hash}`
+        }
       })
     });
 
-    if (!emailResponse.ok) {
-      console.error("Resend no pudo enviar la bienvenida.", emailResponse.status, await emailResponse.text());
-      return json(res, 502, { error: "No pudimos enviar el email de bienvenida." });
+    if (!emailResponse.ok && emailResponse.status !== 409) {
+      const detail = (await emailResponse.text()).slice(0, 300);
+      console.error("Resend no pudo enviar la bienvenida.", emailResponse.status, detail);
+      return json(res, 502, { error: "No pudimos enviar el email de bienvenida. Revisá el email e intentá nuevamente." });
     }
 
     return json(res, 200, { ok: true, contactSaved });
   } catch (error) {
     console.error("Newsletter error", error);
-    return json(res, 500, { error: "No pudimos completar la suscripción." });
+    return json(res, 500, { error: "No pudimos completar la suscripción. Probá nuevamente en unos segundos." });
   }
 };
