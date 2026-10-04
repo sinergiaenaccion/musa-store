@@ -1,5 +1,6 @@
 let products = [];
 let bag = JSON.parse(localStorage.getItem('musaBag') || '[]');
+let appliedCoupon = localStorage.getItem('musaCoupon') || '';
 
 const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n);
 
@@ -46,7 +47,9 @@ function renderBag(){
   const items=document.querySelector('#bagItems');
   if(!bag.length){
     items.innerHTML='<p class="empty-bag">Tu bolsa está esperando algo lindo ✦</p>';
+    document.querySelector('#bagSubtotal').textContent=money(0);
     document.querySelector('#bagTotal').textContent=money(0);
+    document.querySelector('#discountRow').hidden=true;
     localStorage.setItem('musaBag',JSON.stringify(bag));
     return;
   }
@@ -62,8 +65,15 @@ function renderBag(){
       <button class="remove" onclick="removeFromBag('${p.id}')">×</button>
     </div>`;
   }).join('');
-  document.querySelector('#bagTotal').textContent=money(total);
+  document.querySelector('#bagSubtotal').textContent=money(total);
+  const discount = appliedCoupon ? Math.round(total * 0.20) : 0;
+  document.querySelector('#discountRow').hidden=!appliedCoupon;
+  document.querySelector('#bagDiscount').textContent=money(-discount);
+  document.querySelector('#bagTotal').textContent=money(total-discount);
   localStorage.setItem('musaBag',JSON.stringify(bag));
+  localStorage.setItem('musaCoupon',appliedCoupon);
+  const couponInput=document.querySelector('#couponInput');
+  if(couponInput) couponInput.value=appliedCoupon;
 }
 
 function addToBag(id){
@@ -99,6 +109,28 @@ document.querySelector('#searchInput').addEventListener('input',e=>{
   if(found.length) document.querySelector('#digitalProducts').scrollIntoView({behavior:'smooth',block:'start'});
 });
 
+document.querySelector('#applyCoupon').onclick=()=>{
+  const input=document.querySelector('#couponInput');
+  const message=document.querySelector('#couponMessage');
+  const code=(input.value||'').trim().toUpperCase();
+  if(!code){ appliedCoupon=''; message.textContent='Ingresá un código para aplicarlo.'; renderBag(); return; }
+  const allowed=['MUSAWEEK','MAMA2026'];
+  if(!allowed.includes(code)){
+    appliedCoupon='';
+    message.textContent='Ese código no está disponible. ♡';
+    renderBag();
+    return;
+  }
+  appliedCoupon=code;
+  message.textContent=code==='MUSAWEEK'?'¡MUSA WEEK activada! Tenés 20% OFF. ✦':'¡Promo Día de la Madre activada! Tenés 20% OFF. 🌷';
+  renderBag();
+};
+
+document.querySelector('#voucherBtn').onclick=()=>{
+  const text=encodeURIComponent('Hola MUSA 🎁 Quiero regalar un voucher MUSA. ¿Me cuentan las opciones y cómo puedo comprarlo?');
+  window.open('https://wa.me/5493513394174?text='+text,'_blank','noopener');
+};
+
 document.querySelector('#checkoutBtn').onclick=async()=>{
   if(!bag.length){openBag();return;}
   const button=document.querySelector('#checkoutBtn');
@@ -108,7 +140,7 @@ document.querySelector('#checkoutBtn').onclick=async()=>{
     const response=await fetch('/api/create-preference',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({items:bag})
+      body:JSON.stringify({items:bag,coupon:appliedCoupon})
     });
     const data=await response.json();
     if(!response.ok || !data.initPoint) throw new Error(data.error || 'checkout_unavailable');
