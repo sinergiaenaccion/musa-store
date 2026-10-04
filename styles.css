@@ -450,3 +450,197 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .digital-hero-art:before{left:2%;top:19%;font-size:25px}
   .digital-hero-art:after{right:0;bottom:17%;font-size:13px}
 }
+
+
+/* MUSA BAG — editorial checkout refresh */
+.bag-drawer{
+  width:min(470px,94vw);
+  background:linear-gradient(180deg,#fffdfc 0%,#fff7fb 100%);
+}
+.drawer-head{
+  padding:28px 26px 22px;
+  border-bottom:1px solid #ead6e0;
+}
+.drawer-head h3{
+  font-size:15px;
+  letter-spacing:.12em;
+}
+.bag-items{
+  padding:24px 26px 18px;
+}
+.bag-item{
+  grid-template-columns:78px 1fr auto;
+  gap:15px;
+  padding:4px 0 18px;
+  margin-bottom:17px;
+  border-bottom:1px solid #f0e3e9;
+}
+.bag-thumb{
+  width:78px;
+  height:78px;
+  border-radius:17px;
+  box-shadow:0 7px 18px rgba(37,35,49,.08);
+}
+.bag-item h4{
+  font-size:13px;
+  margin-bottom:7px;
+}
+.bag-item small{
+  font-size:11px;
+}
+.bag-footer{
+  padding:22px 26px 26px;
+  border-top:1px solid #ead6e0;
+  background:rgba(255,255,255,.72);
+}
+.bag-footer>div{
+  margin-bottom:17px;
+  font-size:12px;
+}
+.bag-footer>div>span{
+  color:#766b74;
+  letter-spacing:.1em;
+}
+.bag-footer>div>strong{
+  font-size:13px;
+}
+.coupon-box{
+  display:block!important;
+  padding:18px;
+  margin-bottom:15px!important;
+  border:1px solid #ead6e0;
+  border-radius:18px;
+  background:#fff;
+}
+.coupon-box label{
+  display:block;
+  margin-bottom:11px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.1em;
+}
+.coupon-row{
+  display:grid!important;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  margin-bottom:7px!important;
+}
+.coupon-row input{
+  min-width:0;
+  border:1px solid #d9cbd3;
+  border-radius:10px;
+  padding:11px 12px;
+  font-size:11px;
+  letter-spacing:.06em;
+  outline:none;
+  background:#fffdfd;
+}
+.coupon-row input:focus{
+  border-color:var(--pink);
+  box-shadow:0 0 0 3px rgba(255,92,168,.09);
+}
+.coupon-row button{
+  border:1px solid var(--ink);
+  border-radius:10px;
+  background:var(--ink);
+  color:#fff;
+  padding:0 15px;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+.coupon-row button:disabled{
+  opacity:.55;
+  cursor:wait;
+}
+.coupon-box #couponMessage{
+  min-height:16px;
+  text-align:left;
+  margin:5px 0 0;
+  font-size:10px;
+}
+.voucher-box{
+  display:block!important;
+  padding:17px 18px;
+  margin-bottom:22px!important;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fff0f7,#f4efff);
+  border:1px solid #ead6e0;
+}
+.voucher-copy{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:13px;
+}
+.voucher-icon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#fff;
+  font-size:19px;
+  box-shadow:0 5px 15px rgba(37,35,49,.07);
+}
+.voucher-copy strong{
+  display:block;
+  font-size:11px;
+  letter-spacing:.1em;
+}
+.voucher-copy small{
+  display:block;
+  text-align:left;
+  margin:4px 0 0;
+  font-size:10px;
+  line-height:1.45;
+}
+.voucher-box>button{
+  width:100%;
+  border:1px solid var(--pink);
+  background:#fff;
+  color:#b52b6d;
+  border-radius:999px;
+  padding:11px 14px;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.1em;
+}
+.voucher-box>button:hover{
+  background:var(--pink);
+  color:#fff;
+}
+.discount-row{
+  padding-top:2px;
+  color:#b52b6d;
+}
+.bag-footer .shipping-summary{
+  padding:13px 0 3px;
+  margin-top:3px;
+  border-top:1px solid #ead6e0;
+}
+.bag-footer .shipping-summary strong{
+  font-size:9px;
+  letter-spacing:.08em;
+}
+.bag-footer .btn.full{
+  margin-top:5px;
+  padding:16px 18px;
+  font-size:10px;
+  box-shadow:0 10px 24px rgba(244,63,145,.18);
+}
+.bag-footer>small:last-child{
+  font-size:10px;
+  margin-top:13px;
+}
+@media(max-width:560px){
+  .bag-drawer{width:94vw}
+  .drawer-head{padding:23px 20px 18px}
+  .bag-items{padding:20px}
+  .bag-footer{padding:19px 20px 23px}
+  .bag-item{grid-template-columns:68px 1fr auto;gap:12px}
+  .bag-thumb{width:68px;height:68px}
+  .coupon-box,.voucher-box{padding:15px}
+  .coupon-row{grid-template-columns:1fr}
+  .coupon-row button{padding:11px}
+}
