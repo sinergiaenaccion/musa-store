@@ -1,6 +1,6 @@
 let products = [];
 let bag = JSON.parse(localStorage.getItem('musaBag') || '[]');
-let appliedCoupon = localStorage.getItem('musaCoupon') || '';
+let appliedCoupon = '';
 
 const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n);
 
