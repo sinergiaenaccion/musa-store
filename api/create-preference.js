@@ -9,9 +9,22 @@ const PRODUCTS = {
   "MUSA-D08": { name: "Workbook Relax", price: 4990 }
 };
 
+const COUPONS = {
+  MUSAWEEK: { discount: 0.20, start: "2026-10-03T00:00:00-03:00", end: "2026-10-12T00:00:00-03:00" },
+  MAMA2026: { discount: 0.20, start: "2026-10-12T00:00:00-03:00", end: "2026-10-19T00:00:00-03:00" }
+};
+
 function json(res, status, body) {
   res.status(status).setHeader("Content-Type", "application/json");
   res.end(JSON.stringify(body));
+}
+
+function getCoupon(code) {
+  const coupon = COUPONS[String(code || "").trim().toUpperCase()];
+  if (!coupon) return null;
+  const now = Date.now();
+  if (now < Date.parse(coupon.start) || now >= Date.parse(coupon.end)) return null;
+  return coupon;
 }
 
 module.exports = async (req, res) => {
@@ -26,6 +39,14 @@ module.exports = async (req, res) => {
 
     if (!items.length) return json(res, 400, { error: "No hay productos digitales válidos." });
 
+    const couponCode = String(req.body?.coupon || "").trim().toUpperCase();
+    const coupon = couponCode ? getCoupon(couponCode) : null;
+    if (couponCode && !coupon) return json(res, 400, { error: "El cupón no está disponible o ya venció." });
+
+    const subtotal = items.reduce((sum, item) => sum + PRODUCTS[item.productId].price * item.quantity, 0);
+    const discount = coupon ? Math.round(subtotal * coupon.discount) : 0;
+    const total = subtotal - discount;
+
     const mpItems = items.map(item => {
       const product = PRODUCTS[item.productId];
       return {
@@ -38,6 +59,17 @@ module.exports = async (req, res) => {
       };
     });
 
+    if (discount > 0) {
+      mpItems.push({
+        id: `DISCOUNT-${couponCode}`,
+        title: `Descuento MUSA · ${couponCode}`,
+        description: "Descuento promocional MUSA",
+        quantity: 1,
+        currency_id: "ARS",
+        unit_price: -discount
+      });
+    }
+
     const siteUrl = (process.env.MUSA_SITE_URL || "https://musa-store-nine.vercel.app").replace(/\/$/, "");
     const orderId = `MUSA-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
     const productIds = items.map(item => item.productId);
@@ -46,7 +78,9 @@ module.exports = async (req, res) => {
       items: mpItems,
       external_reference: orderId,
       metadata: {
-        product_ids: productIds.join(",")
+        product_ids: productIds.join(","),
+        coupon: couponCode || "",
+        discount_ars: String(discount)
       },
       back_urls: {
         success: `${siteUrl}/digital-success.html?order=${encodeURIComponent(orderId)}`,
@@ -75,7 +109,11 @@ module.exports = async (req, res) => {
     return json(res, 200, {
       orderId,
       preferenceId: data.id,
-      initPoint: data.init_point
+      initPoint: data.init_point,
+      subtotal,
+      discount,
+      total,
+      coupon: couponCode || null
     });
   } catch (error) {
     console.error(error);
