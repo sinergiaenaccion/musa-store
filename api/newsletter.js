@@ -6,7 +6,7 @@ function json(res, status, body) {
 }
 
 function validEmail(email) {
-  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 module.exports = async (req, res) => {
@@ -14,20 +14,29 @@ module.exports = async (req, res) => {
 
   const email = String(req.body?.email || "").trim().toLowerCase();
   if (!validEmail(email)) return json(res, 400, { error: "Ingresá un email válido." });
-  if (!process.env.RESEND_API_KEY) return json(res, 503, { error: "El servicio de email todavía no está configurado." });
+
+  const sendingApiKey = process.env.RESEND_API_KEY;
+  const contactsApiKey = process.env.RESEND_CONTACTS_API_KEY || sendingApiKey;
+
+  if (!sendingApiKey) {
+    return json(res, 503, { error: "El servicio de email todavía no está configurado." });
+  }
 
   try {
-    const headers = {
-      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+    const sendingHeaders = {
+      Authorization: `Bearer ${sendingApiKey}`,
       "Content-Type": "application/json"
     };
 
-    // Cuando la clave tenga permiso de gestión de contactos, el suscriptor
-    // queda guardado automáticamente dentro de MUSA CLUB.
+    const contactsHeaders = {
+      Authorization: `Bearer ${contactsApiKey}`,
+      "Content-Type": "application/json"
+    };
+
     let contactSaved = false;
     const contactResponse = await fetch("https://api.resend.com/contacts", {
       method: "POST",
-      headers,
+      headers: contactsHeaders,
       body: JSON.stringify({
         email,
         unsubscribed: false
@@ -39,23 +48,26 @@ module.exports = async (req, res) => {
       const contact = contactResponse.ok ? await contactResponse.json() : null;
       const contactId = contact?.id || email;
       const segmentId = process.env.MUSA_CLUB_SEGMENT_ID;
+
       if (segmentId) {
         const segmentResponse = await fetch(
           `https://api.resend.com/contacts/${encodeURIComponent(contactId)}/segments/${encodeURIComponent(segmentId)}`,
-          { method: "POST", headers }
+          { method: "POST", headers: contactsHeaders }
         );
+
         if (!segmentResponse.ok && segmentResponse.status !== 409) {
           console.warn("No se pudo agregar el contacto a MUSA CLUB.", segmentResponse.status);
         }
       }
     } else {
-      console.warn("La clave de Resend no tiene permisos de contactos o falló el alta.", contactResponse.status);
+      console.warn("No se pudo guardar el contacto en Resend.", contactResponse.status);
     }
 
     const hash = crypto.createHash("sha256").update(email).digest("hex").slice(0, 24);
+
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers,
+      headers: sendingHeaders,
       body: JSON.stringify({
         from: process.env.MUSA_FROM_EMAIL || "MUSA <hola@hellomusa.store>",
         to: [email],
