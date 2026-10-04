@@ -1305,3 +1305,25 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .community-logo{width:130px;max-height:90px;margin-bottom:18px}
   .community-cta strong{font-size:27px}
 }
+
+
+/* MUSA — final brand touchpoints */
+.footer-talk strong{font-size:30px}
+.business-form-head{text-align:center}
+.business-logo{
+  width:116px;
+  max-width:55%;
+  height:auto;
+  max-height:88px;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  margin:0 auto 16px;
+  border-radius:0;
+}
+.business-form-head strong{font-size:clamp(27px,3vw,38px);line-height:1}
+@media(max-width:560px){
+  .footer-talk strong{font-size:25px}
+  .business-logo{width:102px;max-height:76px;margin-bottom:13px}
+  .business-form-head strong{font-size:30px}
+}
