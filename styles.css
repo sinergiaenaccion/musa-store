@@ -891,3 +891,26 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 .announcement{position:relative}
 .announcement-legal{color:#252331!important;font-size:8px!important;font-weight:900!important;letter-spacing:.08em;text-decoration:underline;margin-left:auto;white-space:nowrap}
 @media(max-width:700px){.announcement-legal{font-size:7px!important}.announcement-legal{display:none}}
+
+/* Final MUSA visual pass */
+.footer-topline{padding:30px 0 38px;align-items:center}
+.footer-topline h2{font-size:clamp(38px,4.6vw,64px)}
+.footer-talk{min-width:300px;padding:25px 28px;border-radius:22px;background:#fff0f7;border-color:#f1c9dd}
+.footer-talk span{font-size:10px;letter-spacing:.18em}
+.footer-talk strong{font-size:30px;line-height:1.05}
+.footer-talk:hover{background:#ffe7f2}
+.club-tab{min-width:102px;padding:17px 14px 16px 13px;gap:8px;border-radius:20px 0 0 20px}
+.club-tab span{font-size:11px}
+.club-tab strong{font-size:13px;line-height:1.12}
+.whatsapp-float span{display:none!important}
+.whatsapp-float b{width:62px;height:62px}
+.info-modal-body h4{font-size:15px;color:#252331;margin:24px 0 8px}
+@media(max-width:560px){
+  .footer-topline{padding:10px 0 28px}
+  .footer-topline h2{font-size:40px}
+  .footer-talk{min-width:0;width:100%;padding:23px}
+  .footer-talk strong{font-size:27px}
+  .club-tab{min-width:92px;padding:14px 11px}
+  .club-tab span{font-size:10px}
+  .club-tab strong{font-size:12px}
+}
