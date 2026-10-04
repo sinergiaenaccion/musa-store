@@ -266,6 +266,7 @@ function closeClubPopup(){
 clubTab?.addEventListener('click',openClubPopup);
 clubPopupClose?.addEventListener('click',closeClubPopup);
 clubPopup?.addEventListener('click',e=>{if(e.target===clubPopup) closeClubPopup();});
+setTimeout(()=>{ if(!localStorage.getItem('musaClubSeen')) { openClubPopup(); localStorage.setItem('musaClubSeen','1'); } }, 5500);
 
 clubPopupForm?.addEventListener('submit',async e=>{
   e.preventDefault();
