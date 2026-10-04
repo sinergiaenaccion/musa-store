@@ -845,3 +845,6 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .footer-talk{width:100%}
   .buyer-email-box{padding:15px}
 }
+
+.club-popup-logo{width:104px;height:auto;max-height:54px;object-fit:contain;object-position:left center;display:block;margin-bottom:17px;border-radius:0}
+@media(max-width:560px){.club-popup-logo{width:92px;max-height:48px;margin-bottom:13px}}
