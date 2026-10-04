@@ -1114,3 +1114,17 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .business-form-grid{grid-template-columns:1fr}
   .business-form-grid label.full{grid-column:auto}
 }
+
+/* MUSA HERO — YOUTH PHOTO COLLAGE */
+.digital-hero-art{overflow:visible}
+.hero-photo{position:absolute;z-index:8;overflow:hidden;border:5px solid #fff;box-shadow:0 18px 42px rgba(37,35,49,.16);background:#fff}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.08) contrast(1.01)}
+.hero-photo span{position:absolute;left:12px;bottom:10px;padding:6px 9px;border-radius:999px;background:rgba(37,35,49,.84);color:#fff;font-size:7px;font-weight:900;letter-spacing:.12em}
+.hero-photo-left{width:185px;height:235px;left:-1%;top:13%;border-radius:28px 28px 28px 8px;transform:rotate(-8deg)}
+.hero-photo-right{width:170px;height:215px;right:-1%;top:5%;border-radius:28px 8px 28px 28px;transform:rotate(7deg)}
+.hero-photo-bottom{width:205px;height:135px;left:10%;bottom:5%;border-radius:8px 28px 28px 28px;transform:rotate(4deg)}
+.digital-stack{position:relative;z-index:10;transform:translateX(2%)}
+.hero-photo-left:after,.hero-photo-right:after,.hero-photo-bottom:after{content:'✦';position:absolute;top:9px;right:12px;color:#fff;font-size:17px;text-shadow:0 0 10px rgba(255,92,168,.9)}
+@media(max-width:1100px){.hero-photo-left{left:0;width:150px;height:195px}.hero-photo-right{right:0;width:145px;height:185px}.hero-photo-bottom{left:8%;width:175px;height:115px}}
+@media(max-width:760px){.digital-hero-art{min-height:500px}.hero-photo-left{left:0;top:13%;width:130px;height:170px}.hero-photo-right{right:0;top:5%;width:125px;height:160px}.hero-photo-bottom{left:7%;bottom:3%;width:150px;height:100px}.hero-photo span{font-size:6px;left:8px;bottom:7px;padding:5px 7px}.digital-stack{transform:translateX(0) scale(.9)}}
+@media(max-width:560px){.digital-hero-art{min-height:430px}.hero-photo-left{width:108px;height:140px;top:12%}.hero-photo-right{width:103px;height:132px;top:5%}.hero-photo-bottom{width:125px;height:84px;left:5%;bottom:2%}.digital-stack{transform:translateX(0) scale(.72)}}
