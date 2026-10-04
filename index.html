@@ -24,7 +24,7 @@
     <nav class="desktop-nav" aria-label="Principal">
       <a href="#new">LO NUEVO</a>
       <a href="#collection">COLECCIÓN</a>
-      <a href="#club">MUSA CLUB</a>
+      <a href="#club">MUSA CLUB</a>\n      <a href="#empresa-amiga">EMPRESA AMIGA</a>
       <a href="#shop">WORKBOOKS</a>
       <a href="#inspiration">INSPIRACIÓN</a>
       <a href="#footer">INFO</a>
@@ -151,7 +151,7 @@
 
     <section class="club-section" id="club">
       <div class="club-visual">
-        <img src="https://images.pexels.com/photos/7314228/pexels-photo-7314228.jpeg?auto=compress&dpr=1&h=900&w=1400" alt="Amigas jóvenes riendo juntas" loading="lazy">
+        <img src="https://images.pexels.com/photos/4871878/pexels-photo-4871878.jpeg?auto=compress&dpr=1&h=900&w=1400" alt="Amigas jóvenes riendo juntas" loading="lazy">
         <div class="club-sticker">MUSA<br>CLUB ♡</div>
       </div>
       <div class="club-copy">
@@ -167,14 +167,51 @@
       </div>
     </section>
 
+    <section class="business-section" id="empresa-amiga">
+      <div class="business-copy">
+        <p class="eyebrow">MUSA EMPRESA AMIGA ✦</p>
+        <h2>Un beneficio lindo<br><em>también se comparte.</em></h2>
+        <p>Si tu empresa tiene un beneficio MUSA, completá el formulario y solicitá la activación de tu descuento.</p>
+        <div class="business-points">
+          <span><b>01</b>Completá tus datos.</span>
+          <span><b>02</b>Indicá dónde trabajás.</span>
+          <span><b>03</b>Esperá la validación.</span>
+        </div>
+        <small>La activación puede demorar hasta 5 días hábiles. MUSA verificará la solicitud con la empresa correspondiente.</small>
+      </div>
+      <div class="business-form-card">
+        <div class="business-form-head">
+          <span>EMPRESA AMIGA ♡</span>
+          <strong>Activá tu beneficio</strong>
+          <small>Completá los datos para que podamos verificar tu solicitud.</small>
+        </div>
+        <form id="businessFriendsForm">
+          <div class="business-form-grid">
+            <label>Correo electrónico *<input name="email" type="email" autocomplete="email" required placeholder="tu@email.com"></label>
+            <label>DNI *<input name="dni" type="text" inputmode="numeric" autocomplete="off" required placeholder="Tu DNI"></label>
+            <label>Nombre *<input name="name" type="text" autocomplete="given-name" required placeholder="Nombre"></label>
+            <label>Apellido *<input name="surname" type="text" autocomplete="family-name" required placeholder="Apellido"></label>
+            <label class="full">Empresa *<input name="company" type="text" autocomplete="organization" required placeholder="Nombre de la empresa"></label>
+            <label>Área / sector<input name="area" type="text" placeholder="Opcional"></label>
+            <label>Cargo<input name="role" type="text" placeholder="Opcional"></label>
+          </div>
+          <label class="business-check"><input name="privacy" type="checkbox" required> <span>Acepto que MUSA utilice estos datos para verificar y gestionar esta solicitud, de acuerdo con su Política de privacidad.</span></label>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" class="business-honeypot">
+          <button class="btn btn-pink" type="submit">QUIERO ACTIVAR MI BENEFICIO ✦</button>
+          <small class="business-form-note">No necesitás crear una cuenta previamente. ♡</small>
+          <div class="business-form-message" id="businessFriendsMessage" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
     <section class="community-section">
       <div class="community-head">
         <div><p class="eyebrow">MUSA IRL ✦</p><h2>Nos vemos en <em>Instagram.</em></h2></div>
         <a class="text-link" href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener">@hellomusa.store →</a>
       </div>
       <div class="community-grid">
-        <a href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/5325943/pexels-photo-5325943.jpeg?auto=compress&dpr=1&h=900&w=1000" alt="Amigas jóvenes compartiendo un momento divertido" loading="lazy"><span>FIND YOUR PEOPLE ♡</span></a>
-        <a href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/5325707/pexels-photo-5325707.jpeg?auto=compress&dpr=1&h=900&w=1000" alt="Amigas jóvenes riendo y abrazándose" loading="lazy"><span>SHINE TOGETHER ✦</span></a>
+        <a href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/12864517/pexels-photo-12864517.jpeg?auto=compress&dpr=1&h=900&w=1000" alt="Amigas jóvenes compartiendo un momento divertido" loading="lazy"><span>FIND YOUR PEOPLE ♡</span></a>
+        <a href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/5325958/pexels-photo-5325958.jpeg?auto=compress&dpr=1&h=900&w=1000" alt="Amigas jóvenes riendo y abrazándose" loading="lazy"><span>SHINE TOGETHER ✦</span></a>
         <div class="community-cta"><span>♡</span><strong>Compartí tu mood<br>con MUSA.</strong><small>Etiquetanos en Instagram y formá parte de la comunidad.</small><a href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener">SEGUIR A MUSA →</a></div>
       </div>
     </section>
@@ -212,7 +249,7 @@ ion>
         <p class="muted">Villa Allende, Córdoba, Argentina 🇦🇷</p>
         <div class="secure-badge">🔒 COMPRA 100% SEGURA<br><small>Mercado Pago · Transferencia</small></div>
       </div>
-      <div><h4>MUSA SHOP</h4><a href="#new">Lo nuevo</a><a href="#shop">Workbooks</a><a href="#collection">Colección</a><a href="#how">Cómo comprar</a><a href="#club">MUSA CLUB ♡</a></div>
+      <div><h4>MUSA SHOP</h4><a href="#new">Lo nuevo</a><a href="#shop">Workbooks</a><a href="#collection">Colección</a><a href="#how">Cómo comprar</a><a href="#club">MUSA CLUB ♡</a><a href="#empresa-amiga">Empresa Amiga</a></div>
       <div><h4>AYUDA</h4><a href="#how">Cómo funciona</a><a href="#info" data-info="payments">Medios de pago</a><a href="#info" data-info="changes">Cambios y devoluciones</a><a href="#info" data-info="complaints">Libro de quejas web</a><a href="mailto:hellomusa.store@gmail.com">Email</a><a href="https://wa.me/5493513394174?text=Hola%20MUSA%20%F0%9F%92%97%20Necesito%20ayuda" target="_blank" rel="noopener">Hablemos</a></div>
       <div><h4>LEGAL</h4><a href="#info" data-info="terms">Términos y condiciones</a><a href="#info" data-info="privacy">Política de privacidad</a><a href="#info" data-info="refunds">Política de reembolso</a><a href="#info" data-info="faq">Preguntas frecuentes</a><a href="#info" data-info="club">Reglamento MUSA CLUB</a><a href="#info" data-info="data">Tratamiento de datos</a><a href="#info" data-info="complaints">Libro de quejas web</a><a class="regret-link" href="#info" data-info="regret">BOTÓN DE ARREPENTIMIENTO</a></div>
       <div><h4>SEGUINOS</h4><a href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener">Instagram ♡</a><a href="https://www.tiktok.com/@musai678" target="_blank" rel="noopener">TikTok ✦</a><a href="https://facebook.com/hellomusa.store" target="_blank" rel="noopener">Facebook ♡</a></div>
@@ -226,7 +263,7 @@ ion>
   <div class="club-popup" id="clubPopup" aria-hidden="true">
     <div class="club-popup-card">
       <button class="club-popup-close" id="clubPopupClose" type="button" aria-label="Cerrar">×</button>
-      <div class="club-popup-image"><img src="https://images.pexels.com/photos/5325867/pexels-photo-5325867.jpeg?auto=compress&dpr=1&h=1000&w=900" alt="Amigas jóvenes riendo y abrazándose" loading="lazy"><span>HEY, SÉ PARTE ♡</span></div>
+      <div class="club-popup-image"><img src="https://images.pexels.com/photos/4871878/pexels-photo-4871878.jpeg?auto=compress&dpr=1&h=1000&w=900" alt="Amigas jóvenes riendo y abrazándose" loading="lazy"><span>HEY, SÉ PARTE ♡</span></div>
       <div class="club-popup-copy">
         <img class="club-popup-logo" src="assets/musa-logo.jpg" alt="MUSA">
         <p class="eyebrow">MUSA CLUB ✦</p>
