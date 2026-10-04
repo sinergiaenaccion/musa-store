@@ -150,6 +150,30 @@ document.querySelector('#voucherBtn').onclick=()=>{
   window.open('https://wa.me/5493513394174?text='+text,'_blank','noopener');
 };
 
+document.querySelector('#transferBtn').onclick=()=>{
+  if(!bag.length){openBag();return;}
+  const subtotal=bag.reduce((sum,x)=>{
+    const p=products.find(p=>p.id===x.id);
+    return sum+(p?p.price*x.qty:0);
+  },0);
+  const discount=Math.round(subtotal*0.10);
+  const total=subtotal-discount;
+  const selected=bag.map(x=>{
+    const p=products.find(p=>p.id===x.id);
+    return p?`${x.qty} × ${p.name} — ${money(p.price*x.qty)}`:null;
+  }).filter(Boolean).join('\n');
+  const text=encodeURIComponent(
+    'Hola MUSA 💗 Quiero comprar por transferencia:\n\n'+
+    selected+
+    '\n\nSubtotal: '+money(subtotal)+
+    '\n10% OFF transferencia: -'+money(discount)+
+    '\nTOTAL A TRANSFERIR: '+money(total)+
+    '\n\nAlias Mercado Pago: armar.caer.cauces.mp'+
+    '\n\nYa realicé la transferencia. Les envío el comprobante por acá para que me habiliten la descarga. ♡'
+  );
+  window.open('https://wa.me/5493513394174?text='+text,'_blank','noopener');
+};
+
 document.querySelector('#checkoutBtn').onclick=async()=>{
   if(!bag.length){openBag();return;}
   const button=document.querySelector('#checkoutBtn');
