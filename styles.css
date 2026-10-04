@@ -1719,3 +1719,30 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
     margin:12px auto 15px;
   }
 }
+
+
+/* MUSA — animated step icons */
+.steps-grid article span{
+  display:inline-block;
+  transform-origin:center;
+  animation:musaStepSparkle 2.6s ease-in-out infinite;
+  text-shadow:0 0 12px rgba(255,92,168,.16);
+}
+.steps-grid article:nth-child(1) span{
+  color:#ff5ca8;
+  animation-delay:0s;
+}
+.steps-grid article:nth-child(2) span{
+  color:#d49a2c;
+  animation-delay:-.8s;
+}
+.steps-grid article:nth-child(3) span{
+  color:#ff91c5;
+  animation-delay:-1.6s;
+}
+@keyframes musaStepSparkle{
+  0%,100%{transform:scale(.92) rotate(-4deg);opacity:.58}
+  28%{transform:scale(1.12) rotate(5deg);opacity:1}
+  52%{transform:scale(.98) rotate(-2deg);opacity:.72}
+  72%{transform:scale(1.18) rotate(7deg);opacity:1}
+}
