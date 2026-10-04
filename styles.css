@@ -1257,3 +1257,51 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
     animation:none!important;
   }
 }
+
+
+/* MUSA — Instagram community refinement */
+.community-grid>a span{
+  font-size:10px;
+  letter-spacing:.1em;
+}
+.community-cta{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:34px 28px;
+}
+.community-cta>span.community-heart{
+  position:absolute;
+  right:22px;
+  top:18px;
+  font-size:36px;
+  color:#d49a2c;
+}
+.community-logo{
+  width:150px;
+  max-width:72%;
+  height:auto;
+  max-height:110px;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  margin:0 auto 22px;
+  border-radius:0;
+}
+.community-cta strong{
+  font-size:30px;
+  line-height:1;
+}
+.community-cta small{
+  max-width:250px;
+  margin:14px auto 22px;
+}
+.community-cta>a{
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+@media(max-width:560px){
+  .community-logo{width:130px;max-height:90px;margin-bottom:18px}
+  .community-cta strong{font-size:27px}
+}
