@@ -848,3 +848,42 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 
 .club-popup-logo{width:104px;height:auto;max-height:54px;object-fit:contain;object-position:left center;display:block;margin-bottom:17px;border-radius:0}
 @media(max-width:560px){.club-popup-logo{width:92px;max-height:48px;margin-bottom:13px}}
+
+
+/* MUSA info + stronger calls to action */
+.footer-talk{min-width:235px;padding:20px 23px}
+.footer-talk span{font-size:9px}
+.footer-talk strong{font-size:25px;line-height:1.05}
+.footer-talk:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,35,49,.08)}
+.club-tab{min-width:88px;padding:16px 13px 15px 12px;gap:7px}
+.club-tab span{font-size:10px}
+.club-tab strong{font-size:12px;line-height:1.12}
+.regret-link{font-weight:800!important;color:#b52b6d!important;margin-top:16px!important}
+.info-modal{position:fixed;inset:0;background:rgba(37,35,49,.55);backdrop-filter:blur(8px);z-index:80;display:none;align-items:center;justify-content:center;padding:28px}
+.info-modal.open{display:flex}
+.info-modal-card{width:min(820px,94vw);max-height:min(84vh,760px);overflow:auto;background:#fff;border-radius:28px;box-shadow:0 30px 90px rgba(37,35,49,.25);position:relative;padding:42px 46px}
+.info-modal-close{position:absolute;right:20px;top:15px;border:0;background:transparent;font-size:32px;color:#77717c;cursor:pointer}
+.info-modal-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:25px}
+.info-modal-head h2{font-size:clamp(34px,5vw,58px);line-height:.95;letter-spacing:-.05em;margin:0}
+.info-modal-body article{display:none;color:#5d5660;line-height:1.65;font-size:14px}
+.info-modal-body article.active{display:block}
+.info-modal-body h3{color:#252331;font-size:24px;margin:0 0 18px}
+.info-modal-body p{margin:0 0 15px}
+.info-modal-body ul{padding-left:20px;margin:0 0 18px}
+.info-modal-body li{margin:8px 0}
+.info-modal-body a{color:#b52b6d;text-decoration:underline}
+.info-modal-body details{border-top:1px solid var(--line);padding:16px 0}
+.info-modal-body details:last-child{border-bottom:1px solid var(--line)}
+.info-modal-body summary{cursor:pointer;color:#252331;font-weight:800}
+.info-action{display:inline-block!important;background:#252331;color:#fff!important;text-decoration:none!important;border-radius:999px;padding:14px 20px;font-size:11px;font-weight:800;letter-spacing:.08em;margin:8px 0 15px}
+.info-note{font-size:12px;color:#8c7885}
+@media(max-width:560px){
+  .footer-talk{min-width:0;width:100%;padding:19px 20px}
+  .footer-talk strong{font-size:22px}
+  .club-tab{min-width:82px;padding:13px 10px}
+  .club-tab span{font-size:9px}
+  .club-tab strong{font-size:11px}
+  .info-modal{padding:12px}
+  .info-modal-card{width:100%;max-height:90vh;border-radius:22px;padding:35px 22px 28px}
+  .info-modal-close{right:12px;top:8px}
+}
