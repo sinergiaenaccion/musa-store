@@ -159,9 +159,32 @@ document.querySelector('#checkoutBtn').onclick=async()=>{
   }
 };
 
-document.querySelector('#newsletterForm').addEventListener('submit',e=>{
+document.querySelector('#newsletterForm').addEventListener('submit',async e=>{
   e.preventDefault();
-  e.target.innerHTML='<strong>YA ESTÁS ADENTRO ♡</strong><span style="margin-left:10px;color:#665b63">Te avisamos del próximo drop.</span>';
+  const form=e.target;
+  const input=form.querySelector('input[type="email"]');
+  const button=form.querySelector('button');
+  const email=input.value.trim();
+  if(!email) return;
+  button.disabled=true;
+  button.textContent='SUMANDO…';
+  try{
+    const response=await fetch('/api/newsletter',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email})
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.error || 'newsletter_error');
+    form.innerHTML='<strong>YA FORMÁS PARTE DE MUSA CLUB ♡</strong><span style="display:block;margin-top:8px;color:#665b63">Te damos la bienvenida. Revisá tu mail: acabamos de enviarte un mensaje de bienvenida con todo lo que vas a recibir.</span>';
+  }catch(error){
+    console.warn('No se pudo completar MUSA CLUB:',error);
+    button.disabled=false;
+    button.textContent='ME SUMO ✦';
+    let msg=form.querySelector('.newsletter-error');
+    if(!msg){msg=document.createElement('small');msg.className='newsletter-error';msg.style.cssText='display:block;margin-top:10px;color:#b42318';form.appendChild(msg);}
+    msg.textContent='No pudimos completar la suscripción. Probá nuevamente en unos segundos. ♡';
+  }
 });
 
 const nav=document.querySelector('.desktop-nav');
