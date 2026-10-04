@@ -1178,14 +1178,16 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 .community-section::before,
 .business-section::before,
 .club-section::before{
-  content:'✦';
+  content:'✦  ✧';
   position:absolute;
   z-index:1;
   right:6%;
   top:12%;
   color:#d49a2c;
   font-size:24px;
-  opacity:.5;
+  letter-spacing:16px;
+  opacity:.62;
+  text-shadow:0 0 12px rgba(212,154,44,.22);
   pointer-events:none;
   animation:musaTwinkle 2.8s ease-in-out infinite;
 }
@@ -1198,16 +1200,53 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 .community-section::after,
 .business-section::after,
 .club-section::after{
-  content:'♡';
+  content:'♡  ✦';
   position:absolute;
   z-index:1;
   left:4%;
   bottom:12%;
-  color:#ff5ca8;
+  color:#ff78b8;
   font-size:23px;
-  opacity:.32;
+  letter-spacing:13px;
+  opacity:.48;
+  text-shadow:0 0 14px rgba(255,92,168,.2);
   pointer-events:none;
   animation:musaFloat 4.8s ease-in-out infinite;
+}
+.new-in-section::before,.digital-intro::before,.digital-section::before,.how-section::before,.inspiration-section::before,.mini-story::before,.community-section::before,.club-section::before{
+  filter:drop-shadow(0 4px 7px rgba(212,154,44,.12));
+}
+.club-section::before,.business-section::before{color:#f5d38d}
+.club-section::after,.business-section::after{color:#ff91c5}
+@media(max-width:560px){
+  .new-in-section::before,
+  .digital-intro::before,
+  .digital-section::before,
+  .how-section::before,
+  .inspiration-section::before,
+  .mini-story::before,
+  .community-section::before,
+  .business-section::before,
+  .club-section::before{
+    right:5%;
+    top:9%;
+    font-size:18px;
+    letter-spacing:9px;
+  }
+  .new-in-section::after,
+  .digital-intro::after,
+  .digital-section::after,
+  .how-section::after,
+  .inspiration-section::after,
+  .mini-story::after,
+  .community-section::after,
+  .business-section::after,
+  .club-section::after{
+    left:4%;
+    bottom:8%;
+    font-size:18px;
+    letter-spacing:7px;
+  }
 }
 .club-section::before,.business-section::before{color:#f5d38d}
 .club-section::after,.business-section::after{color:#ff91c5}
