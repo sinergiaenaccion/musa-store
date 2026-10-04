@@ -31,6 +31,54 @@ async function validSignature(req) {
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
+
+async function markWelcomeCouponUsed(email, payment) {
+  if (!email) return;
+  const contactsApiKey = process.env.RESEND_CONTACTS_API_KEY || process.env.RESEND_API_KEY;
+  if (!contactsApiKey) return;
+
+  let coupon = String(payment.metadata?.coupon || "").trim().toUpperCase();
+
+  if (!coupon && payment.preference_id) {
+    try {
+      const preferenceResponse = await fetch(
+        `https://api.mercadopago.com/checkout/preferences/${encodeURIComponent(payment.preference_id)}`,
+        { headers: { Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}` } }
+      );
+      if (preferenceResponse.ok) {
+        const preference = await preferenceResponse.json();
+        coupon = String(preference.metadata?.coupon || "").trim().toUpperCase();
+      }
+    } catch (error) {
+      console.warn("No se pudo leer el cupón desde la preferencia.", error?.message || error);
+    }
+  }
+
+  if (coupon !== "BIENVENIDA10") return;
+
+  try {
+    const response = await fetch(
+      `https://api.resend.com/contacts/${encodeURIComponent(email)}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${contactsApiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          properties: { welcome_coupon_used: "yes" }
+        })
+      }
+    );
+
+    if (!response.ok) {
+      console.warn("No se pudo marcar BIENVENIDA10 como usado.", response.status);
+    }
+  } catch (error) {
+    console.warn("Welcome coupon mark error", error?.message || error);
+  }
+}
+
 module.exports = async (req, res) => {
   if (req.method !== "POST") return json(res, 405, { error: "Método no permitido" });
 
@@ -71,6 +119,7 @@ module.exports = async (req, res) => {
       return json(res, 200, { received: true });
     }
 
+
     const email = String(payment.payer?.email || "").trim();
     const orderId = String(
       payment.external_reference ||
@@ -83,6 +132,8 @@ module.exports = async (req, res) => {
       console.warn("Pago aprobado sin email u orden externa.");
       return json(res, 200, { received: true });
     }
+
+    await markWelcomeCouponUsed(email, payment);
 
     const siteUrl = process.env.MUSA_SITE_URL || "https://www.hellomusa.store";
     const verifyUrl = `${siteUrl.replace(/\/$/, "")}/api/verify-payment?payment_id=${encodeURIComponent(paymentId)}&order=${encodeURIComponent(orderId)}`;
