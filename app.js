@@ -258,6 +258,10 @@ const infoTitles={
   terms:'Términos y condiciones',
   privacy:'Política de privacidad',
   refunds:'Política de reembolso',
+  changes:'Cambios y devoluciones',
+  data:'Tratamiento de datos',
+  club:'Reglamento MUSA CLUB',
+  complaints:'Libro de quejas web',
   faq:'Preguntas frecuentes',
   regret:'Botón de arrepentimiento'
 };
