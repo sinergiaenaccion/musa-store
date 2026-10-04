@@ -1661,3 +1661,22 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .phrase-right{top:40%;right:1%}
   .phrase-bottom{bottom:5%;left:37%}
 }
+
+
+/* MUSA — Empresa Amiga form branding */
+.business-form-logo{
+  width:96px;
+  height:96px;
+  object-fit:contain;
+  display:block;
+  margin:14px auto 18px;
+  border-radius:50%;
+  box-shadow:0 10px 24px rgba(37,35,49,.08);
+}
+@media(max-width:560px){
+  .business-form-logo{
+    width:82px;
+    height:82px;
+    margin:12px auto 15px;
+  }
+}
