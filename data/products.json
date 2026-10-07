@@ -198,5 +198,31 @@
     "digital": true,
     "active": true,
     "image": "assets/digital/relax.svg"
+  },
+  {
+    "id": "MUSA-F001",
+    "name": "Tote Bag MUSA — Próximamente",
+    "price": 0,
+    "stock": 0,
+    "category": "fisico",
+    "badge": "PRÓXIMAMENTE",
+    "sub": "Accesorios · MUSA",
+    "description": "Nuestro primer producto físico MUSA está llegando. Muy pronto vas a poder comprarlo online y elegir tu modalidad de envío.",
+    "includes": [
+      "Producto físico MUSA",
+      "Envío nacional próximamente",
+      "Disponible próximamente"
+    ],
+    "pages": 0,
+    "emoji": "👜",
+    "bg": "#f8e8ef",
+    "featured": false,
+    "musaPick": false,
+    "newDrop": false,
+    "digital": false,
+    "active": true,
+    "purchasable": false,
+    "shippingRequired": true,
+    "image": "assets/musa-logo.jpg"
   }
 ]
