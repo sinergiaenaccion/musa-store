@@ -9,8 +9,11 @@ const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS
 async function loadProducts(){
   const response = await fetch('data/products.json', {cache:'no-store'});
   if(!response.ok) throw new Error('No se pudo cargar el catálogo');
-  products = (await response.json()).filter(p=>p.active && p.digital);
+  const catalog = (await response.json()).filter(p=>p.active);
+  products = catalog.filter(p=>p.digital);
+  const physical = catalog.filter(p=>!p.digital && p.category==='fisico');
   renderGrid('#digitalProducts', products);
+  renderPhysicalGrid('#physicalProducts', physical);
   renderBag();
 }
 
@@ -39,7 +42,36 @@ function card(p){
 
 function renderGrid(target,list){
   const el=document.querySelector(target);
+  if(!el) return;
   el.innerHTML=list.length ? list.map(card).join('') : '<p class="empty-results">No encontramos productos todavía ♡</p>';
+}
+
+function physicalCard(p){
+  return `<article class="product-card physical-product-card">
+    <div class="product-image" style="background:${p.bg}">
+      <span class="product-badge">${p.badge}</span>
+      <img class="product-cover" src="${p.image}" alt="${p.name}" loading="lazy">
+    </div>
+    <div class="product-info digital-info">
+      <div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-sub">${p.sub}</div>
+      </div>
+      <div class="product-price">MUY PRONTO</div>
+    </div>
+    <p class="product-description">${p.description}</p>
+    <details class="product-details">
+      <summary>¿Qué estamos preparando? <span>＋</span></summary>
+      <ul>${p.includes.map(item=>`<li>${item}</li>`).join('')}</ul>
+    </details>
+    <button class="add-btn digital-add" type="button" disabled>DISPONIBLE PRÓXIMAMENTE ✦</button>
+  </article>`;
+}
+
+function renderPhysicalGrid(target,list){
+  const el=document.querySelector(target);
+  if(!el) return;
+  el.innerHTML=list.length ? list.map(physicalCard).join('') : '<p class="empty-results">Próximamente vas a encontrar productos físicos MUSA. ♡</p>';
 }
 
 function renderBag(){
@@ -82,7 +114,7 @@ function renderBag(){
 
 function addToBag(id){
   const p=products.find(p=>p.id===id);
-  if(!p) return;
+  if(!p || p.purchasable===false) return;
   const found=bag.find(x=>x.id===id);
   if(found){ found.qty++; } else { bag.push({id,qty:1}); }
   renderBag();
