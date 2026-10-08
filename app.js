@@ -82,17 +82,23 @@ function card(p){
       <div class="product-price">${money(p.price)}</div>
     </div>
     <p class="product-description">${p.description}</p>
-    ${p.usage?`<p class="product-usage"><strong>Modo de uso:</strong> ${p.usage}</p>`:""}
-    ${p.note?`<p class="product-usage"><strong>Importante:</strong> ${p.note}</p>`:""}
-    ${isPhysical?`<p class="product-usage"><strong>Envío:</strong> por ahora se gestiona mediante un link de Andreani y se abona por separado.</p>`:""}
-    <details class="product-details">
-      <summary>${p.digital?'¿Qué incluye?':'Más información'} <span>＋</span></summary>
-      <ul>${(p.includes||[]).map(item=>`<li>${item}</li>`).join('')}</ul>
-    </details>
+    ${isPhysical ? `
+      <details class="product-details physical-details">
+        <summary>Ver detalles <span>＋</span></summary>
+        ${p.usage?`<p><strong>Modo de uso:</strong> ${p.usage}</p>`:""}
+        ${p.note?`<p><strong>Importante:</strong> ${p.note}</p>`:""}
+        <ul>${(p.includes||[]).map(item=>`<li>${item}</li>`).join('')}</ul>
+      </details>
+    ` : `
+      ${p.usage?`<p class="product-usage"><strong>Modo de uso:</strong> ${p.usage}</p>`:""}
+      <details class="product-details">
+        <summary>¿Qué incluye? <span>＋</span></summary>
+        <ul>${(p.includes||[]).map(item=>`<li>${item}</li>`).join('')}</ul>
+      </details>
+    `}
     <button class="add-btn digital-add" onclick="addToBag('${p.id}')">AGREGAR A LA BOLSA ♡</button>
   </article>`;
 }
-
 function renderGrid(target,list){
   const el=document.querySelector(target);
   if(!el) return;
