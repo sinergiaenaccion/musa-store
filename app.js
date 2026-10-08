@@ -81,6 +81,7 @@ function card(p){
       </div>
       <div class="product-price">${money(p.price)}</div>
     </div>
+    ${isPhysical && p.stock <= 3 ? `<div class="stock-pill">${p.stock === 1 ? "ÚLTIMA UNIDAD" : `${p.stock} DISPONIBLES`}</div>` : ""}
     <p class="product-description">${p.description}</p>
     ${isPhysical ? `
       <details class="product-details physical-details">
@@ -111,6 +112,11 @@ function renderCatalog(){
   const physical=visible.filter(p=>!p.digital);
   renderGrid('#digitalProducts',digital);
   renderGrid('#physicalProducts',physical);
+  const picks=document.querySelector('#musaPicks');
+  if(picks){
+    const pickList=products.filter(p=>p.musaPick).slice(0,3);
+    picks.innerHTML=pickList.map(card).join('');
+  }
   const count=document.querySelector('#catalogCount');
   if(count) count.textContent=`${visible.length} producto${visible.length===1?'':'s'}`;
   const categories=document.querySelector('#categoryFilters');
