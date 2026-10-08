@@ -114,7 +114,7 @@ function renderCatalog(){
   renderGrid('#physicalProducts',physical);
   const picks=document.querySelector('#musaPicks');
   if(picks){
-    const pickList=products.filter(p=>p.musaPick).slice(0,3);
+    const pickList=[...products.filter(p=>!p.digital&&p.musaPick).slice(0,2),...products.filter(p=>p.digital&&p.musaPick).slice(0,1)];
     picks.innerHTML=pickList.map(card).join('');
   }
   const count=document.querySelector('#catalogCount');
