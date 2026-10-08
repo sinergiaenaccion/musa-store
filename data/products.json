@@ -4,7 +4,7 @@
     "name": "Workbook Glow Up",
     "price": 4990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "MUSA DIGITAL",
     "sub": "Autocuidado · hábitos · glow",
     "description": "Un ratito para vos. Un espacio para registrar cómo estás, cuidar tus hábitos y volver a elegirte en lo cotidiano. Abrilo cuando necesites inspiración, claridad o simplemente un poquito de mimo.",
@@ -22,14 +22,21 @@
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/glow_up_kit.svg"
+    "image": "assets/digital/glow_up_kit.svg",
+    "tags": [
+      "digital",
+      "autocuidado",
+      "planner"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-D02",
     "name": "Workbook Study Girl",
     "price": 4990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "MUSA DIGITAL",
     "sub": "Estudio · organización · focus",
     "description": "Porque organizarte también puede sentirse lindo. Un espacio para ordenar tu semana de estudio, bajar el ruido mental y encontrar tu propio ritmo para enfocarte.",
@@ -43,18 +50,25 @@
     "emoji": "📚",
     "bg": "#eee8ff",
     "featured": true,
-    "musaPick": false,
+    "musaPick": true,
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/study_girl_kit.svg"
+    "image": "assets/digital/study_girl_kit.svg",
+    "tags": [
+      "digital",
+      "estudio",
+      "organizacion"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-D03",
     "name": "Workbook Sunday Reset",
     "price": 4990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "MUSA DIGITAL",
     "sub": "Reset · orden · bienestar",
     "description": "Domingo, música, un café y un reset. Este workbook te acompaña a ordenar tu espacio, tu semana y tu cabeza sin exigirte empezar de cero.",
@@ -68,18 +82,25 @@
     "emoji": "🫧",
     "bg": "#e6f0ff",
     "featured": true,
-    "musaPick": false,
+    "musaPick": true,
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/sunday_reset_kit.svg"
+    "image": "assets/digital/sunday_reset_kit.svg",
+    "tags": [
+      "digital",
+      "organizacion",
+      "bienestar"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-D04",
     "name": "Workbook Bestie",
     "price": 4990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "MUSA DIGITAL",
     "sub": "Amistad · recuerdos · planes",
     "description": "Para esa amistad que merece su propio álbum. Llenalo de recuerdos, ideas, conversaciones, planes y momentos que todavía están por pasar.",
@@ -93,18 +114,25 @@
     "emoji": "💌",
     "bg": "#ffe5ec",
     "featured": true,
-    "musaPick": false,
+    "musaPick": true,
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/bestie_kit.svg"
+    "image": "assets/digital/bestie_kit.svg",
+    "tags": [
+      "digital",
+      "amistad",
+      "regalos"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-D05",
     "name": "Workbook Money Girl",
     "price": 4990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "MUSA DIGITAL",
     "sub": "Ahorro · metas · finanzas",
     "description": "Money girl energy, pero a tu manera. Un espacio visual para mirar tu dinero con más claridad, ponerle nombre a tus metas y empezar a construirlas paso a paso.",
@@ -118,18 +146,25 @@
     "emoji": "💸",
     "bg": "#e8f3e7",
     "featured": true,
-    "musaPick": false,
+    "musaPick": true,
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/money_girl_kit.svg"
+    "image": "assets/digital/money_girl_kit.svg",
+    "tags": [
+      "digital",
+      "finanzas",
+      "planner"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-D06",
     "name": "My Life Planner",
     "price": 6990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "MUSA DIGITAL",
     "sub": "Planificación · hábitos · vida soñada",
     "description": "La vida que imaginás también puede empezar en una página. Un planner para bajar tus ideas a tierra, ordenar tus hábitos y convertir eso que soñás en próximos pasos.",
@@ -147,14 +182,21 @@
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/my_life_planner.svg"
+    "image": "assets/digital/my_life_planner.svg",
+    "tags": [
+      "digital",
+      "planner",
+      "organizacion"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-D07",
     "name": "Workbook Agradecimiento",
     "price": 4990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "NUEVO",
     "sub": "Gratitud · conexión · vida plena",
     "description": "Un pequeño espacio para volver a mirar lo lindo. Para registrar lo que agradecés, guardar esos momentos que no querés olvidar y hacer de lo cotidiano algo más especial.",
@@ -172,14 +214,21 @@
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/agradecimiento.svg"
+    "image": "assets/digital/agradecimiento.svg",
+    "tags": [
+      "digital",
+      "gratitud",
+      "bienestar"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-D08",
     "name": "Workbook Relax",
     "price": 4990,
     "stock": 999,
-    "category": "digital",
+    "category": "Digital",
     "badge": "NUEVO",
     "sub": "Calma · equilibrio · bienestar",
     "description": "Bajá un cambio. Este workbook es una invitación a respirar, hacer una pausa y volver al presente cuando todo parece ir demasiado rápido. No tenés que resolverlo todo hoy.",
@@ -197,14 +246,21 @@
     "newDrop": true,
     "digital": true,
     "active": true,
-    "image": "assets/digital/relax.svg"
+    "image": "assets/digital/relax.svg",
+    "tags": [
+      "digital",
+      "bienestar",
+      "calma"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-F01",
     "name": "Máscara Karseell Collagen 500 g",
     "price": 26000,
     "stock": 1,
-    "category": "haircare",
+    "category": "Beauty",
     "badge": "MUSA BEAUTY",
     "sub": "Tratamiento capilar · hidratación intensa",
     "description": "Tratamiento profesional pensado para devolver suavidad, brillo y una apariencia sedosa al cabello. Su fórmula combina derivados de proteína de trigo, esencia de maca, aceite de argán, ceramidas y colágeno para ayudar a fortalecer la fibra, retener la hidratación y reducir el frizz.",
@@ -222,14 +278,21 @@
     "featured": true,
     "musaPick": true,
     "newDrop": true,
-    "usage": "Lavar el cabello con shampoo. Aplicar la máscara y dejar actuar de 10 a 15 minutos. Enjuagar con abundante agua, secar y finalizar como de costumbre. Se puede utilizar 1 a 2 veces por semana. Evitar el contacto con los ojos; si ocurre, enjuagar inmediatamente con abundante agua."
+    "usage": "Lavar el cabello con shampoo. Aplicar la máscara y dejar actuar de 10 a 15 minutos. Enjuagar con abundante agua, secar y finalizar como de costumbre. Se puede utilizar 1 a 2 veces por semana. Evitar el contacto con los ojos; si ocurre, enjuagar inmediatamente con abundante agua.",
+    "tags": [
+      "beauty",
+      "cabello",
+      "tratamiento"
+    ],
+    "favorites": false,
+    "sizes": []
   },
   {
     "id": "MUSA-A01",
     "name": "Auriculares Estéreo Inalámbricos Hi-Fi P9",
     "price": 39900,
     "stock": 1,
-    "category": "tech",
+    "category": "Tech",
     "badge": "MUSA TECH",
     "sub": "Bluetooth · estéreo · over-ear",
     "description": "Auriculares inalámbricos P9 con diseño over-ear, conexión Bluetooth y sonido estéreo. Vienen nuevos, en su caja original. El packaging presenta un detalle leve en la caja, visible en las imágenes.",
@@ -247,6 +310,13 @@
     "featured": true,
     "musaPick": true,
     "newDrop": true,
-    "note": "La caja presenta un leve daño estético. El producto es nuevo."
+    "note": "La caja presenta un leve daño estético. El producto es nuevo.",
+    "tags": [
+      "tech",
+      "auriculares",
+      "bluetooth"
+    ],
+    "favorites": false,
+    "sizes": []
   }
 ]
