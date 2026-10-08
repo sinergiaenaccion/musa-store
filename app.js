@@ -7,25 +7,72 @@ let buyerEmail = localStorage.getItem('musaBuyerEmail') || '';
 const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n);
 
 async function loadProducts(){
-  const response = await fetch('data/products.json', {cache:'no-store'});
+  const response=await fetch('data/products.json', {cache:'no-store'});
   if(!response.ok) throw new Error('No se pudo cargar el catálogo');
   products = (await response.json()).filter(p=>p.active);
-  const digital = products.filter(p=>p.digital);
-  const physical = products.filter(p=>!p.digital);
-  renderGrid('#digitalProducts', digital);
-  renderGrid('#physicalProducts', physical);
-  products = products;
+  syncFavorites();
+  renderCatalog();
   renderBag();
+}
+
+function syncFavorites(){
+  const favs=JSON.parse(localStorage.getItem('musaFavorites')||'[]');
+  products.forEach(p=>p.favorite=favs.includes(p.id));
+}
+
+function saveFavorites(){
+  localStorage.setItem('musaFavorites',JSON.stringify(products.filter(p=>p.favorite).map(p=>p.id)));
+}
+
+const catalogState={
+  query:'',
+  category:'Todos',
+  collection:'Todos',
+  sort:'recommended',
+  minPrice:0,
+  maxPrice:Infinity,
+  onlyStock:false
+};
+
+function getCategories(){
+  return ['Todos',...new Set(products.map(p=>p.category).filter(Boolean))];
+}
+
+function getVisibleProducts(){
+  let list=products.filter(p=>{
+    const text=[p.name,p.sub,p.description,...(p.includes||[]),...(p.tags||[])].join(' ').toLowerCase();
+    const queryOk=!catalogState.query||text.includes(catalogState.query.toLowerCase());
+    const catOk=catalogState.category==='Todos'||p.category===catalogState.category;
+    const collectionOk=
+      catalogState.collection==='Todos' ||
+      (catalogState.collection==='Novedades'&&p.newDrop) ||
+      (catalogState.collection==='Seleccionados MUSA'&&p.musaPick) ||
+      (catalogState.collection==='Outlet'&&p.outlet) ||
+      (catalogState.collection==='Favoritos'&&p.favorite);
+    const priceOk=p.price>=catalogState.minPrice && p.price<=catalogState.maxPrice;
+    const stockOk=!catalogState.onlyStock || p.stock>0;
+    return queryOk&&catOk&&collectionOk&&priceOk&&stockOk;
+  });
+  list.sort((a,b)=>{
+    if(catalogState.sort==='priceAsc') return a.price-b.price;
+    if(catalogState.sort==='priceDesc') return b.price-a.price;
+    if(catalogState.sort==='newest') return Number(b.newDrop)-Number(a.newDrop);
+    if(catalogState.sort==='favorites') return Number(b.favorite)-Number(a.favorite);
+    return Number(b.musaPick)-Number(a.musaPick)||Number(b.newDrop)-Number(a.newDrop)||Number(b.featured)-Number(a.featured);
+  });
+  return list;
 }
 
 function card(p){
   const isPhysical=!p.digital;
-  const image=p.image ? `${image}` : `<div class="product-placeholder" aria-label="${p.name}"><span>${p.category==="haircare"?"♡":"◉"}</span></div>`;
+  const image=p.image
+    ? `<img class="product-cover" src="${p.image}" alt="${p.name}" loading="lazy">`
+    : `<div class="product-placeholder" aria-label="${p.name}"><span>${p.category==="Beauty"?"♡":"◉"}</span></div>`;
   return `<article class="product-card ${isPhysical?"physical-product-card":"digital-product-card"}">
-    <div class="product-image" style="background:${p.bg}">
-      <span class="product-badge">${p.badge}</span>
-      <button class="product-like" aria-label="Favorito">♡</button>
-      <img class="product-cover" src="${p.image}" alt="${p.name}" loading="lazy">
+    <div class="product-image" style="background:${p.bg||'#f3edf0'}">
+      <span class="product-badge">${p.badge||p.category}</span>
+      <button class="product-like ${p.favorite?'is-favorite':''}" aria-label="${p.favorite?'Quitar de favoritos':'Agregar a favoritos'}" onclick="toggleFavorite('${p.id}')">${p.favorite?'♥':'♡'}</button>
+      ${image}
     </div>
     <div class="product-info digital-info">
       <div>
@@ -34,10 +81,13 @@ function card(p){
       </div>
       <div class="product-price">${money(p.price)}</div>
     </div>
-    <p class="product-description">${p.description}</p>${p.usage?`<p class="product-usage"><strong>Modo de uso:</strong> ${p.usage}</p>`:""}${p.note?`<p class="product-usage"><strong>Importante:</strong> ${p.note}</p>`:""}${isPhysical?`<p class="product-usage"><strong>Envío:</strong> se coordina antes de finalizar la compra. Los costos dependen de destino y modalidad.</p>`:""}
+    <p class="product-description">${p.description}</p>
+    ${p.usage?`<p class="product-usage"><strong>Modo de uso:</strong> ${p.usage}</p>`:""}
+    ${p.note?`<p class="product-usage"><strong>Importante:</strong> ${p.note}</p>`:""}
+    ${isPhysical?`<p class="product-usage"><strong>Envío:</strong> se calcula según destino antes de finalizar la compra.</p>`:""}
     <details class="product-details">
-      <summary>¿Qué incluye? <span>＋</span></summary>
-      <ul>${p.includes.map(item=>`<li>${item}</li>`).join('')}</ul>
+      <summary>${p.digital?'¿Qué incluye?':'Más información'} <span>＋</span></summary>
+      <ul>${(p.includes||[]).map(item=>`<li>${item}</li>`).join('')}</ul>
     </details>
     <button class="add-btn digital-add" onclick="addToBag('${p.id}')">AGREGAR A LA BOLSA ♡</button>
   </article>`;
@@ -45,7 +95,75 @@ function card(p){
 
 function renderGrid(target,list){
   const el=document.querySelector(target);
-  el.innerHTML=list.length ? list.map(card).join('') : '<p class="empty-results">No encontramos productos todavía ♡</p>';
+  if(!el) return;
+  el.innerHTML=list.length ? list.map(card).join('') : '<p class="empty-results">No encontramos productos con estos filtros ♡</p>';
+}
+
+function renderCatalog(){
+  const visible=getVisibleProducts();
+  const digital=visible.filter(p=>p.digital);
+  const physical=visible.filter(p=>!p.digital);
+  renderGrid('#digitalProducts',digital);
+  renderGrid('#physicalProducts',physical);
+  const count=document.querySelector('#catalogCount');
+  if(count) count.textContent=`${visible.length} producto${visible.length===1?'':'s'}`;
+  const categories=document.querySelector('#categoryFilters');
+  if(categories) categories.innerHTML=getCategories().map(c=>`<button class="filter-chip ${catalogState.category===c?'active':''}" onclick="setCategory('${c}')">${c}</button>`).join('');
+}
+
+function setCategory(category){
+  catalogState.category=category;
+  renderCatalog();
+}
+
+function setCollection(collection){
+  catalogState.collection=collection;
+  renderCatalog();
+}
+
+function setSort(sort){
+  catalogState.sort=sort;
+  renderCatalog();
+}
+
+function setPriceRange(max){
+  catalogState.maxPrice=max===0?Infinity:Number(max);
+  renderCatalog();
+}
+
+function setOnlyStock(checked){
+  catalogState.onlyStock=checked;
+  renderCatalog();
+}
+
+function toggleFavorite(id){
+  const p=products.find(x=>x.id===id);
+  if(!p) return;
+  p.favorite=!p.favorite;
+  saveFavorites();
+  renderCatalog();
+}
+
+function rememberSearch(q){
+  q=q.trim();
+  if(!q) return;
+  let searches=JSON.parse(localStorage.getItem('musaRecentSearches')||'[]');
+  searches=[q,...searches.filter(x=>x.toLowerCase()!==q.toLowerCase())].slice(0,5);
+  localStorage.setItem('musaRecentSearches',JSON.stringify(searches));
+}
+
+function renderRecentSearches(){
+  const el=document.querySelector('#recentSearches');
+  if(!el) return;
+  const searches=JSON.parse(localStorage.getItem('musaRecentSearches')||'[]');
+  el.innerHTML=searches.length ? searches.map(q=>`<button onclick="useRecentSearch('${q.replace(/'/g,"&#39;")}')">${q}</button>`).join('') : '<span>Sin búsquedas recientes</span>';
+}
+
+function useRecentSearch(q){
+  catalogState.query=q;
+  renderCatalog();
+  renderRecentSearches();
+  document.querySelector('#shop')?.scrollIntoView({behavior:'smooth'});
 }
 
 function renderBag(){
@@ -108,15 +226,17 @@ document.querySelector('#closeBag').onclick=closeBag;
 backdrop.onclick=closeBag;
 
 const overlay=document.querySelector('#searchOverlay');
-document.querySelector('#searchBtn').onclick=()=>{overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');setTimeout(()=>document.querySelector('#searchInput').focus(),100)};
+document.querySelector('#searchBtn').onclick=()=>{overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');renderRecentSearches();setTimeout(()=>document.querySelector('#searchInput').focus(),100)};
 document.querySelector('#closeSearch').onclick=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true')};
 document.querySelector('#searchInput').addEventListener('input',e=>{
   const q=e.target.value.toLowerCase().trim();
   const hint=document.querySelector('#searchHint');
   if(!q){hint.textContent='Probá: glow, study, relax, planner...';return}
-  const found=products.filter(p=>(p.name+' '+p.sub+' '+p.description+' '+p.includes.join(' ')).toLowerCase().includes(q));
+    catalogState.query=q;
+  const found=getVisibleProducts();
   hint.textContent=found.length?`${found.length} resultado${found.length===1?'':'s'} encontrado${found.length===1?'':'s'} ♡`:'Todavía no encontramos eso — quizás en el próximo drop ✦';
-  if(found.length) document.querySelector('#digitalProducts').scrollIntoView({behavior:'smooth',block:'start'});
+  if(found.length) document.querySelector('#shop')?.scrollIntoView({behavior:'smooth',block:'start'});
+  if(q) rememberSearch(q); renderCatalog(); renderRecentSearches();
 });
 
 document.querySelector('#applyCoupon').onclick=async()=>{
