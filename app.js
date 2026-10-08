@@ -9,13 +9,19 @@ const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS
 async function loadProducts(){
   const response = await fetch('data/products.json', {cache:'no-store'});
   if(!response.ok) throw new Error('No se pudo cargar el catálogo');
-  products = (await response.json()).filter(p=>p.active && p.digital);
-  renderGrid('#digitalProducts', products);
+  products = (await response.json()).filter(p=>p.active);
+  const digital = products.filter(p=>p.digital);
+  const physical = products.filter(p=>!p.digital);
+  renderGrid('#digitalProducts', digital);
+  renderGrid('#physicalProducts', physical);
+  products = products;
   renderBag();
 }
 
 function card(p){
-  return `<article class="product-card digital-product-card">
+  const isPhysical=!p.digital;
+  const image=p.image ? `${image}` : `<div class="product-placeholder" aria-label="${p.name}"><span>${p.category==="haircare"?"♡":"◉"}</span></div>`;
+  return `<article class="product-card ${isPhysical?"physical-product-card":"digital-product-card"}">
     <div class="product-image" style="background:${p.bg}">
       <span class="product-badge">${p.badge}</span>
       <button class="product-like" aria-label="Favorito">♡</button>
@@ -24,11 +30,11 @@ function card(p){
     <div class="product-info digital-info">
       <div>
         <div class="product-name">${p.name}</div>
-        <div class="product-sub">${p.sub} · ${p.pages} páginas</div>
+        <div class="product-sub">${p.sub}${p.pages ? ` · ${p.pages} páginas` : ""}</div>
       </div>
       <div class="product-price">${money(p.price)}</div>
     </div>
-    <p class="product-description">${p.description}</p>
+    <p class="product-description">${p.description}</p>${p.usage?`<p class="product-usage"><strong>Modo de uso:</strong> ${p.usage}</p>`:""}${p.note?`<p class="product-usage"><strong>Importante:</strong> ${p.note}</p>`:""}${isPhysical?`<p class="product-usage"><strong>Envío:</strong> se coordina antes de finalizar la compra. Los costos dependen de destino y modalidad.</p>`:""}
     <details class="product-details">
       <summary>¿Qué incluye? <span>＋</span></summary>
       <ul>${p.includes.map(item=>`<li>${item}</li>`).join('')}</ul>
