@@ -198,5 +198,55 @@
     "digital": true,
     "active": true,
     "image": "assets/digital/relax.svg"
+  },
+  {
+    "id": "MUSA-F01",
+    "name": "Máscara Karseell Collagen 500 g",
+    "price": 26000,
+    "stock": 1,
+    "category": "haircare",
+    "badge": "MUSA BEAUTY",
+    "sub": "Tratamiento capilar · hidratación intensa",
+    "description": "Tratamiento profesional pensado para devolver suavidad, brillo y una apariencia sedosa al cabello. Su fórmula combina derivados de proteína de trigo, esencia de maca, aceite de argán, ceramidas y colágeno para ayudar a fortalecer la fibra, retener la hidratación y reducir el frizz.",
+    "includes": [
+      "Hidratación intensa y nutrición",
+      "Brillo y efecto espejado",
+      "Ayuda a fortalecer y mejorar la elasticidad de la fibra",
+      "Sin sulfatos ni parabenos",
+      "Contenido: 500 g"
+    ],
+    "digital": false,
+    "active": true,
+    "image": "",
+    "bg": "#dfe9df",
+    "featured": true,
+    "musaPick": true,
+    "newDrop": true,
+    "usage": "Lavar el cabello con shampoo. Aplicar la máscara y dejar actuar de 10 a 15 minutos. Enjuagar con abundante agua, secar y finalizar como de costumbre. Se puede utilizar 1 a 2 veces por semana. Evitar el contacto con los ojos; si ocurre, enjuagar inmediatamente con abundante agua."
+  },
+  {
+    "id": "MUSA-A01",
+    "name": "Auriculares Estéreo Inalámbricos Hi-Fi P9",
+    "price": 39900,
+    "stock": 1,
+    "category": "tech",
+    "badge": "MUSA TECH",
+    "sub": "Bluetooth · estéreo · over-ear",
+    "description": "Auriculares inalámbricos P9 con diseño over-ear, conexión Bluetooth y sonido estéreo. Vienen nuevos, en su caja original. El packaging presenta un detalle leve en la caja, visible en las imágenes.",
+    "includes": [
+      "Conexión Bluetooth",
+      "Sonido estéreo Hi-Fi",
+      "Diseño over-ear con vincha",
+      "Nuevos y en caja original",
+      "Color: verde y negro"
+    ],
+    "digital": false,
+    "active": true,
+    "image": "",
+    "bg": "#e4e7e1",
+    "featured": true,
+    "musaPick": true,
+    "newDrop": true,
+    "note": "La caja presenta un leve daño estético. El producto es nuevo."
   }
 ]
