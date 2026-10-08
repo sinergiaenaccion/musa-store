@@ -6,7 +6,9 @@ const PRODUCTS = {
   "MUSA-D05": { name: "Workbook Money Girl", price: 4990 },
   "MUSA-D06": { name: "My Life Planner", price: 6990 },
   "MUSA-D07": { name: "Workbook Agradecimiento", price: 4990 },
-  "MUSA-D08": { name: "Workbook Relax", price: 4990 }
+  "MUSA-D08": { name: "Workbook Relax", price: 4990 },
+  "MUSA-F01": { name: "Máscara Karseell Collagen 500 g", price: 26000, physical: true },
+  "MUSA-A01": { name: "Auriculares Estéreo Inalámbricos Hi-Fi P9", price: 39900, physical: true }
 };
 
 const COUPONS = {
@@ -64,7 +66,9 @@ module.exports = async (req, res) => {
       .map(item => ({ productId: String(item.id || ""), quantity: Math.max(1, Math.min(10, Number(item.qty) || 1)) }))
       .filter(item => PRODUCTS[item.productId]);
 
-    if (!items.length) return json(res, 400, { error: "No hay productos digitales válidos." });
+    if (!items.length) return json(res, 400, { error: "No hay productos válidos." });
+    const hasPhysical = items.some(item => PRODUCTS[item.productId].physical);
+    if (hasPhysical) return json(res, 409, { error: "Para productos físicos primero debemos definir el envío. Tu carrito está guardado y no se pierde." });
 
     const couponCode = String(req.body?.coupon || "").trim().toUpperCase();
     const buyerEmail = String(req.body?.buyerEmail || "").trim().toLowerCase();
