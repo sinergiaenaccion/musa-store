@@ -156,7 +156,36 @@
         </div>
         <span class="digital-badge">SIN ENVÍO · TODO DIGITAL ✦</span>
       </div>
-      <div class="product-grid digital-grid" id="digitalProducts"></div>
+      <div class="catalog-toolbar">
+  <div class="catalog-topline"><span id="catalogCount">0 productos</span><label>Ordenar
+    <select id="sortSelect" onchange="setSort(this.value)">
+      <option value="recommended">Recomendados</option>
+      <option value="newest">Novedades</option>
+      <option value="priceAsc">Precio: menor a mayor</option>
+      <option value="priceDesc">Precio: mayor a menor</option>
+      <option value="favorites">Mis favoritos</option>
+    </select>
+  </label></div>
+  <div class="catalog-filters">
+    <div class="filter-group"><span>Categorías</span><div id="categoryFilters" class="filter-chips"></div></div>
+    <div class="filter-group"><span>Colecciones</span><div class="filter-chips">
+      <button class="filter-chip active" onclick="setCollection('Todos')">Todos</button>
+      <button class="filter-chip" onclick="setCollection('Novedades')">Últimas novedades</button>
+      <button class="filter-chip" onclick="setCollection('Seleccionados MUSA')">Seleccionados MUSA</button>
+      <button class="filter-chip" onclick="setCollection('Outlet')">Outlet</button>
+      <button class="filter-chip" onclick="setCollection('Favoritos')">♡ Favoritos</button>
+    </div></div>
+    <div class="filter-group"><span>Precio</span><div class="filter-chips">
+      <button class="filter-chip" onclick="setPriceRange(10000)">Hasta $10.000</button>
+      <button class="filter-chip" onclick="setPriceRange(30000)">Hasta $30.000</button>
+      <button class="filter-chip" onclick="setPriceRange(50000)">Hasta $50.000</button>
+      <button class="filter-chip" onclick="setPriceRange(0)">Todos</button>
+    </div></div>
+    <label class="stock-filter"><input type="checkbox" onchange="setOnlyStock(this.checked)"> Solo disponibles</label>
+  </div>
+  <div class="recent-searches" id="recentSearches"></div>
+</div>
+<div class="product-grid digital-grid" id="digitalProducts"></div>
     </section>
 
     <section class="section how-section" id="how">
