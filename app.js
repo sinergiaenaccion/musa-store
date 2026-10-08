@@ -228,6 +228,7 @@ backdrop.onclick=closeBag;
 const overlay=document.querySelector('#searchOverlay');
 document.querySelector('#searchBtn').onclick=()=>{overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');renderRecentSearches();setTimeout(()=>document.querySelector('#searchInput').focus(),100)};
 document.querySelector('#closeSearch').onclick=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true')};
+document.querySelector('#searchInput').addEventListener('keydown',e=>{if(e.key==='Enter'){const q=e.target.value.trim();if(q){rememberSearch(q);renderRecentSearches();}}});
 document.querySelector('#searchInput').addEventListener('input',e=>{
   const q=e.target.value.toLowerCase().trim();
   const hint=document.querySelector('#searchHint');
@@ -236,7 +237,7 @@ document.querySelector('#searchInput').addEventListener('input',e=>{
   const found=getVisibleProducts();
   hint.textContent=found.length?`${found.length} resultado${found.length===1?'':'s'} encontrado${found.length===1?'':'s'} ♡`:'Todavía no encontramos eso — quizás en el próximo drop ✦';
   if(found.length) document.querySelector('#shop')?.scrollIntoView({behavior:'smooth',block:'start'});
-  if(q) rememberSearch(q); renderCatalog(); renderRecentSearches();
+  renderCatalog();
 });
 
 document.querySelector('#applyCoupon').onclick=async()=>{
