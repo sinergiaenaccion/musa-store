@@ -84,7 +84,7 @@ function card(p){
     <p class="product-description">${p.description}</p>
     ${p.usage?`<p class="product-usage"><strong>Modo de uso:</strong> ${p.usage}</p>`:""}
     ${p.note?`<p class="product-usage"><strong>Importante:</strong> ${p.note}</p>`:""}
-    ${isPhysical?`<p class="product-usage"><strong>Envío:</strong> se calcula según destino antes de finalizar la compra.</p>`:""}
+    ${isPhysical?`<p class="product-usage"><strong>Envío:</strong> por ahora se gestiona mediante un link de Andreani y se abona por separado.</p>`:""}
     <details class="product-details">
       <summary>${p.digital?'¿Qué incluye?':'Más información'} <span>＋</span></summary>
       <ul>${(p.includes||[]).map(item=>`<li>${item}</li>`).join('')}</ul>
@@ -175,6 +175,8 @@ function renderBag(){
     items.innerHTML='<p class="empty-bag">Tu bolsa está esperando algo lindo ✦</p>';
     document.querySelector('#bagSubtotal').textContent=money(0);
     document.querySelector('#bagTotal').textContent=money(0);
+    const shippingSummaryEmpty=document.querySelector('#shippingSummaryText');
+    if(shippingSummaryEmpty) shippingSummaryEmpty.textContent='—';
     document.querySelector('#discountRow').hidden=true;
     localStorage.setItem('musaBag',JSON.stringify(bag));
     return;
@@ -198,6 +200,12 @@ function renderBag(){
   document.querySelector('#discountRow').hidden=!appliedCoupon;
   document.querySelector('#bagDiscount').textContent=money(-discount);
   document.querySelector('#bagTotal').textContent=money(total-discount);
+  const hasPhysical=bag.some(x=>{
+    const p=products.find(p=>p.id===x.id);
+    return p && !p.digital;
+  });
+  const shippingSummaryText=document.querySelector('#shippingSummaryText');
+  if(shippingSummaryText) shippingSummaryText.textContent=hasPhysical ? 'LINK DE ANDREANI · PAGO SEPARADO' : 'DESCARGA DIGITAL';
   localStorage.setItem('musaBag',JSON.stringify(bag));
   localStorage.setItem('musaCoupon',appliedCoupon);
   const couponInput=document.querySelector('#couponInput');
@@ -310,7 +318,7 @@ document.querySelector('#transferBtn').onclick=()=>{
     '\n10% OFF transferencia: -'+money(discount)+
     '\nTOTAL A TRANSFERIR: '+money(total)+
     '\n\nAlias Mercado Pago: armar.caer.cauces.mp'+
-    '\n\nYa realicé la transferencia. Les envío el comprobante por acá para que me habiliten la descarga. ♡'
+    '\n\nYa realicé la transferencia. Les envío el comprobante por acá para confirmar la compra. Si hay productos físicos, coordinamos por este medio el link de Andreani para abonar el envío. ♡'
   );
   window.open('https://wa.me/5493513394174?text='+text,'_blank','noopener');
 };
@@ -338,7 +346,16 @@ document.querySelector('#checkoutBtn').onclick=async()=>{
       const p=products.find(p=>p.id===x.id);
       return p?`${x.qty} × ${p.name}`:null;
     }).filter(Boolean).join('%0A');
-    const text=encodeURIComponent('Hola MUSA 💗 Quiero comprar:\n'+selected+'\n\n¿Me pasan el medio de pago y cómo recibo los workbooks?');
+    const hasPhysical=bag.some(x=>{
+      const p=products.find(p=>p.id===x.id);
+      return p && !p.digital;
+    });
+    const text=encodeURIComponent(
+      'Hola MUSA 💗 Quiero comprar:\n'+selected+
+      (hasPhysical
+        ? '\n\nTengo productos físicos. ¿Me confirman el pago y luego me envían el link de Andreani para completar mis datos y abonar el envío?'
+        : '\n\n¿Me pasan el medio de pago y cómo recibo los workbooks?')
+    );
     window.open('https://wa.me/5493513394174?text='+text,'_blank','noopener');
   }finally{
     button.disabled=false;

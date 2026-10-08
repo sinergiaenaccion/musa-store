@@ -68,7 +68,6 @@ module.exports = async (req, res) => {
 
     if (!items.length) return json(res, 400, { error: "No hay productos válidos." });
     const hasPhysical = items.some(item => PRODUCTS[item.productId].physical);
-    if (hasPhysical) return json(res, 409, { error: "Para productos físicos primero debemos definir el envío. Tu carrito está guardado y no se pierde." });
 
     const couponCode = String(req.body?.coupon || "").trim().toUpperCase();
     const buyerEmail = String(req.body?.buyerEmail || "").trim().toLowerCase();
@@ -88,7 +87,7 @@ module.exports = async (req, res) => {
       return {
         id: item.productId,
         title: product.name,
-        description: `Producto digital MUSA · ${product.name}`,
+        description: `${product.physical ? "Producto físico MUSA" : "Producto digital MUSA"} · ${product.name}`,
         quantity: item.quantity,
         currency_id: "ARS",
         unit_price: product.price
@@ -117,12 +116,14 @@ module.exports = async (req, res) => {
         product_ids: productIds.join(","),
         coupon: couponCode || "",
         discount_ars: String(discount),
-        buyer_email: buyerEmail
+        buyer_email: buyerEmail,
+        has_physical: hasPhysical ? "true" : "false",
+        shipping_method: hasPhysical ? "andreani_link" : "digital"
       },
       back_urls: {
-        success: `${siteUrl}/digital-success.html?order=${encodeURIComponent(orderId)}`,
-        pending: `${siteUrl}/digital-success.html?order=${encodeURIComponent(orderId)}&state=pending`,
-        failure: `${siteUrl}/digital-success.html?order=${encodeURIComponent(orderId)}&state=failure`
+        success: `${siteUrl}/${hasPhysical ? "physical-success" : "digital-success"}.html?order=${encodeURIComponent(orderId)}`,
+        pending: `${siteUrl}/${hasPhysical ? "physical-success" : "digital-success"}.html?order=${encodeURIComponent(orderId)}&state=pending`,
+        failure: `${siteUrl}/${hasPhysical ? "physical-success" : "digital-success"}.html?order=${encodeURIComponent(orderId)}&state=failure`
       },
       auto_return: "approved",
       ...(validEmail(buyerEmail) ? { payer: { email: buyerEmail } } : {}),

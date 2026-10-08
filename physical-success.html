@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MUSA · Compra recibida</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#faf7f9;color:#30272d;display:grid;place-items:center;min-height:100vh;padding:24px;box-sizing:border-box}
+.card{max-width:620px;background:#fff;border:1px solid #eadfe5;border-radius:24px;padding:40px;box-shadow:0 16px 50px rgba(50,30,45,.08)}
+.eyebrow{letter-spacing:.12em;font-size:12px;color:#9b7186;font-weight:700}
+h1{font-size:34px;line-height:1.1;margin:10px 0 16px}
+p{line-height:1.65;color:#625861}
+.steps{margin:26px 0;padding:20px;border-radius:16px;background:#faf5f8}
+.steps strong{display:block;margin-bottom:8px}
+.btn{display:inline-block;text-decoration:none;background:#d96c98;color:#fff;padding:14px 20px;border-radius:999px;font-weight:700}
+.small{font-size:13px;color:#82757e;margin-top:18px}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="eyebrow">MUSA · BRILLA A TU MANERA ♡</div>
+<h1 id="title">¡Recibimos tu compra!</h1>
+<p id="intro">Tu pago fue derivado a Mercado Pago. Si la operación se aprueba, vamos a preparar tu pedido.</p>
+<div class="steps">
+<strong>¿Cómo funciona el envío?</strong>
+<p style="margin:0">Para productos físicos, por ahora usamos el <strong>link de envío de Andreani</strong>: MUSA te enviará un link para que completes tus datos y abones el envío directamente en Andreani. Después podremos despachar tu pedido.</p>
+</div>
+<a class="btn" href="https://wa.me/5493513394174?text=Hola%20MUSA%20%E2%99%A5%20Acabo%20de%20realizar%20una%20compra%20con%20producto%20f%C3%ADsico%20y%20necesito%20coordinar%20el%20link%20de%20Andreani." target="_blank" rel="noopener">COORDINAR POR WHATSAPP ✦</a>
+<p class="small">Número de pedido: <span id="order">—</span></p>
+</main>
+<script>
+const q=new URLSearchParams(location.search);
+const state=q.get('state')||'success';
+const order=q.get('order')||'—';
+document.querySelector('#order').textContent=order;
+if(state==='pending'){
+ document.querySelector('#title').textContent='Tu pago está pendiente';
+ document.querySelector('#intro').textContent='Mercado Pago todavía no confirmó la operación. Cuando se apruebe, podremos avanzar con el pedido.';
+}
+if(state==='failure'){
+ document.querySelector('#title').textContent='El pago no se completó';
+ document.querySelector('#intro').textContent='La operación no fue aprobada. Podés volver a MUSA e intentarlo nuevamente o escribirnos por WhatsApp.';
+}
+</script>
+</body>
+</html>
