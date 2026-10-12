@@ -127,6 +127,20 @@ function setCategory(category){
   catalogState.category=category;
   renderCatalog();
 }
+function filterByCategory(category){
+  catalogState.category=category;
+  renderCatalog();
+  document.querySelector('#physical')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function toggleCatalogFilters(){
+  const panel=document.querySelector('#catalogFiltersPanel');
+  const button=document.querySelector('#filterToggle');
+  if(!panel||!button) return;
+  const opening=panel.hidden;
+  panel.hidden=!opening;
+  button.setAttribute('aria-expanded',String(opening));
+  button.innerHTML=opening?'<span>×</span> CERRAR FILTROS':'<span>☷</span> FILTRAR';
+}
 
 function setCollection(collection){
   catalogState.collection=collection;
