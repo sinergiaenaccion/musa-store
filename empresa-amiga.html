@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff5ca8">
+  <meta name="description" content="Sumá tu empresa a MUSA y conversemos sobre beneficios para tu equipo.">
+  <title>Empresas amigas — MUSA</title>
+  <link rel="icon" href="assets/musa-logo.jpg">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .friend-page{min-height:75vh;padding:clamp(28px,6vw,80px) 5vw;background:radial-gradient(circle at 10% 15%,#ffe0ef,transparent 34%),radial-gradient(circle at 90% 90%,#f6e2b9,transparent 32%),#fffaf7}
+    .friend-layout{max-width:1060px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center}
+    .friend-intro h1{font-size:clamp(42px,6vw,76px);line-height:.98;margin:18px 0}
+    .friend-intro h1 em{font-family:'Playfair Display',serif;color:#ed4c99}
+    .friend-intro p{color:#77717c;line-height:1.8;font-size:17px}
+    .friend-logo{width:96px;height:96px;object-fit:contain;border-radius:50%}
+    .friend-form{background:#fff;border:1px solid #efdae5;border-radius:28px;padding:clamp(22px,4vw,40px);box-shadow:0 22px 65px #70435714}
+    .friend-form h2{margin-top:0}
+    .friend-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .friend-fields label{display:grid;gap:7px;font-size:13px;font-weight:700}
+    .friend-fields input{width:100%;min-width:0;border:1px solid #e5d5df;border-radius:12px;padding:13px;background:#fffdfd}
+    .friend-fields .full{grid-column:1/-1}
+    .friend-consent{display:flex;gap:10px;align-items:flex-start;margin:18px 0;color:#716a76;font-size:12px;line-height:1.5}
+    .friend-consent input{margin-top:4px}
+    .friend-message{color:#b42318;font-size:13px;margin-top:12px}
+    @media(max-width:760px){.friend-layout{grid-template-columns:1fr}.friend-fields{grid-template-columns:1fr}.friend-fields .full{grid-column:auto}}
+  </style>
+</head>
+<body>
+  <div class="announcement"><span>✦ MUSA</span><i></i><span>EMPRESAS AMIGAS</span><i></i><span>BENEFICIOS QUE SE COMPARTEN ♡</span></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="MUSA inicio"><img class="brand-logo" src="assets/musa-logo.jpg" alt="MUSA"></a>
+    <nav class="desktop-nav" aria-label="Principal"><a href="index.html">INICIO</a><a href="index.html#physical">TIENDA</a><a href="index.html#club">MUSA CLUB</a></nav>
+    <a class="btn btn-pink" href="index.html#top">VOLVER A MUSA</a>
+  </header>
+  <main class="friend-page">
+    <div class="friend-layout">
+      <section class="friend-intro">
+        <img class="friend-logo" src="assets/musa-logo.jpg" alt="MUSA">
+        <p class="eyebrow">EMPRESA AMIGA ♡</p>
+        <h1>Un beneficio lindo<br><em>se comparte.</em></h1>
+        <p>¿Querés sumar tu empresa a MUSA? Contanos un poquito sobre vos y conversemos sobre beneficios, descuentos, vouchers o propuestas pensadas para tu equipo.</p>
+        <p>Enviar la solicitud no crea una cuenta ni confirma automáticamente un acuerdo. Nos pondremos en contacto para revisar la propuesta.</p>
+      </section>
+      <section class="friend-form">
+        <h2>Sumá tu empresa a MUSA ✦</h2>
+        <p>Completá los datos para que podamos contactarte.</p>
+        <form id="businessFriendsForm">
+          <div class="friend-fields">
+            <label>Correo electrónico *<input name="email" type="email" autocomplete="email" required placeholder="tu@email.com"></label>
+            <label>DNI *<input name="dni" type="text" inputmode="numeric" required placeholder="Tu DNI"></label>
+            <label>Nombre *<input name="name" type="text" autocomplete="given-name" required placeholder="Nombre"></label>
+            <label>Apellido *<input name="surname" type="text" autocomplete="family-name" required placeholder="Apellido"></label>
+            <label class="full">Empresa *<input name="company" type="text" autocomplete="organization" required placeholder="Nombre de la empresa"></label>
+            <label>Área / sector<input name="area" type="text" placeholder="Opcional"></label>
+            <label>Cargo<input name="role" type="text" placeholder="Opcional"></label>
+          </div>
+          <label class="friend-consent"><input name="privacy" type="checkbox" required><span>Acepto que MUSA utilice estos datos para gestionar esta solicitud, de acuerdo con su <a href="index.html#info" data-info="privacy">Política de privacidad</a>.</span></label>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+          <button class="btn btn-pink" type="submit">ENVIAR SOLICITUD ✦</button>
+          <div class="friend-message" id="businessFriendsMessage" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><p>© 2026 MUSA — Todos los derechos reservados.</p><a href="index.html">Volver a MUSA</a></footer>
+  <script>
+    const form=document.querySelector('#businessFriendsForm');
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();
+      const button=form.querySelector('button[type="submit"]');
+      const message=document.querySelector('#businessFriendsMessage');
+      const payload=Object.fromEntries(new FormData(form).entries());
+      button.disabled=true;button.textContent='ENVIANDO…';message.textContent='';
+      try{
+        const response=await fetch('/api/business-friends',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        const data=await response.json();
+        if(!response.ok) throw new Error(data.error||'No pudimos enviar la solicitud.');
+        form.innerHTML='<div class="business-success"><strong>¡Solicitud recibida! ♡</strong><p>Gracias. Vamos a revisar los datos y nos pondremos en contacto.</p></div>';
+      }catch(error){
+        button.disabled=false;button.textContent='ENVIAR SOLICITUD ✦';message.textContent=error.message||'No pudimos completar la solicitud. Probá nuevamente.';
+      }
+    });
+  </script>
+</body>
+</html>
