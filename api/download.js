@@ -6,7 +6,8 @@ const PRODUCT_ENV = {
   "MUSA-D05": "MUSA_PDF_URL_MUSA_D05",
   "MUSA-D06": "MUSA_PDF_URL_MUSA_D06",
   "MUSA-D07": "MUSA_PDF_URL_MUSA_D07",
-  "MUSA-D08": "MUSA_PDF_URL_MUSA_D08"
+  "MUSA-D08": "MUSA_PDF_URL_MUSA_D08",
+  "MUSA-D09": "MUSA_PDF_URL_MUSA_D09"
 };
 
 const NAMES = {
@@ -17,7 +18,8 @@ const NAMES = {
   "MUSA-D05": "MUSA_Money_Girl.pdf",
   "MUSA-D06": "MUSA_My_Life_Planner.pdf",
   "MUSA-D07": "MUSA_Agradecimiento.pdf",
-  "MUSA-D08": "MUSA_Relax.pdf"
+  "MUSA-D08": "MUSA_Relax.pdf",
+  "MUSA-D09": "MUSA_Mama_Nuestra_Historia.pdf"
 };
 
 async function verify(payload, signature) {
