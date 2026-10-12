@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff5f7"/><stop offset="1" stop-color="#f5c9dc"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#7d3d5c" flood-opacity=".15"/></filter></defs>
+<rect x="18" y="18" width="764" height="964" rx="58" fill="url(#bg)" stroke="#fff" stroke-width="5"/>
+<path d="M40 160 C220 100 370 205 540 145 S730 120 760 160" fill="none" stroke="#fff" stroke-width="15" opacity=".8" stroke-linecap="round"/>
+<g fill="#dba94d"><path d="M110 220 l7 18 18 7-18 7-7 18-7-18-18-7 18-7z"/><path d="M688 240 l6 15 15 6-15 6-6 15-6-15-15-6 15-6z"/></g>
+<text x="70" y="90" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#8b4968">MUSA · EDICIÓN ESPECIAL</text>
+<text x="70" y="125" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#c65388">UN REGALO PARA COMPARTIR ♡</text>
+<g filter="url(#shadow)"><rect x="70" y="290" width="660" height="420" rx="42" fill="#fff" opacity=".95"/></g>
+<g transform="translate(400 370)"><path d="M0 8 C-42 -44 -88 -2 -45 29 C-82 61 -27 87 0 44 C27 87 82 61 45 29 C88 -2 42 -44 0 8Z" fill="#e76ca3" stroke="#fff" stroke-width="5"/><circle cx="0" cy="28" r="17" fill="#f6d978" stroke="#fff" stroke-width="4"/></g>
+<text x="400" y="485" text-anchor="middle" font-family="Georgia,serif" font-size="54" font-weight="700" fill="#8b4968">Mamá,</text>
+<text x="400" y="552" text-anchor="middle" font-family="Georgia,serif" font-size="52" font-style="italic" fill="#c65388">nuestra historia</text>
+<text x="400" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#8b4968">Un viaje por nuestros recuerdos,</text>
+<text x="400" y="640" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#8b4968">nuestras palabras y todo lo que nos une.</text>
+<text x="70" y="805" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#8b4968">RECORDAR · CONOCER · AGRADECER · CELEBRAR</text>
+<text x="70" y="870" font-family="Georgia,serif" font-size="28" font-style="italic" fill="#c65388">Un momento para recordar.</text>
+<text x="70" y="910" font-family="Georgia,serif" font-size="28" font-style="italic" fill="#c65388">Una historia para guardar. ♡</text>
+<text x="70" y="950" font-family="Arial,sans-serif" font-size="14" letter-spacing="2" fill="#8b4968">MUSA · BRILLÁ A TU MANERA</text>
+</svg>
