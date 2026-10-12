@@ -6,7 +6,8 @@ const PRODUCTS = {
   "MUSA-D05": "Workbook Money Girl",
   "MUSA-D06": "My Life Planner",
   "MUSA-D07": "Workbook Agradecimiento",
-  "MUSA-D08": "Workbook Relax"
+  "MUSA-D08": "Workbook Relax",
+  "MUSA-D09": "Mamá, nuestra historia"
 };
 
 function json(res, status, body) {
