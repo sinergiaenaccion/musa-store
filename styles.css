@@ -1853,3 +1853,59 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
   .musa-category-card small{font-size:9px}
   .musa-picks-grid{grid-template-columns:1fr;gap:18px}
 }
+
+
+/* MUSA visual refresh — editorial lifestyle, champagne gold and playful depth */
+:root{--gold:#c99a45;--champagne:#f8e6bc;--peach:#ffe3d8;--lilac:#eee5ff;--soft:#fff2f8}
+.announcement{background:linear-gradient(90deg,#ffe5dc,#ffd8eb 48%,#fff0d2);color:#a74c77}
+.announcement span:first-child:before{content:"✦ ";color:var(--gold)}
+.desktop-nav{gap:clamp(10px,1.5vw,24px)}
+.nav-categories{position:relative;font-size:12px;font-weight:700;letter-spacing:.04em}
+.nav-categories summary{cursor:pointer;list-style:none}
+.nav-categories summary::-webkit-details-marker{display:none}
+.nav-categories summary:after{content:"⌄";margin-left:5px}
+.nav-category-menu{position:absolute;top:28px;left:-12px;min-width:165px;padding:10px;background:#fffaf7;border:1px solid #f0d9e2;border-radius:16px;box-shadow:0 14px 40px #6b3b5420;display:grid;gap:4px;z-index:50}
+.nav-category-menu a{padding:10px 12px;border-radius:10px}
+.nav-category-menu a:hover{background:#fff0f7;color:#c02b77}
+.musa-hero{position:relative;overflow:hidden;background:radial-gradient(circle at 20% 30%,#ffd9e8,transparent 38%),radial-gradient(circle at 75% 70%,#f9e3bd,transparent 34%),linear-gradient(115deg,#fff0f7,#fffaf5 58%,#f4eaff)}
+.musa-hero:after{content:"✦";position:absolute;right:3%;top:10%;font-size:clamp(80px,12vw,170px);color:#d6ad60;opacity:.65;text-shadow:0 8px 22px #e5c77a80;pointer-events:none;animation:musaFloat 5s ease-in-out infinite}
+.musa-hero-lifestyle{width:100%;height:100%;object-fit:cover;display:block;border-radius:34px;box-shadow:0 22px 50px #a84e7525;transform:rotate(-2deg);border:8px solid #fffaf7}
+.musa-lifestyle-art{position:relative;isolation:isolate}
+.musa-lifestyle-art:before{content:"";position:absolute;inset:8% -2% 0 7%;background:linear-gradient(140deg,#f6d4e5,#f7e4b7,#e6dcff);border-radius:45% 35% 28% 40%;z-index:-1;filter:blur(1px)}
+.musa-hero-note{box-shadow:0 15px 35px #6c40551c;backdrop-filter:blur(10px)}
+.musa-hero-3d-heart,.musa-hero-3d-star{position:absolute;z-index:3;filter:drop-shadow(0 9px 8px #b85d8440);animation:musaFloat 4.8s ease-in-out infinite}
+.musa-hero-3d-heart{right:3%;top:4%;font-size:clamp(48px,7vw,92px);color:#f65b9d;text-shadow:2px 3px 0 #fff,4px 7px 0 #eab0c7}
+.musa-hero-3d-star{left:-2%;top:18%;font-size:clamp(44px,6vw,82px);color:#c99a45;text-shadow:2px 3px 0 #fff,4px 7px 0 #e8c875;animation-delay:-2s}
+@keyframes musaFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+.hero-copy h1 em{color:#f24c9a;text-shadow:0 5px 0 #f9d5e6}
+.hero-copy .eyebrow{color:#8b6b80}
+.btn-pink{background:linear-gradient(115deg,#ff5ca8,#ef4796 65%,#d9a64d);box-shadow:0 10px 24px #f24c9a30}
+.trust-strip{background:linear-gradient(90deg,#fffaf7,#fff0f7,#fff7e8)}
+.ticker{background:linear-gradient(90deg,#fa5da7,#e9b958,#c9a0e9,#fa5da7);background-size:200% 100%;animation:musaTicker 12s linear infinite}
+@keyframes musaTicker{to{background-position:200% 0}}
+.musa-category-card{box-shadow:0 14px 35px #5c3d5010;transition:transform .25s ease,box-shadow .25s ease}
+.musa-category-card:hover{transform:translateY(-5px) rotate(-.5deg);box-shadow:0 20px 40px #5c3d5020}
+.section-head .eyebrow{letter-spacing:.14em}
+.catalog-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.filter-toggle{border:1px solid #e9c5d8;background:linear-gradient(120deg,#fff,#fff0f7);color:var(--ink);border-radius:999px;padding:12px 18px;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;gap:8px;box-shadow:0 5px 16px #6b3b5410}
+.filter-toggle span{font-size:20px;color:#e74796}
+.catalog-filters[hidden]{display:none!important}
+.catalog-filters{margin-top:16px;padding:20px;border:1px solid #efdae5;border-radius:24px;background:linear-gradient(135deg,#fffaf7,#fff1f7 70%,#fff7e7);box-shadow:0 14px 36px #70435710}
+.filter-group>span{font-weight:800}
+.business-join-card{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:18px}
+.business-join-card .business-form-head{max-width:360px}
+.club-section,.business-section{background-image:radial-gradient(circle at 5% 10%,#ffe2ee,transparent 30%),radial-gradient(circle at 95% 85%,#f7e4bc,transparent 28%)}
+.club-tab{box-shadow:0 12px 30px #a94d7925}
+.product-card,.product-item{transition:transform .22s ease,box-shadow .22s ease}
+.product-card:hover,.product-item:hover{transform:translateY(-4px);box-shadow:0 18px 34px #6b3b541a}
+@media(max-width:800px){
+ .desktop-nav{display:none}
+ .musa-hero{background:linear-gradient(150deg,#fff0f7,#fff8ed)}
+ .musa-hero-lifestyle{min-height:280px;max-height:390px}
+ .musa-hero-3d-heart{right:0;top:0}
+ .musa-hero-3d-star{left:0;top:10%}
+ .nav-category-menu{position:static;box-shadow:none;margin-top:8px}
+ .catalog-topline{align-items:stretch}
+ .filter-toggle{justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){.musa-hero:after,.musa-hero-3d-heart,.musa-hero-3d-star,.ticker{animation:none!important}.musa-category-card,.product-card,.product-item{transition:none!important}}
