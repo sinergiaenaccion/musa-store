@@ -15,20 +15,19 @@
 <body>
   <div class="announcement">
     <span>✦ MUSA</span><i></i>
-    <span>CURADURÍA DE FAVORITOS</span><i></i>
+    <span>SELECCIÓN MUSA</span><i></i>
     <span>♡ COMPRA ONLINE</span>
   </div>
 
   <header class="site-header">
     <a class="brand" href="#top" aria-label="MUSA inicio"><img class="brand-logo" src="assets/musa-logo.jpg" alt="MUSA"></a>
     <nav class="desktop-nav" aria-label="Principal">
-      <a href="#new">LO NUEVO</a>
-      <a href="#picks">MUSA PICKS</a>
-      <a href="#physical">MUSA SELECT</a>
-      <a href="#shop">DIGITAL</a>
+      <a href="#top">INICIO</a>
+      <a href="#physical">TIENDA</a>
+      <details class="nav-categories"><summary>CATEGORÍAS</summary><div class="nav-category-menu"><a href="#physical" onclick="filterByCategory('Beauty')">Beauty</a><a href="#physical" onclick="filterByCategory('Tech')">Tech</a><a href="#shop" onclick="filterByCategory('Digital')">Digital</a><a href="#inspiration">Lifestyle</a><a href="#physical">Accesorios</a></div></details>
       <a href="#club">MUSA CLUB</a>
-      <a href="#inspiration">INSPIRACIÓN</a>
-      <a href="#footer">INFO</a>
+      <a href="#empresa-amiga">EMPRESAS AMIGAS</a>
+      <a href="#footer">NOSOTRAS</a>
     </nav>
     <div class="header-actions">
       <button class="icon-btn" id="searchBtn" aria-label="Buscar">⌕<small>Buscar</small></button>
@@ -40,29 +39,24 @@
   <main id="top">
     <section class="hero musa-hero">
       <div class="hero-copy">
-        <p class="eyebrow">MUSA · SELECTED FOR YOU ♡</p>
-        <h1>Brilla a tu<br><em>manera.</em> ✦</h1>
+        <p class="eyebrow">MUSA · ELEGIDOS PARA VOS ♡</p>
+        <h1>Brillá a tu<br><em>manera.</em> ✦</h1>
         <p class="hero-text">Beauty, tech, digital y pequeños favoritos elegidos con mirada MUSA. Cositas lindas, útiles y especiales para hacer un poquito más tuyo cada día.</p>
         <div class="hero-actions">
           <a class="btn btn-pink" href="#picks">DESCUBRIR MUSA ♡</a>
           <a class="hero-secondary-link" href="#physical">VER MUSA SELECT →</a>
         </div>
-        <div class="hero-microcopy"><span>♡ Curaduría MUSA</span><span>♡ Compra online</span><span>♡ Stock real</span></div>
+        <div class="hero-microcopy"><span>♡ Selección MUSA</span><span>♡ Cositas para vos</span><span>♡ Novedades</span></div>
       </div>
-      <div class="hero-art musa-hero-art" aria-label="Selección de productos MUSA">
+      <div class="hero-art musa-hero-art musa-lifestyle-art" aria-label="Jóvenes disfrutando su estilo">
         <div class="musa-hero-glow"></div>
-        <div class="musa-hero-card hero-product-back">
-          <span class="hero-product-label">MUSA TECH</span>
-          <img src="assets/products/auriculares-verde.svg" alt="Auriculares inalámbricos verdes" loading="eager">
-        </div>
-        <div class="musa-hero-card hero-product-front">
-          <span class="hero-product-label">MUSA BEAUTY</span>
-          <img src="https://acdn-us.mitiendanube.com/stores/004/619/161/products/whatsapp-image-2024-04-26-at-10-47-04-1-328fa368bc38a0eba017141399258844-1024-1024.jpeg" alt="Máscara Karseell Collagen 500 g" loading="eager">
-        </div>
+        <img class="musa-hero-lifestyle" src="https://images.pexels.com/photos/7148384/pexels-photo-7148384.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Amigas jóvenes compartiendo un momento divertido" loading="eager">
         <div class="musa-hero-note">MUSA PICKS ♡<br><small>elegidos para vos</small></div>
         <div class="musa-hero-sparkle sparkle-one">✦</div>
         <div class="musa-hero-sparkle sparkle-two">✧</div>
         <div class="musa-hero-sparkle sparkle-three">♡</div>
+        <div class="musa-hero-3d-heart">♡</div>
+        <div class="musa-hero-3d-star">✦</div>
       </div>
     </section>
 
@@ -92,7 +86,7 @@
 
     <section class="section musa-picks-section" id="picks">
       <div class="section-head">
-        <div><p class="eyebrow">CURADURÍA MUSA ✦</p><h2>MUSA <em>Picks.</em></h2></div>
+        <div><p class="eyebrow">SELECCIÓN MUSA ✦</p><h2>MUSA <em>Picks.</em></h2></div>
         <a class="text-link" href="#physical">VER MUSA SELECT →</a>
       </div>
       <p class="musa-picks-lead">No es todo lo que tenemos. Es lo que hoy elegiríamos para vos.</p>
@@ -153,7 +147,7 @@
         <span class="digital-badge">SIN ENVÍO · TODO DIGITAL ✦</span>
       </div>
       <div class="catalog-toolbar">
-  <div class="catalog-topline"><span id="catalogCount">0 productos</span><label>Ordenar
+  <div class="catalog-topline"><button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" onclick="toggleCatalogFilters()"><span>☷</span> FILTRAR</button><span id="catalogCount">0 productos</span><label>Ordenar
     <select id="sortSelect" onchange="setSort(this.value)">
       <option value="recommended">Recomendados</option>
       <option value="newest">Novedades</option>
@@ -162,7 +156,7 @@
       <option value="favorites">Mis favoritos</option>
     </select>
   </label></div>
-  <div class="catalog-filters">
+  <div class="catalog-filters" id="catalogFiltersPanel" hidden>
     <div class="filter-group"><span>Categorías</span><div id="categoryFilters" class="filter-chips"></div></div>
     <div class="filter-group"><span>Colecciones</span><div class="filter-chips">
       <button class="filter-chip active" onclick="setCollection('Todos')">Todos</button>
@@ -228,29 +222,15 @@
         </div>
         <small>Recibimos tu propuesta, evaluamos la solicitud y nos ponemos en contacto para definir la propuesta de beneficios MUSA para tu empresa.</small>
       </div>
-      <div class="business-form-card">
+      <div class="business-form-card business-join-card">
         <div class="business-form-head">
           <span>EMPRESA AMIGA ♡</span>
           <img class="business-form-logo" src="assets/musa-logo.jpg" alt="MUSA">
           <strong>Sumá tu empresa a MUSA</strong>
-          <small>Dejanos tus datos y contanos cómo te gustaría sumar beneficios MUSA a tu empresa.</small>
+          <small>Un espacio para crear beneficios y propuestas para tu equipo.</small>
         </div>
-        <form id="businessFriendsForm">
-          <div class="business-form-grid">
-            <label>Correo electrónico *<input name="email" type="email" autocomplete="email" required placeholder="tu@email.com"></label>
-            <label>DNI *<input name="dni" type="text" inputmode="numeric" autocomplete="off" required placeholder="Tu DNI"></label>
-            <label>Nombre *<input name="name" type="text" autocomplete="given-name" required placeholder="Nombre"></label>
-            <label>Apellido *<input name="surname" type="text" autocomplete="family-name" required placeholder="Apellido"></label>
-            <label class="full">Empresa *<input name="company" type="text" autocomplete="organization" required placeholder="Nombre de la empresa"></label>
-            <label>Área / sector<input name="area" type="text" placeholder="Opcional"></label>
-            <label>Cargo<input name="role" type="text" placeholder="Opcional"></label>
-          </div>
-          <label class="business-check"><input name="privacy" type="checkbox" required> <span>Acepto que MUSA utilice estos datos para verificar y gestionar esta solicitud, de acuerdo con su Política de privacidad.</span></label>
-          <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" class="business-honeypot">
-          <button class="btn btn-pink" type="submit">QUIERO SUMAR MI EMPRESA ✦</button>
-          <small class="business-form-note">No necesitás crear una cuenta previamente. ♡</small>
-          <div class="business-form-message" id="businessFriendsMessage" role="status" aria-live="polite"></div>
-        </form>
+        <a class="btn btn-pink" href="empresa-amiga.html">QUIERO SUMAR MI EMPRESA ✦</a>
+      </div>
       </div>
     </section>
 
