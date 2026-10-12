@@ -130,7 +130,12 @@ function setCategory(category){
 function filterByCategory(category){
   catalogState.category=category;
   renderCatalog();
-  document.querySelector('#physical')?.scrollIntoView({behavior:'smooth',block:'start'});
+  const destination=category==='Digital'?'#shop':'#physical';
+  document.querySelector(destination)?.scrollIntoView({behavior:'smooth',block:'start'});
+  const panel=document.querySelector('#catalogFiltersPanel');
+  if(panel) panel.hidden=false;
+  const toggle=document.querySelector('#filterToggle');
+  if(toggle){toggle.setAttribute('aria-expanded','true');toggle.innerHTML='<span>×</span> CERRAR FILTROS';}
 }
 function toggleCatalogFilters(){
   const panel=document.querySelector('#catalogFiltersPanel');
