@@ -1947,3 +1947,40 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
  .musa-picks-section{padding-top:48px;padding-bottom:44px}
  .musa-picks-lead{margin-bottom:16px}
 }
+
+
+/* MUSA polish pass — distinctive hearts, sparkle motion and readable Empresa Amiga */
+.musa-category-card strong span{
+  font-size:0!important;
+  width:25px;height:25px;flex:0 0 25px;
+  display:grid!important;place-items:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.72);
+  color:#d84d91!important;
+  border:1px solid rgba(216,77,145,.18);
+  animation:musaCategoryCharm 2.8s ease-in-out infinite;
+}
+.musa-category-card strong span::before{content:"♡";font-family:Georgia,serif;font-size:21px;line-height:1}
+.musa-category-card:nth-child(2) strong span::before{content:"✦";font-family:Georgia,serif;font-size:17px}
+.musa-category-card:nth-child(3) strong span::before{content:"✧";font-family:Georgia,serif;font-size:19px}
+.musa-category-card:nth-child(4) strong span::before{content:"♡";font-family:Georgia,serif;font-size:21px}
+.musa-category-card:nth-child(2) strong span{animation-delay:-.7s}
+.musa-category-card:nth-child(3) strong span{animation-delay:-1.4s}
+.musa-category-card:nth-child(4) strong span{animation-delay:-2.1s}
+@keyframes musaCategoryCharm{
+  0%,100%{transform:scale(.94) rotate(-5deg);opacity:.78}
+  50%{transform:scale(1.08) rotate(5deg);opacity:1}
+}
+.musa-picks-section .text-link{display:inline-flex;align-items:center;gap:7px}
+.musa-picks-section .text-link::after{content:"♡";font-family:Georgia,serif;font-size:17px;color:#d84d91;animation:musaCategoryCharm 2.8s ease-in-out infinite}
+.business-section .business-copy>p:not(.eyebrow){color:#f4edf3!important}
+.business-section .business-points span{color:#fff!important;background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.24)}
+.business-section .business-copy>small{color:#e9dfe8!important}
+.business-section .business-copy .eyebrow{color:#ffe1a0!important}
+.business-section .business-points b{color:#ffda91!important}
+.business-form-card{background:#fffafc!important}
+.business-form-head span{color:#a51e61!important}
+.business-form-head small{color:#625762!important}
+@media(prefers-reduced-motion:reduce){
+  .musa-category-card strong span,.musa-picks-section .text-link::after{animation:none!important}
+}
