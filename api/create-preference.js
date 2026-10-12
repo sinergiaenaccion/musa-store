@@ -7,6 +7,7 @@ const PRODUCTS = {
   "MUSA-D06": { name: "My Life Planner", price: 6990 },
   "MUSA-D07": { name: "Workbook Agradecimiento", price: 4990 },
   "MUSA-D08": { name: "Workbook Relax", price: 4990 },
+  "MUSA-D09": { name: "Mamá, nuestra historia", price: 8900 },
   "MUSA-F01": { name: "Máscara Karseell Collagen 500 g", price: 26000, physical: true },
   "MUSA-A01": { name: "Auriculares Estéreo Inalámbricos Hi-Fi P9", price: 39900, physical: true }
 };
