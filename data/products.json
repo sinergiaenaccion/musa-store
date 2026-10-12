@@ -256,6 +256,39 @@
     "sizes": []
   },
   {
+    "id": "MUSA-D09",
+    "name": "Mamá, nuestra historia",
+    "price": 8900,
+    "stock": 999,
+    "category": "Digital",
+    "badge": "ESPECIAL DÍA DE LA MADRE",
+    "sub": "Un regalo para compartir · recuerdos · conexión",
+    "description": "Un regalo para compartir, descubrir y conservar. Un workbook para recordar, conversar, conocer nuevas historias y guardar todo eso que nos une. Incluye tarjeta de regalo imprimible en formato A5.",
+    "includes": [
+      "Workbook digital para compartir recuerdos y conversaciones",
+      "Espacios para escribir, sumar fotografías y guardar mensajes",
+      "Tarjeta de regalo imprimible en formato A5",
+      "Edición especial para el Día de la Madre"
+    ],
+    "emoji": "🌷",
+    "bg": "#fff0f5",
+    "featured": true,
+    "musaPick": true,
+    "newDrop": true,
+    "digital": true,
+    "active": true,
+    "image": "assets/digital/mama_nuestra_historia.svg",
+    "tags": [
+      "digital",
+      "regalos",
+      "dia-de-la-madre",
+      "familia",
+      "recuerdos"
+    ],
+    "favorites": false,
+    "sizes": []
+  },
+  {
     "id": "MUSA-F01",
     "name": "Máscara Karseell Collagen 500 g",
     "price": 26000,
