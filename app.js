@@ -554,3 +554,24 @@ loadProducts().catch(error=>{
   console.error(error);
   document.querySelector('#digitalProducts').innerHTML='<p class="empty-results">Estamos actualizando MUSA. Volvemos enseguida ♡</p>';
 });
+
+// Mother's Day popup campaign — Argentina, October 18, 2026
+(function initMusaMomPopup(){
+ const popup=document.getElementById('musaMomPopup');
+ if(!popup)return;
+ const close=()=>{popup.classList.remove('open');popup.setAttribute('aria-hidden','true');document.body.classList.remove('musa-mom-open');try{sessionStorage.setItem('musaMomSeen','1')}catch(e){}};
+ const targetDate=new Date(2026,9,18);const today=new Date();today.setHours(0,0,0,0);
+ const days=Math.max(0,Math.ceil((targetDate-today)/86400000));
+ const counter=document.getElementById('musaMomDays');if(counter)counter.textContent=days;
+ document.getElementById('musaMomClose')?.addEventListener('click',close);
+ popup.addEventListener('click',e=>{if(e.target===popup)close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+ popup.querySelectorAll('[data-target]').forEach(button=>button.addEventListener('click',()=>{
+  const target=button.dataset.target;close();
+  document.querySelector('#shop')?.scrollIntoView({behavior:'smooth',block:'start'});
+  if(target==='all')return;
+  const card=[...document.querySelectorAll('.product-card')].find(el=>el.textContent.toLowerCase().includes(target.toLowerCase()));
+  if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.classList.add('musa-mom-selected');setTimeout(()=>card.classList.remove('musa-mom-selected'),2200)}
+ }));
+ setTimeout(()=>{let seen=false;try{seen=sessionStorage.getItem('musaMomSeen')==='1'}catch(e){}if(!seen&&new Date()<new Date(2026,9,19)){popup.classList.add('open');popup.setAttribute('aria-hidden','false');document.body.classList.add('musa-mom-open')}},1000);
+})();
