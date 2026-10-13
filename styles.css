@@ -1894,7 +1894,8 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 .filter-group>span{font-weight:800}
 .business-join-card{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:18px}
 .business-join-card .business-form-head{max-width:360px}
-.club-section,.business-section{background-image:radial-gradient(circle at 5% 10%,#ffe2ee,transparent 30%),radial-gradient(circle at 95% 85%,#f7e4bc,transparent 28%)}
+.club-section{background-image:radial-gradient(circle at 5% 10%,#ffe2ee,transparent 30%),radial-gradient(circle at 95% 85%,#f7e4bc,transparent 28%)}
+.business-section{background:radial-gradient(circle at 5% 10%,rgba(255,226,238,.10),transparent 30%),radial-gradient(circle at 95% 85%,rgba(247,228,188,.10),transparent 28%),linear-gradient(135deg,#252331 0%,#302a3a 55%,#4a3041 100%)}
 .club-tab{box-shadow:0 12px 30px #a94d7925}
 .product-card,.product-item{transition:transform .22s ease,box-shadow .22s ease}
 .product-card:hover,.product-item:hover{transform:translateY(-4px);box-shadow:0 18px 34px #6b3b541a}
