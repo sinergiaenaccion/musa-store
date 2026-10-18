@@ -1988,3 +1988,52 @@ footer{background:#fff;padding:65px 7vw 20px}.footer-main{display:grid;grid-temp
 
 /* Mother's Day campaign popup */
 .musa-mom-popup{position:fixed;inset:0;z-index:9999;background:rgba(35,28,40,.68);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:18px}.musa-mom-popup.open{display:flex}.musa-mom-card{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;width:min(900px,96vw);max-height:90vh;overflow:auto;background:#fff9fc;border:1px solid #f2d6e5;border-radius:26px;box-shadow:0 24px 80px #21162255}.musa-mom-close{position:absolute;right:12px;top:12px;z-index:2;border:0;background:#fff;border-radius:50%;width:42px;height:42px;font-size:28px;color:#282332}.musa-mom-photo{min-height:560px;background:#f8dce9;overflow:hidden}.musa-mom-photo img{width:100%;height:100%;object-fit:cover;display:block}.musa-mom-copy{padding:38px;display:flex;flex-direction:column;justify-content:center}.musa-mom-copy .eyebrow{color:#a42c69;font-size:10px;font-weight:800;letter-spacing:.15em}.musa-mom-count{display:flex;align-items:center;gap:8px;color:#805d73;font-size:10px;font-weight:800;letter-spacing:.07em}.musa-mom-count strong{display:grid;place-items:center;background:#f8d7e7;color:#b32f75;border-radius:50%;width:44px;height:44px;font-size:23px}.musa-mom-copy h2{font-size:clamp(32px,4vw,46px);line-height:1;color:#282332;letter-spacing:-.04em;margin:18px 0 10px}.musa-mom-copy h2 em{font-family:Georgia,serif;color:#df4a94;font-weight:500}.musa-mom-copy>p:not(.eyebrow):not(.musa-mom-note){font-size:13px;line-height:1.6;color:#665a66}.musa-mom-choice{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #f0d9e5;border-radius:14px;background:white;padding:11px;margin-top:8px;color:#282332}.musa-mom-choice>span{display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:12px;background:#fce4ef;color:#d3408a;font-family:Georgia,serif;font-size:23px}.musa-mom-choice:nth-of-type(4)>span{background:#fff0cf;color:#a87820}.musa-mom-choice:nth-of-type(5)>span{background:#eee5ff;color:#7958b3}.musa-mom-choice b{font-size:10px;letter-spacing:.05em;flex:1}.musa-mom-choice small{display:block;color:#746875;font-weight:400;font-size:11px;letter-spacing:0;margin-top:3px}.musa-mom-choice i{font-family:Georgia,serif;font-size:20px;font-style:normal;color:#d3408a;animation:musaMomSparkle 2.4s ease-in-out infinite}.musa-mom-note{font-family:Georgia,serif;font-style:italic;font-size:13px;color:#9a7d8e;margin-top:15px}@keyframes musaMomSparkle{0%,100%{opacity:.65;transform:scale(.9) rotate(-7deg)}50%{opacity:1;transform:scale(1.12) rotate(7deg)}}body.musa-mom-open{overflow:hidden}@media(max-width:650px){.musa-mom-popup{padding:9px}.musa-mom-card{grid-template-columns:1fr;width:100%;max-height:93dvh;border-radius:20px}.musa-mom-photo{height:165px;min-height:0}.musa-mom-photo img{object-position:center 38%}.musa-mom-copy{padding:18px 18px 20px}.musa-mom-copy .eyebrow{margin:0 0 8px}.musa-mom-count strong{width:36px;height:36px;font-size:20px}.musa-mom-copy h2{font-size:32px;margin:13px 0 7px}.musa-mom-copy>p:not(.eyebrow):not(.musa-mom-note){font-size:12px;margin:0 0 7px}.musa-mom-choice{padding:8px 9px;gap:9px;margin-top:6px}.musa-mom-choice>span{height:31px;flex-basis:31px}.musa-mom-choice b{font-size:9px}.musa-mom-choice small{font-size:10px}.musa-mom-note{font-size:12px;margin-bottom:0}}@media(prefers-reduced-motion:reduce){.musa-mom-choice i{animation:none}}
+
+/* ===== Revisión MUSA: banner, avisos y páginas ===== */
+.mom-banner{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;background:#282332;color:#fff;text-align:center;padding:10px 14px;font-size:12px;letter-spacing:.06em;text-decoration:none}
+.mom-banner[hidden]{display:none}
+.mom-banner span{color:#ffb6d9;font-weight:800}
+.mom-banner strong{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.coming-soon-card{display:flex;align-items:center;justify-content:center;background:#fff9fc;border:1px dashed #e9b7d1;border-radius:18px;min-height:320px;padding:24px;text-align:center}
+.coming-soon-inner{display:grid;gap:10px;justify-items:center;max-width:260px}
+.coming-soon-inner>span{font-family:Georgia,serif;font-size:28px;color:#d3408a}
+.coming-soon-inner h3{font-size:20px;margin:0;color:#282332}
+.coming-soon-inner p{font-size:13px;line-height:1.5;color:#665a66;margin:0}
+.product-name a{color:inherit;text-decoration:none}
+.product-name a:hover{text-decoration:underline}
+.site-page{background:#fff9fc;color:#282332}
+.page-wrap{max-width:1040px;margin:0 auto;padding:24px 18px 60px}
+.page-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid #f2d6e5;background:#fff}
+.page-top nav{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;letter-spacing:.06em}
+.page-top nav a{color:#282332;text-decoration:none}
+.page-title{font-size:clamp(34px,5vw,52px);line-height:1;letter-spacing:-.03em;margin:8px 0 22px}
+.legal-body{max-width:760px;line-height:1.7;font-size:15px}
+.legal-body h3{font-size:20px;margin:28px 0 8px}
+.legal-body details{margin:12px 0}
+.legal-body summary{font-weight:700;cursor:pointer}
+.page-back{margin-top:34px}
+.page-back a,.crumbs a,.product-page-note a{color:#a42c69}
+.crumbs{font-size:12px;letter-spacing:.04em;color:#746875;margin-bottom:18px}
+.crumbs a{text-decoration:none}
+.product-page{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center}
+.product-page-media{border-radius:24px;overflow:hidden;aspect-ratio:1/1;display:grid;place-items:center}
+.product-page-media img{width:100%;height:100%;object-fit:cover;display:block}
+.product-badge-inline{font-size:11px;font-weight:800;letter-spacing:.12em;color:#a42c69}
+.product-page h1{font-size:clamp(36px,5vw,56px);line-height:1;letter-spacing:-.03em;margin:10px 0 8px}
+.product-page-sub{color:#746875;font-size:14px;margin:0 0 14px}
+.product-page-price{font-size:28px;font-weight:800;color:#d3408a;margin:0 0 14px}
+.product-page-desc{font-size:15px;line-height:1.65;color:#4a404b}
+.product-page-h2{font-size:16px;margin:22px 0 6px}
+.product-includes{padding-left:18px;line-height:1.8;font-size:14px}
+.product-buy{display:inline-block;margin-top:20px;text-decoration:none}
+.product-page-note{font-size:12px;line-height:1.6;color:#746875;margin-top:14px}
+.related-products{margin-top:60px}
+.related-products h2{font-size:22px;margin:0 0 16px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{display:grid;gap:6px;text-decoration:none;color:#282332;background:#fff;border:1px solid #f2d6e5;border-radius:16px;padding:12px}
+.related-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px}
+.related-card span{color:#d3408a;font-weight:700;font-size:13px}
+.page-footer{margin-top:56px;border-top:1px solid #f2d6e5;padding-top:24px;font-size:13px;color:#746875;display:grid;gap:14px}
+.page-footer nav{display:flex;flex-wrap:wrap;gap:8px 18px}
+.page-footer nav a{color:#282332;text-decoration:none}
+@media(max-width:760px){.product-page{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr 1fr}}

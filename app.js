@@ -13,6 +13,12 @@ async function loadProducts(){
   syncFavorites();
   renderCatalog();
   renderBag();
+  const addId=new URLSearchParams(location.search).get('add');
+  if(addId && products.some(p=>p.id===addId)){
+    addToBag(addId);
+    openBag();
+    history.replaceState(null,'',location.pathname+location.hash);
+  }
 }
 
 function syncFavorites(){
@@ -63,6 +69,8 @@ function getVisibleProducts(){
   return list;
 }
 
+function slugify(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+
 function card(p){
   const isPhysical=!p.digital;
   const image=p.image
@@ -76,7 +84,7 @@ function card(p){
     </div>
     <div class="product-info digital-info">
       <div>
-        <div class="product-name">${p.name}</div>
+        <div class="product-name">${p.digital?`<a href="producto/${slugify(p.name)}.html">${p.name}</a>`:p.name}</div>
         <div class="product-sub">${p.sub}${p.pages ? ` · ${p.pages} páginas` : ""}</div>
       </div>
       <div class="product-price">${money(p.price)}</div>
@@ -112,6 +120,10 @@ function renderCatalog(){
   const physical=visible.filter(p=>!p.digital);
   renderGrid('#digitalProducts',digital);
   renderGrid('#physicalProducts',physical);
+  const physicalEl=document.querySelector('#physicalProducts');
+  if(physicalEl && physical.length && physical.length<6 && catalogState.category!=='Digital'){
+    physicalEl.insertAdjacentHTML('beforeend','<article class="product-card coming-soon-card"><div class="coming-soon-inner"><span aria-hidden="true">✦</span><h3>Más productos muy pronto ♡</h3><p>Estamos sumando piezas seleccionadas por MUSA. Escribinos y te avisamos primero.</p><a class="btn btn-pink" href="https://wa.me/5493513394174?text=Hola%20MUSA%20quiero%20saber%20cuando%20llegan%20nuevos%20productos" target="_blank" rel="noopener">AVISAME POR WHATSAPP ♡</a></div></article>');
+  }
   const picks=document.querySelector('#musaPicks');
   if(picks){
     const pickList=[...products.filter(p=>!p.digital&&p.musaPick).slice(0,2),...products.filter(p=>p.digital&&p.musaPick).slice(0,1)];
@@ -455,47 +467,7 @@ businessFriendsForm?.addEventListener('submit',async e=>{
 
 
 
-const infoModal=document.querySelector('#infoModal');
-const infoModalClose=document.querySelector('#infoModalClose');
-const infoTitle=document.querySelector('#infoModalTitle');
-const infoPanels=[...document.querySelectorAll('[data-info-panel]')];
-const infoTitles={
-  payments:'Medios de pago',
-  terms:'Términos y condiciones',
-  privacy:'Política de privacidad',
-  refunds:'Política de reembolso',
-  changes:'Cambios y devoluciones',
-  data:'Tratamiento de datos',
-  club:'Reglamento MUSA CLUB',
-  complaints:'Libro de quejas web',
-  faq:'Preguntas frecuentes',
-  regret:'Botón de arrepentimiento'
-};
 
-function openInfo(key){
-  if(!infoModal) return;
-  infoPanels.forEach(panel=>panel.classList.toggle('active',panel.dataset.infoPanel===key));
-  infoTitle.textContent=infoTitles[key]||'Información MUSA';
-  infoModal.classList.add('open');
-  infoModal.setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
-}
-function closeInfo(){
-  if(!infoModal) return;
-  infoModal.classList.remove('open');
-  infoModal.setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
-}
-document.addEventListener('click',e=>{
-  const link=e.target.closest('[data-info]');
-  if(link){
-    e.preventDefault();
-    openInfo(link.dataset.info);
-  }
-});
-infoModalClose?.addEventListener('click',closeInfo);
-infoModal?.addEventListener('click',e=>{if(e.target===infoModal) closeInfo();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape') closeInfo();});
 
 const clubPopup=document.querySelector('#clubPopup');
 const clubPopupForm=document.querySelector('#clubPopupForm');
@@ -515,7 +487,18 @@ function closeClubPopup(){
 clubTab?.addEventListener('click',openClubPopup);
 clubPopupClose?.addEventListener('click',closeClubPopup);
 clubPopup?.addEventListener('click',e=>{if(e.target===clubPopup) closeClubPopup();});
-setTimeout(()=>{ if(!localStorage.getItem('musaClubSeen')) { openClubPopup(); localStorage.setItem('musaClubSeen','1'); } }, 5500);
+(function initClubPrompt(){
+  let last=0; try{last=Number(localStorage.getItem('musaClubPromptAt')||0)}catch(e){}
+  if(Date.now()-last<7*864e5) return;
+  let shown=false;
+  const show=()=>{ if(shown) return; shown=true; try{localStorage.setItem('musaClubPromptAt',String(Date.now()))}catch(e){} openClubPopup(); };
+  document.addEventListener('mouseout',e=>{ if(!e.relatedTarget && e.clientY<8) show(); });
+  const club=document.querySelector('#club');
+  if(club && 'IntersectionObserver' in window){
+    const io=new IntersectionObserver(entries=>{ if(entries.some(en=>en.isIntersecting)){ io.disconnect(); setTimeout(show,1500); } },{threshold:.6});
+    io.observe(club);
+  }
+})();
 
 clubPopupForm?.addEventListener('submit',async e=>{
   e.preventDefault();
@@ -555,23 +538,10 @@ loadProducts().catch(error=>{
   document.querySelector('#digitalProducts').innerHTML='<p class="empty-results">Estamos actualizando MUSA. Volvemos enseguida ♡</p>';
 });
 
-// Mother's Day popup campaign — Argentina, October 18, 2026
-(function initMusaMomPopup(){
- const popup=document.getElementById('musaMomPopup');
- if(!popup)return;
- const close=()=>{popup.classList.remove('open');popup.setAttribute('aria-hidden','true');document.body.classList.remove('musa-mom-open');try{sessionStorage.setItem('musaMomSeen','1')}catch(e){}};
- const targetDate=new Date(2026,9,18);const today=new Date();today.setHours(0,0,0,0);
- const days=Math.max(0,Math.ceil((targetDate-today)/86400000));
- const counter=document.getElementById('musaMomDays');if(counter)counter.textContent=days;
- document.getElementById('musaMomClose')?.addEventListener('click',close);
- popup.addEventListener('click',e=>{if(e.target===popup)close()});
- document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
- popup.querySelectorAll('[data-target]').forEach(button=>button.addEventListener('click',()=>{
-  const target=button.dataset.target;close();
-  document.querySelector('#shop')?.scrollIntoView({behavior:'smooth',block:'start'});
-  if(target==='all')return;
-  const card=[...document.querySelectorAll('.product-card')].find(el=>el.textContent.toLowerCase().includes(target.toLowerCase()));
-  if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.classList.add('musa-mom-selected');setTimeout(()=>card.classList.remove('musa-mom-selected'),2200)}
- }));
- setTimeout(()=>{let seen=false;try{seen=sessionStorage.getItem('musaMomSeen')==='1'}catch(e){}if(!seen&&new Date()<new Date(2026,9,19)){popup.classList.add('open');popup.setAttribute('aria-hidden','false');document.body.classList.add('musa-mom-open')}},1000);
+// Banner Día de la Madre: visible hasta mañana 19/10/2026 a las 20:00 (hora de Argentina), después se oculta solo.
+(function initMomBanner(){
+  const banner=document.getElementById('momBanner');
+  if(!banner) return;
+  const END=new Date('2026-10-19T20:00:00-03:00');
+  if(new Date()<END) banner.hidden=false;
 })();

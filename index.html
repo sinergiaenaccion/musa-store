@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://www.hellomusa.store/">
   <meta property="og:title" content="MUSA — Brillá a tu manera ♡">
   <meta property="og:description" content="Belleza, tecnología, accesorios y productos digitales elegidos por MUSA. Descubrí tu próximo favorito.">
-  <title>MUSA — Brilla a tu manera ♡</title>
+  <title>MUSA — Brillá a tu manera ♡</title>
   <link rel="icon" href="assets/musa-logo.jpg">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,6 +18,8 @@
     <span>SELECCIÓN MUSA</span><i></i>
     <span>♡ COMPRA ONLINE</span>
   </div>
+
+  <a class="mom-banner" id="momBanner" href="#shop" hidden><span>♡ HOY ES EL DÍA DE LA MADRE</span><strong>Regalá un workbook digital en minutos →</strong></a>
 
   <header class="site-header">
     <a class="brand" href="#top" aria-label="MUSA inicio"><img class="brand-logo" src="assets/musa-logo.jpg" alt="MUSA"></a>
@@ -147,7 +149,7 @@
         <span class="digital-badge">SIN ENVÍO · TODO DIGITAL ✦</span>
       </div>
       <div class="catalog-toolbar">
-  <div class="catalog-topline"><button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" onclick="toggleCatalogFilters()"><span>☷</span> FILTRAR</button><span id="catalogCount">0 productos</span><label>Ordenar
+  <div class="catalog-topline"><button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" onclick="toggleCatalogFilters()"><span>☷</span> FILTRAR</button><span id="catalogCount">Cargando productos…</span><label>Ordenar
     <select id="sortSelect" onchange="setSort(this.value)">
       <option value="recommended">Recomendados</option>
       <option value="newest">Novedades</option>
@@ -286,8 +288,8 @@ ion>
         <div class="secure-badge">🔒 COMPRA 100% SEGURA<br><small>Mercado Pago · Transferencia</small></div>
       </div>
       <div><h4>MUSA SHOP</h4><a href="#new">Lo nuevo</a><a href="#shop">Workbooks</a><a href="#collection">Colección</a><a href="#how">Cómo comprar</a><a href="#club">MUSA CLUB ♡</a><a href="#empresa-amiga">Empresa Amiga</a></div>
-      <div><h4>AYUDA</h4><a href="#how">Cómo funciona</a><a href="#info" data-info="payments">Medios de pago</a><a href="#info" data-info="changes">Cambios y devoluciones</a><a href="#info" data-info="complaints">Libro de quejas web</a><a href="mailto:hellomusa.store@gmail.com">Email</a><a href="https://wa.me/5493513394174?text=Hola%20MUSA%20%F0%9F%92%97%20Necesito%20ayuda" target="_blank" rel="noopener">Hablemos</a></div>
-      <div><h4>LEGAL</h4><a href="#info" data-info="terms">Términos y condiciones</a><a href="#info" data-info="privacy">Política de privacidad</a><a href="#info" data-info="refunds">Política de reembolso</a><a href="#info" data-info="faq">Preguntas frecuentes</a><a href="#info" data-info="club">Reglamento MUSA CLUB</a><a href="#info" data-info="data">Tratamiento de datos</a><a href="#info" data-info="complaints">Libro de quejas web</a><a class="regret-link" href="#info" data-info="regret">BOTÓN DE ARREPENTIMIENTO</a></div>
+      <div><h4>AYUDA</h4><a href="#how">Cómo funciona</a><a href="medios-de-pago.html">Medios de pago</a><a href="cambios-y-devoluciones.html">Cambios y devoluciones</a><a href="mailto:hellomusa.store@gmail.com">Email</a><a href="https://wa.me/5493513394174?text=Hola%20MUSA%20%F0%9F%92%97%20Necesito%20ayuda" target="_blank" rel="noopener">Hablemos</a></div>
+      <div><h4>LEGAL</h4><a href="terminos.html">Términos y condiciones</a><a href="privacidad.html">Política de privacidad</a><a href="reembolso.html">Política de reembolso</a><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="reglamento-musa-club.html">Reglamento MUSA CLUB</a><a href="tratamiento-de-datos.html">Tratamiento de datos</a><a href="libro-de-quejas.html">Libro de quejas web</a><a class="regret-link" href="arrepentimiento.html">BOTÓN DE ARREPENTIMIENTO</a></div>
       <div><h4>SEGUINOS</h4><a href="https://instagram.com/hellomusa.store" target="_blank" rel="noopener">Instagram ♡</a><a href="https://www.tiktok.com/@musai678" target="_blank" rel="noopener">TikTok ✦</a><a href="https://facebook.com/hellomusa.store" target="_blank" rel="noopener">Facebook ♡</a></div>
     </div>
     <div class="footer-bottom"><span>© 2026 MUSA — Todos los derechos reservados. · <a href="https://www.hellomusa.store/" target="_blank" rel="noopener">www.hellomusa.store</a></span><span>Hecho con ♡ en Villa Allende, Córdoba, Argentina 🇦🇷 · SHINE YOUR WAY.</span></div>
@@ -311,102 +313,6 @@ ion>
   </div>
 
 
-  <div class="info-modal" id="infoModal" aria-hidden="true">
-    <div class="info-modal-card" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
-      <button class="info-modal-close" id="infoModalClose" type="button" aria-label="Cerrar">×</button>
-      <div class="info-modal-head">
-        <p class="eyebrow">MUSA INFO ♡</p>
-        <h2 id="infoModalTitle">Información MUSA</h2>
-      </div>
-      <div class="info-modal-body">
-        <article data-info-panel="payments">
-          <h3>Medios de pago</h3>
-          <p>Podés pagar tus workbooks digitales mediante Mercado Pago o, cuando esté habilitado, por transferencia bancaria.</p>
-          <ul><li><strong>Mercado Pago:</strong> checkout online seguro con los medios de pago disponibles en la plataforma.</li><li><strong>Transferencia:</strong> el carrito informa el beneficio vigente y el acceso se habilita una vez verificado el pago.</li></ul>
-          <p>Los precios se expresan en pesos argentinos (ARS). MUSA no solicita ni almacena datos completos de tarjetas.</p>
-        </article>
-
-        <article data-info-panel="changes">
-          <h3>Cambios y devoluciones</h3>
-          <p>MUSA comercializa principalmente <strong>productos digitales descargables</strong>. Por eso, no existe un sistema de cambios de productos físicos ni un esquema de puntos asociado a las compras.</p>
-          <p>Si recibiste un archivo defectuoso, incompleto, ilegible o que no puede abrirse correctamente, escribinos a <a href="mailto:hellomusa.store@gmail.com">hellomusa.store@gmail.com</a> indicando el email de compra y el producto. Analizaremos el caso y, cuando corresponda, ofreceremos una solución o reemplazo.</p>
-          <p>Si querés ejercer el <strong>derecho de arrepentimiento</strong> de una compra a distancia, podés hacerlo desde el botón correspondiente del sitio. El derecho y sus excepciones se rigen por la legislación argentina aplicable.</p>
-          <p>Por tratarse de contenido digital, las situaciones vinculadas con el acceso, descarga o utilización del archivo se analizarán de acuerdo con la normativa aplicable y las características concretas de la operación.</p>
-        </article>
-
-        <article data-info-panel="terms">
-          <h3>Términos y condiciones</h3>
-          <p>MUSA Digital ofrece workbooks y otros contenidos digitales para uso personal. La compra se perfecciona cuando el medio de pago informa la aprobación de la operación.</p>
-          <p>Los archivos adquiridos no pueden revenderse, redistribuirse, publicarse, alojarse en plataformas de descarga ni utilizarse comercialmente sin autorización expresa.</p>
-          <p>Las promociones, códigos y beneficios tienen las condiciones, vigencia y restricciones informadas en cada caso.</p>
-          <p>Las presentes condiciones no limitan derechos irrenunciables reconocidos por la legislación argentina de defensa del consumidor.</p>
-        </article>
-
-        <article data-info-panel="privacy">
-          <h3>Política de privacidad</h3>
-          <p>MUSA trata los datos personales para gestionar compras, entregar productos digitales, administrar MUSA CLUB, responder consultas, prevenir fraude y enviar comunicaciones comerciales cuando exista consentimiento o base legal suficiente.</p>
-          <p>Los datos se tratarán conforme a la Ley 25.326 de Protección de Datos Personales y normativa aplicable. Podés solicitar acceso, actualización, rectificación o supresión de tus datos cuando corresponda escribiendo a <a href="mailto:hellomusa.store@gmail.com">hellomusa.store@gmail.com</a>.</p>
-          <p>MUSA adopta medidas razonables para proteger la confidencialidad e integridad de la información. No solicitamos ni almacenamos datos completos de tarjetas; los pagos son procesados por los proveedores de pago correspondientes.</p>
-        </article>
-
-        <article data-info-panel="data">
-          <h3>Tratamiento de datos</h3>
-          <p>Los datos que proporciones para MUSA CLUB podrán utilizarse para administrar la membresía, validar beneficios, enviar novedades y promociones cuando corresponda, prevenir usos indebidos y generar estadísticas generales para mejorar la experiencia.</p>
-          <p>No se solicitarán datos sensibles como requisito para participar del Programa. El tratamiento se realizará de acuerdo con la legislación vigente y con criterios de proporcionalidad y seguridad.</p>
-          <p>Podés retirar el consentimiento para comunicaciones comerciales en cualquier momento. La baja de comunicaciones no elimina los datos que MUSA deba conservar por obligaciones legales o para acreditar una operación.</p>
-        </article>
-
-        <article data-info-panel="club">
-          <h3>Reglamento MUSA CLUB</h3>
-          <p><strong>MUSA CLUB</strong> es un programa gratuito de beneficios y comunidad administrado por MUSA desde Villa Allende, Córdoba, Argentina.</p>
-          <h4>Quiénes pueden participar</h4>
-          <p>Podrán participar personas físicas mayores de 16 años residentes en la República Argentina. La inscripción requiere un email válido y la aceptación de este Reglamento y de la Política de Privacidad.</p>
-          <h4>Beneficios</h4>
-          <p>MUSA CLUB podrá ofrecer descuentos, beneficios de bienvenida, acceso anticipado a lanzamientos, novedades, contenidos y acciones especiales. Los beneficios pueden cambiar, tener vigencia determinada y contar con condiciones particulares.</p>
-          <h4>Beneficio de bienvenida</h4>
-          <p>El beneficio vigente de bienvenida es <strong>10% OFF</strong> mediante el código <strong>BIENVENIDA10</strong>, sujeto a validación del email registrado en MUSA CLUB y a las condiciones publicadas en el sitio. Se limita a una utilización por persona y no se acumula con promociones incompatibles.</p>
-          <h4>Uso correcto y fraude</h4>
-          <p>Está prohibido crear cuentas duplicadas, utilizar datos falsos, compartir o comercializar códigos personales, automatizar registros o intentar vulnerar los mecanismos de validación. MUSA podrá realizar controles y auditorías razonables y cancelar beneficios o membresías cuando detecte fraude, abuso o incumplimientos.</p>
-          <h4>Comunicaciones</h4>
-          <p>Las comunicaciones del Programa se realizarán mediante los canales oficiales de MUSA y el email registrado. MUSA no se responsabiliza por comunicaciones falsas emitidas desde canales no oficiales.</p>
-          <h4>Modificaciones</h4>
-          <p>MUSA podrá actualizar el Programa y este Reglamento para adaptarlo a cambios legales, técnicos u operativos. La versión vigente estará publicada en el sitio. Los cambios no afectarán retroactivamente beneficios ya válidamente otorgados.</p>
-          <p class="info-note">El Reglamento MUSA CLUB se complementa con los Términos y Condiciones y la Política de Privacidad de MUSA.</p>
-        </article>
-
-        <article data-info-panel="refunds">
-          <h3>Política de reembolso</h3>
-          <p>Si el producto digital presenta un inconveniente técnico o no coincide con lo ofrecido, contactanos para que podamos analizar el caso y ofrecer una solución.</p>
-          <p>El derecho de arrepentimiento en compras a distancia se regirá por la normativa argentina vigente y sus excepciones. MUSA dispone de un <strong>BOTÓN DE ARREPENTIMIENTO</strong> visible y accesible desde el sitio.</p>
-        </article>
-
-        <article data-info-panel="faq">
-          <h3>Preguntas frecuentes</h3>
-          <details><summary>¿Cuándo recibo mi workbook?</summary><p>Después de la aprobación del pago, la pantalla de compra ofrece el acceso temporal a la descarga y la operación queda asociada al email informado.</p></details>
-          <details><summary>¿Necesito imprimirlo?</summary><p>No. Podés utilizarlo desde un dispositivo compatible o imprimir las páginas que quieras.</p></details>
-          <details><summary>¿Puedo regalar un workbook?</summary><p>Sí. Escribinos por WhatsApp y te ayudamos a coordinar un voucher MUSA.</p></details>
-          <details><summary>¿Cómo funciona MUSA CLUB?</summary><p>Es gratuito. Te sumás con tu email y recibís beneficios, inspiración y novedades según las condiciones vigentes.</p></details>
-          <details><summary>¿Cómo hago un reclamo?</summary><p>Podés escribir a <a href="mailto:hellomusa.store@gmail.com">hellomusa.store@gmail.com</a>. Registraremos y gestionaremos tu consulta o reclamo por un canal digital.</p></details>
-        </article>
-
-        <article data-info-panel="complaints">
-          <h3>Libro de quejas web</h3>
-          <p>Queremos que puedas dejar constancia de cualquier inconveniente, consulta o reclamo relacionado con tu experiencia con MUSA.</p>
-          <p>Podés enviarnos tu reclamo por email a <a href="mailto:hellomusa.store@gmail.com?subject=Reclamo%20MUSA">hellomusa.store@gmail.com</a>, indicando nombre, email de contacto, detalle del reclamo y, si corresponde, los datos de la compra.</p>
-          <p>También podés acudir a los mecanismos oficiales de Defensa del Consumidor de la República Argentina.</p>
-          <a class="info-action" href="https://www.argentina.gob.ar/servicio/iniciar-un-reclamo-ante-defensa-del-consumidor" target="_blank" rel="noopener">DEFENSA DEL CONSUMIDOR →</a>
-        </article>
-
-        <article data-info-panel="regret">
-          <h3>Botón de arrepentimiento</h3>
-          <p>¿Te arrepentiste de una compra realizada a distancia? Podés solicitar la revocación sin registrarte previamente.</p>
-          <p>La normativa argentina establece un plazo general de <strong>10 días corridos</strong> en los términos de la Ley 24.240 y el régimen aplicable.</p>
-          <a class="info-action" href="mailto:hellomusa.store@gmail.com?subject=BOTÓN%20DE%20ARREPENTIMIENTO%20%E2%80%94%20MUSA">SOLICITAR ARREPENTIMIENTO →</a>
-          <p class="info-note">Indicá, si lo tenés, el email utilizado en la compra, fecha y número de operación/pedido. MUSA te informará el código de identificación del trámite por el mismo medio.</p>
-        </article>
-      </div></div>
-    </div>
-  </div>
 
   <div class="search-overlay" id="searchOverlay" aria-hidden="true"><button class="close-overlay" id="closeSearch">×</button><div class="search-box"><p class="eyebrow">BUSCÁ EN MUSA</p><input id="searchInput" type="search" placeholder="¿Qué estás buscando?"><p id="searchHint">Probá: glow, study, relax, planner...</p></div></div>
 
@@ -451,7 +357,6 @@ ion>
   </aside>
   <div class="drawer-backdrop" id="backdrop"></div>
 
-  <div id="musaMomPopup" class="musa-mom-popup" role="dialog" aria-modal="true" aria-labelledby="musaMomTitle" aria-hidden="true"><section class="musa-mom-card"><button id="musaMomClose" class="musa-mom-close" aria-label="Cerrar">×</button><div class="musa-mom-photo"><img src="https://images.pexels.com/photos/5368742/pexels-photo-5368742.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Mamá abrazando a su hija en un barco con un ramo de flores"></div><div class="musa-mom-copy"><p class="eyebrow">MUSA · DÍA DE LA MADRE</p><div class="musa-mom-count">FALTAN <strong id="musaMomDays">6</strong> DÍAS PARA MIMAR A MAMÁ</div><h2 id="musaMomTitle">¿Cuál vas a elegir para <em>mamá?</em> ♡</h2><p>Un regalo digital, tres maneras de decirle cuánto la querés.</p><button class="musa-mom-choice" data-target="Workbook Relax"><span>♡</span><b>QUIERO MIMARLA<small>Relax · una pausa para ella</small></b><i>✧</i></button><button class="musa-mom-choice" data-target="Workbook Agradecimiento"><span>✦</span><b>QUIERO AGRADECERLE<small>Agradecimiento · palabras que abrazan</small></b><i>♡</i></button><button class="musa-mom-choice" data-target="all"><span>♡</span><b>QUIERO SORPRENDERLA<small>Ver todas las ideas para mamá</small></b><i>✧</i></button><p class="musa-mom-note">Pequeños detalles, recuerdos para siempre. ♡</p></div></section></div>
   <script src="app.js"></script>
 </body>
 </html>
